@@ -2637,6 +2637,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392fcf0b9876b93418548bd13a5fcd80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playAreaAlias: {fileID: 2109656005}
+  headsetAlias: {fileID: 547634299}
+  rightControllerSources:
+  - {fileID: 1719104972}
+  - {fileID: 806923388}
+  deadzone: 0.5
 --- !u!4 &522980122
 Transform:
   m_ObjectHideFlags: 0
@@ -2651,6 +2657,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &547634299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1756652776302202, guid: 114b3c3ce4645364a97c8f0803bed65b,
+    type: 3}
+  m_PrefabInstance: {fileID: 47671556}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &547784932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3588,6 +3600,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 23b6deaae46c41a44a5e36264e92cef4,
     type: 3}
   m_PrefabInstance: {fileID: 776494623}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &806923388 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4544270645997882, guid: 9623e1c09606a01498f200718f0f607d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1444012218}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &867778134
 PrefabInstance:
@@ -11363,6 +11381,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1423596216}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1719104972 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4509080931372404, guid: b6b557e5a38efee4f90e60a9287d7b93,
+    type: 3}
+  m_PrefabInstance: {fileID: 62127275}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1732853132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13000,6 +13024,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1754505749}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2109656005 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1458957959020712, guid: 114b3c3ce4645364a97c8f0803bed65b,
+    type: 3}
+  m_PrefabInstance: {fileID: 47671556}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &2109656009
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109656005}
+  serializedVersion: 2
+  m_Mass: 9999
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &2111920736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: f13a096ae2ed77441b5ec43c27ce9d2e,
