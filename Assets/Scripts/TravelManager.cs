@@ -16,6 +16,7 @@ public class TravelManager : MonoBehaviour {
     [SerializeField] private GameObject headsetAlias;
     [SerializeField] private List<Transform> rightControllerSources;
     [SerializeField] private float deadzone;
+	[SerializeField] private float speed = 10;
 
     private void Awake() {
 		state = STATE.STATIONARY;
@@ -62,7 +63,7 @@ public class TravelManager : MonoBehaviour {
             Debug.Log(controllerOffset.magnitude);
             if(controllerOffset.magnitude > deadzone)
             {
-                myRB.velocity = multiplier * controllerOffset;
+                myRB.velocity = multiplier * speed * controllerOffset;
             }
             else
             {
