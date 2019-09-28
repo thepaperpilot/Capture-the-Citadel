@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TravelManager : MonoBehaviour {
@@ -10,13 +11,64 @@ public class TravelManager : MonoBehaviour {
 	}
 
 	private STATE state;
+    private Rigidbody myRB;
+    [SerializeField] private GameObject playAreaAlias;
+    [SerializeField] private GameObject headsetAlias;
+    [SerializeField] private List<Transform> rightControllerSources;
+    [SerializeField] private float deadzone;
 
-	private void Awake() {
+    private void Awake() {
 		state = STATE.STATIONARY;
+        myRB = playAreaAlias.GetComponent<Rigidbody>();
 	}
 
 	private void Update() {
-		Debug.Log(state);
+        Debug.Log(state);
+		if(state == STATE.STATIONARY)
+        {
+            myRB.velocity = Vector3.zero;
+        }
+        else
+        {
+            float multiplier;
+            switch (state)
+            {
+                case STATE.FORWARD:
+                    multiplier = 1;
+                    break;
+                case STATE.FORWARD2X:
+                    multiplier = 2;
+                    break;
+                case STATE.REVERSE:
+                    multiplier = -1;
+                    break;
+                case STATE.REVERSE2X:
+                    multiplier = -2;
+                    break;
+                default:
+                    multiplier = 1;
+                    break;
+            }
+            Vector3 handPos = Vector3.zero;
+            foreach(Transform tf in rightControllerSources)
+            {
+                if(tf.position == Vector3.zero)
+                {
+                    continue;
+                }
+                handPos = tf.position;
+            }
+            Vector3 controllerOffset = Vector3.ProjectOnPlane(handPos - headsetAlias.transform.position, Vector3.up);
+            Debug.Log(controllerOffset.magnitude);
+            if(controllerOffset.magnitude > deadzone)
+            {
+                myRB.velocity = multiplier * controllerOffset;
+            }
+            else
+            {
+                myRB.velocity = Vector3.zero;
+            }
+        }
 	}
 
 	// Bound to Right Circle Pad in OpenVR Controller
