@@ -2,7 +2,7 @@
 
 public class AbstractAction
 {
-    public IEnumerator Run() {
+    public virtual IEnumerator Run() {
         yield return null;
     }
 }
