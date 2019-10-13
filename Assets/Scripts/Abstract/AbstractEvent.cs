@@ -5,12 +5,12 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Events/Generic Event")]
-public class AbstractEvent : ScriptableObject
+public class AbstractEvent : AbstractAction
 {
     public enum OUTCOME_TYPE {
         CARD,
         HEALTH,
-        COMBAT
+        DUMMY
     }
 
     [Serializable]
@@ -19,15 +19,31 @@ public class AbstractEvent : ScriptableObject
         public OUTCOME_TYPE type;
         [Required]
         public string description;
-        [HideIf("type", OUTCOME_TYPE.COMBAT)]
+        [ShowIf("type", OUTCOME_TYPE.HEALTH)]
         public int amount;
-        [ShowIf("type", OUTCOME_TYPE.CARD), AssetList(Path="Cards/"), InlineEditor]
-        public AbstractCard card;
-        [ShowIf("type", OUTCOME_TYPE.COMBAT), AssetList(Path="Combats/"), InlineEditor]
-        public AbstractCombat combat;
+        [Space, ShowIf("type", OUTCOME_TYPE.CARD), InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+        [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
+        public AbstractCard[] cards;
+        [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, ExcludeExistingValuesInList=true)]
+        [Space, PropertyOrder(100), GUIColor(0, 1, 1)]
+        public AbstractAction[] chainedEvents;
+
+        public void Select()
+        {
+            if (type == OUTCOME_TYPE.CARD) {
+                ActionsManager.Instance.AddToTop(new DrawAction(cards, chainedEvents));
+            } else if (type == OUTCOME_TYPE.HEALTH) {
+                ActionsManager.Instance.AddToTop(new HealAction(amount, chainedEvents));
+            }
+        }
     }
 
     public string title;
     public string description;
     public Option[] options;
+
+    public override IEnumerator Run()
+    {
+        yield return null;
+    }
 }

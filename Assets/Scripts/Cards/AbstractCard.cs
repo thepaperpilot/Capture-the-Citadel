@@ -36,10 +36,10 @@ public class AbstractCard : ScriptableObject
         public AbstractStatus status;
     }
 
-    [HorizontalGroup("Split", 100)]
+    [Space, HorizontalGroup("Split", 100)]
     [HideInInlineEditors, HideLabel, PreviewField(100), OnValueChanged("DrawPreview")]
     public Material image;
-    [VerticalGroup("Split/Properties")]
+    [Space, VerticalGroup("Split/Properties")]
     [HideInInlineEditors, InfoBox("Note: Text components aren't rendering in the preview, so you won't see the name or description :(")]
     // TODO if you can make a function run when the field loses focus, make it rename the scriptable object file as per https://answers.unity.com/questions/339997/change-file-name-in-a-scriptable-object.html
     new public string name;
