@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbstractStatus
+public class AbstractStatus : ScriptableObject
 {
     public int priority;
 

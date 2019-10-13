@@ -21,8 +21,9 @@ public class AbstractCard : ScriptableObject
     }
 
     public enum EFFECT_TARGET {
-        SELF,
-        ENEMY
+        PLAYER,
+        ENEMY,
+        ALL_ENEMIES
     }
 
     [Serializable]
@@ -31,9 +32,9 @@ public class AbstractCard : ScriptableObject
         public EFFECT_TYPE type;
         [EnumToggleButtons]
         public EFFECT_TARGET target;
-        public int amount;
         [ShowIf("type", EFFECT_TYPE.STATUS)]
         public AbstractStatus status;
+        public int amount;
     }
 
     [Space, HorizontalGroup("Split", 100)]
