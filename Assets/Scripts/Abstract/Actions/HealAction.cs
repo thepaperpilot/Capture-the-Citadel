@@ -7,7 +7,7 @@ public class HealAction : AbstractAction
 {
     public int amount;
 
-    public HealAction(int amount, AbstractAction[] chainedEvents) {
+    public HealAction(int amount, AbstractAction[] chainedEvents = null) {
         this.amount = amount;
         this.chainedEvents = chainedEvents;
     }

@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class DrawAction : AbstractAction
 {
-    public AbstractCard[] cards;
+    public int amount;
 
-    public DrawAction(AbstractCard[] cards, AbstractAction[] chainedEvents) {
-        this.cards = cards;
+    public DrawAction(int amount, AbstractAction[] chainedEvents = null) {
+        this.amount = amount;
         this.chainedEvents = chainedEvents;
     }
 
     public override IEnumerator Run()
     {
-        yield return null;
+        yield return CardsManager.Instance.Draw(amount);
     }
 }

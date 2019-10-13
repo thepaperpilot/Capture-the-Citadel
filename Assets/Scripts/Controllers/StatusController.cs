@@ -4,24 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StatusManager : MonoBehaviour
+public class StatusController : MonoBehaviour
 {
-    public static StatusManager Instance;
-
     readonly public List<AbstractStatus> statuses = new List<AbstractStatus>();
-
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(this);
-        }
-    }
-
-    private void Start() {
-        SceneManager.sceneLoaded += ResetStatuses;
-    }
 
     private void ResetStatuses(Scene scene, LoadSceneMode mode) {
         statuses.RemoveRange(0, statuses.Count);

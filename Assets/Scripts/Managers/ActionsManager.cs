@@ -46,23 +46,25 @@ public class ActionsManager : SerializedMonoBehaviour
         StartCoroutine(RunAction(action));
     }
 
-    public void AddToTop(AbstractAction action) {
-        foreach (AbstractAction a in action.chainedEvents.Reverse())
-        {
-            actions.Prepend(a);
+    public void AddToTop(AbstractAction action, bool preventImmediate = false) {
+        if (action.chainedEvents != null) {
+            foreach (AbstractAction a in action.chainedEvents) {
+                actions.Prepend(a);
+            }
         }
         actions.Prepend(action);
-        if (!acting)
+        if (!acting && !preventImmediate)
             NextAction();
     }
 
-    public void AddToBottom(AbstractAction action) {
+    public void AddToBottom(AbstractAction action, bool preventImmediate = false) {
         actions.Append(action);
-        foreach (AbstractAction a in action.chainedEvents)
-        {
-            actions.Append(a);
+        if (action.chainedEvents != null) {
+            foreach (AbstractAction a in action.chainedEvents) {
+                actions.Append(a);
+            }
         }
-        if (!acting)
+        if (!acting && !preventImmediate)
             NextAction();
     }
 

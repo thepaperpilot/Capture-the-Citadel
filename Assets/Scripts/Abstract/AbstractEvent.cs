@@ -31,7 +31,7 @@ public class AbstractEvent : AbstractAction
         public void Select()
         {
             if (type == OUTCOME_TYPE.CARD) {
-                ActionsManager.Instance.AddToTop(new DrawAction(cards, chainedEvents));
+                ActionsManager.Instance.AddToTop(new AddCardsAction(cards, chainedEvents));
             } else if (type == OUTCOME_TYPE.HEALTH) {
                 ActionsManager.Instance.AddToTop(new HealAction(amount, chainedEvents));
             }
