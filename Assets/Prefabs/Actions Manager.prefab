@@ -43,3 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec0ab41c7e2064fbe3b774042dac7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  randomActions:
+  - {fileID: 11400000, guid: 434dde3309efbc24596005ef141a07d7, type: 2}
+  actions: []
+  acting: 0

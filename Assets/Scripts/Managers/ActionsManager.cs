@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ActionsManager : MonoBehaviour
+public class ActionsManager : SerializedMonoBehaviour
 {
     public static ActionsManager Instance;
 
+    [InfoBox("These are the actions that are randomly chosen between when entering a new floor")]
+    [SerializeField, AssetSelector(FlattenTreeView=true, ExcludeExistingValuesInList=true)]
+    [InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+    private AbstractAction[] randomActions = new AbstractAction[0];
+    [SerializeField, HideInEditorMode]
     private List<AbstractAction> actions = new List<AbstractAction>();
+    [SerializeField, HideInEditorMode]
     private bool acting = false;
 
     private void Awake() {
@@ -22,12 +29,14 @@ public class ActionsManager : MonoBehaviour
 
     private void Start() {
         SceneManager.sceneLoaded += ResetActions;
+        AddToBottom(GetRandomAction());
     }
 
     private void ResetActions(Scene scene, LoadSceneMode mode) {
         actions.RemoveRange(0, actions.Count);
         acting = false;
         StopAllCoroutines();
+        AddToBottom(GetRandomAction());
     }
 
     private void NextAction() {
@@ -37,16 +46,30 @@ public class ActionsManager : MonoBehaviour
         StartCoroutine(RunAction(action));
     }
 
-    public void AddToTop(AbstractAction action) {
+    public void AddToTop(AbstractAction action, bool preventImmediate = false) {
+        if (action.chainedEvents != null) {
+            foreach (AbstractAction a in action.chainedEvents) {
+                actions.Prepend(a);
+            }
+        }
         actions.Prepend(action);
-        if (!acting)
+        if (!acting && !preventImmediate)
             NextAction();
     }
 
-    public void AddToBottom(AbstractAction action) {
+    public void AddToBottom(AbstractAction action, bool preventImmediate = false) {
         actions.Append(action);
-        if (!acting)
+        if (action.chainedEvents != null) {
+            foreach (AbstractAction a in action.chainedEvents) {
+                actions.Append(a);
+            }
+        }
+        if (!acting && !preventImmediate)
             NextAction();
+    }
+
+    public AbstractAction GetRandomAction() {
+        return randomActions[Random.Range(0, randomActions.Length)];
     }
 
     private IEnumerator RunAction(AbstractAction action) {
