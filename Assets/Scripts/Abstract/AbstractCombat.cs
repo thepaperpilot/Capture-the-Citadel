@@ -19,6 +19,7 @@ public class AbstractCombat : AbstractAction
 
     public override IEnumerator Run()
     {
+        CombatManager.Instance.StartCombat(this);
         yield return null;
     }
 }

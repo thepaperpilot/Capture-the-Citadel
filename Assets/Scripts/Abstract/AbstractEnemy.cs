@@ -10,6 +10,7 @@ public class AbstractEnemy : ScriptableObject
     [Space, AssetList(Path="/Assets/Prefabs/Enemies")]
     public GameObject enemyPrefab;
     public int health;
+    public int spawnPoint;
 
     public enum STRATEGY_TYPE {
         LOOP,
