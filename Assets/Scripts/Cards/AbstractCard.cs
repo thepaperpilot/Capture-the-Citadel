@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,30 +12,6 @@ public class AbstractCard : ScriptableObject
         COMMON,
         UNCOMMON,
         RARE
-    }
-
-    public enum EFFECT_TYPE {
-        DAMAGE,
-        HEAL,
-        DRAW,
-        STATUS
-    }
-
-    public enum EFFECT_TARGET {
-        PLAYER,
-        ENEMY,
-        ALL_ENEMIES
-    }
-
-    [Serializable]
-    public struct Effect {
-        [EnumToggleButtons]
-        public EFFECT_TYPE type;
-        [EnumToggleButtons]
-        public EFFECT_TARGET target;
-        [ShowIf("type", EFFECT_TYPE.STATUS)]
-        public AbstractStatus status;
-        public int amount;
     }
 
     [Space, HorizontalGroup("Split", 100)]
@@ -53,7 +30,7 @@ public class AbstractCard : ScriptableObject
     [HideInInlineEditors, EnumToggleButtons, OnValueChanged("DrawPreview")]
     public CARD_RARITY rarity;
     [HideInInlineEditors, Space]
-    public Effect[] effects;
+    public CombatAction[] actions;
 #if UNITY_EDITOR
     [OnInspectorGUI("CheckPreview"), ShowInInspector, HideLabel, InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden), Space]
     private GameObject preview;
@@ -78,19 +55,6 @@ public class AbstractCard : ScriptableObject
 #endif
 
     public void Play() {
-        ActionsManager.Instance.AddToBottom(new PlayCardAction(this));
-    }
-
-    public class PlayCardAction : AbstractAction {
-        private AbstractCard card;
-
-        public PlayCardAction(AbstractCard card) {
-            this.card = card;
-        }
-
-        public override IEnumerator Run() {
-            // TODO iterate through each effect
-            yield return null;
-        }
+        ActionsManager.Instance.AddToTop(actions);
     }
 }

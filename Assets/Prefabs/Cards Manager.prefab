@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -58,9 +58,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   deck: []
-  hand:
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  drawPile:
-  - {fileID: 0}
-  discards:
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  hand: []
+  drawPile: []
+  discards: []

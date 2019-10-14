@@ -7,12 +7,11 @@ public class AddCardsAction : AbstractAction
 {
     public AbstractCard[] cards;
 
-    public AddCardsAction(AbstractCard[] cards, AbstractAction[] chainedEvents = null) {
+    public AddCardsAction(AbstractCard[] cards) {
         this.cards = cards;
-        this.chainedEvents = chainedEvents;
     }
 
-    public override IEnumerator Run()
+    public IEnumerator Run()
     {
         CardsManager.Instance.deck.AddRange(cards);
         yield return null;

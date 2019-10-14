@@ -7,12 +7,11 @@ public class HealAction : AbstractAction
 {
     public int amount;
 
-    public HealAction(int amount, AbstractAction[] chainedEvents = null) {
+    public HealAction(int amount) {
         this.amount = amount;
-        this.chainedEvents = chainedEvents;
     }
 
-    public override IEnumerator Run()
+    public IEnumerator Run()
     {
         yield return null;
     }

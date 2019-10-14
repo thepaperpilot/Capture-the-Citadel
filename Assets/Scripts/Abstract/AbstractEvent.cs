@@ -5,12 +5,13 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Events/Generic Event")]
-public class AbstractEvent : AbstractAction
+public class AbstractEvent : ScriptableObjectAction
 {
     public enum OUTCOME_TYPE {
         CARD,
         HEALTH,
-        DUMMY
+        GOLD,
+        ACTION
     }
 
     [Serializable]
@@ -24,22 +25,32 @@ public class AbstractEvent : AbstractAction
         [Space, ShowIf("type", OUTCOME_TYPE.CARD), InlineEditor(InlineEditorObjectFieldModes.Foldout)]
         [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
         public AbstractCard[] cards;
-        [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, ExcludeExistingValuesInList=true)]
-        [Space, PropertyOrder(100), GUIColor(0, 1, 1)]
-        public AbstractAction[] chainedEvents;
+        [AssetList, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+        [Space, ShowIf("type", OUTCOME_TYPE.ACTION)]
+        public ScriptableObjectAction action;
 
         public void Select()
         {
-            if (type == OUTCOME_TYPE.CARD) {
-                ActionsManager.Instance.AddToTop(new AddCardsAction(cards, chainedEvents));
-            } else if (type == OUTCOME_TYPE.HEALTH) {
-                ActionsManager.Instance.AddToTop(new HealAction(amount, chainedEvents));
+            switch (type) {
+                case OUTCOME_TYPE.CARD:
+                    ActionsManager.Instance.AddToTop(new AddCardsAction(cards));
+                    break;
+                case OUTCOME_TYPE.HEALTH:
+                    ActionsManager.Instance.AddToTop(new HealAction(amount));
+                    break;
+                case OUTCOME_TYPE.GOLD:
+                    ActionsManager.Instance.AddToTop(new GainGoldAction(amount));
+                    break;
+                case OUTCOME_TYPE.ACTION:
+                    ActionsManager.Instance.AddToTop(action);
+                    break;
             }
         }
     }
 
     public string title;
     public string description;
+    [ListDrawerSettings(Expanded=true)]
     public Option[] options;
 
     public override IEnumerator Run()
