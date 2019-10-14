@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4e47377ec7faf48a31ea5cedbfcda5, type: 3}
   m_Name: New Abstract Event
   m_EditorClassIdentifier: 
+  chainedEvents: []
   title: 
   description: 
   options:
-  - type: 2
+  - type: 0
     description: 
     amount: 0
-    card: {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-    combat: {fileID: 11400000, guid: 434dde3309efbc24596005ef141a07d7, type: 2}
+    cards:
+    - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+    chainedEvents: []

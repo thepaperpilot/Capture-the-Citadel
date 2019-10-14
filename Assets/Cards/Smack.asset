@@ -20,5 +20,5 @@ MonoBehaviour:
   effects:
   - type: 0
     target: 1
-    amount: 2
     status: {fileID: 0}
+    amount: 2

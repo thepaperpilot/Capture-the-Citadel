@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName="Enemies/Generic Enemy")]
 public class AbstractEnemy : ScriptableObject
 {
-    [Space, AssetList(Path="/Assets/Prefabs/Enemies")]
+    [Space, AssetList(Path="Prefabs/Enemies"), InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Foldout)]
     public GameObject enemyPrefab;
     public int health;
     public int spawnPoint;
