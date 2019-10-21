@@ -36,7 +36,7 @@ public class AbstractEvent : ScriptableObjectAction
                     ActionsManager.Instance.AddToTop(new AddCardsAction(cards));
                     break;
                 case OUTCOME_TYPE.HEALTH:
-                    ActionsManager.Instance.AddToTop(new HealAction(amount));
+                    ActionsManager.Instance.AddToTop(new HealAction(CombatManager.Instance.player, amount));
                     break;
                 case OUTCOME_TYPE.GOLD:
                     ActionsManager.Instance.AddToTop(new GainGoldAction(amount));

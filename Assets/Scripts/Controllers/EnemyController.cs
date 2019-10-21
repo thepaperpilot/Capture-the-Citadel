@@ -51,7 +51,20 @@ public class EnemyController : CombatantController
             }
         }
 
-        // Perform our action
+        // Perform our actions
+        foreach (CardAction action in nextMove.actions) {
+            switch (action.target) {
+                case CardAction.TARGET.ALL_ENEMIES:
+                    action.targets = CombatManager.Instance.enemies;
+                    break;
+                case CardAction.TARGET.ENEMY:
+                    action.targets = new CombatantController[] { this };
+                    break;
+                case CardAction.TARGET.PLAYER:
+                    action.targets = new CombatantController[] { CombatManager.Instance.player };
+                    break;
+            }
+        }
         ActionsManager.Instance.AddToTop(nextMove.actions);
 
         // Change back to normal strategy if applicable

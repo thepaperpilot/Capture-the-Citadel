@@ -17,8 +17,12 @@ MonoBehaviour:
   description: Deal 3 damage to an enemy.
   energyCost: 3
   rarity: 2
-  effects:
+  actions:
   - type: 0
     target: 1
     status: {fileID: 0}
-    amount: 2
+    amount: 0
+  - type: 1
+    target: 0
+    status: {fileID: 0}
+    amount: 0

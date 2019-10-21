@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec7b4ae350126d40823b0ea46e97aad, type: 3}
+  m_Name: Decay
+  m_EditorClassIdentifier: 
+  name: Decay
+  type: 1
+  expression:
+    modifier: 0
+    amount: 0
+    effect: 0
+  activeStatus:
+    type: 0
+    status: {fileID: 0}
+    amount: 1
+    targets: []
+    trigger: 0
+    affectsSelf: 1
+    decaysAfterUse:
+      isDecaying: 1
+      amount: 1
+  combatant: {fileID: 0}

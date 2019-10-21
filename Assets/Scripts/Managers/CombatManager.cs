@@ -8,13 +8,17 @@ public class CombatManager : MonoBehaviour
     public static CombatManager Instance;
 
     [HideInPlayMode]
-    [SerializeField] private CombatantController player;
+    public CombatantController player;
+    [HideInInspector]
+    public CombatantController[] enemies;
+
     [HideInPlayMode, ChildGameObjectsOnly]
     [SerializeField] private Transform playerSpawnPoint;
     [Space, HideInPlayMode, ChildGameObjectsOnly]
     [SerializeField] private Transform[] enemySpawnPoints;
     [Space, HideInEditorMode]
     [SerializeField] private CombatantController currentTurn;
+
 
     private AbstractCombat combat;
 
@@ -34,13 +38,16 @@ public class CombatManager : MonoBehaviour
         combatants.Clear();
         combatants.Add(player);
         player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
-        foreach (AbstractEnemy enemy in combat.enemies) {
+        enemies = new CombatantController[combat.enemies.Length];
+        for (int i = 0; i < combat.enemies.Length; i++) {
+            AbstractEnemy enemy = combat.enemies[i];
             if (enemy.spawnPoint >= enemySpawnPoints.Length) {
                 Debug.LogError("Cannot spawn enemy in spawn point " + enemy.spawnPoint + " because only " + enemySpawnPoints.Length + " spawn points exist.");
             } else {
                 EnemyController controller = Instantiate(enemy.enemyPrefab, enemySpawnPoints[enemy.spawnPoint]).GetComponent<EnemyController>();
                 controller.SetEnemy(enemy);
                 combatants.Add(controller);
+                enemies[i] = controller;
             }
         }
         // TODO add actions for relics and start the player turn after that

@@ -16,11 +16,33 @@ MonoBehaviour:
     type: 3}
   health: 0
   spawnPoint: 0
-  type: 0
-  moves:
-  - effects:
-    - type: 0
-      target: 0
-      status: {fileID: 0}
-      amount: 2
-  conditionalStrategyChanges: []
+  normalStrategy:
+    type: 0
+    moves:
+    - actions:
+      - type: 3
+        target: 0
+        status: {fileID: 0}
+        amount: 0
+      - type: 2
+        target: 0
+        status: {fileID: 0}
+        amount: 0
+      - type: 0
+        target: 0
+        status: {fileID: 0}
+        amount: 0
+      moveDirection: 0
+  conditionalStrategyChanges:
+  - condition: 0
+    amount: 0
+    newStrategy:
+      type: 0
+      moves:
+      - actions:
+        - type: 0
+          target: 0
+          status: {fileID: 0}
+          amount: 0
+        moveDirection: 0
+    returnAfter: 0

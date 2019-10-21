@@ -17,7 +17,7 @@ public class AbstractCard : ScriptableObject
     [Space, HorizontalGroup("Split", 100)]
     [HideInInlineEditors, HideLabel, PreviewField(100), OnValueChanged("DrawPreview")]
     public Material image;
-    [Space, VerticalGroup("Split/Properties")]
+    [Space, VerticalGroup("Split/Properties"), Delayed]
     [HideInInlineEditors, InfoBox("Note: Text components aren't rendering in the preview, so you won't see the name or description :(")]
     // TODO if you can make a function run when the field loses focus, make it rename the scriptable object file as per https://answers.unity.com/questions/339997/change-file-name-in-a-scriptable-object.html
     new public string name;
@@ -30,7 +30,7 @@ public class AbstractCard : ScriptableObject
     [HideInInlineEditors, EnumToggleButtons, OnValueChanged("DrawPreview")]
     public CARD_RARITY rarity;
     [HideInInlineEditors, Space]
-    public CombatAction[] actions;
+    public CardAction[] actions;
 #if UNITY_EDITOR
     [OnInspectorGUI("CheckPreview"), ShowInInspector, HideLabel, InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden), Space]
     private GameObject preview;
@@ -46,6 +46,7 @@ public class AbstractCard : ScriptableObject
     
     [HideInInlineEditors, Button("Regenerate Preview")]
     private void DrawPreview() {
+        if (name == "") return;
         GameObject temp = UnityEditor.PrefabUtility.LoadPrefabContents("Assets/Prefabs/Card.prefab");
         temp.GetComponent<CardController>().Setup(this);
         preview = null;
@@ -55,6 +56,15 @@ public class AbstractCard : ScriptableObject
 #endif
 
     public void Play() {
-        ActionsManager.Instance.AddToTop(actions);
+        if (actions.Any(action => action.target == CardAction.TARGET.ENEMY)) {
+            // TODO enemy selection system
+        } else {
+            foreach (CardAction action in actions) {
+                action.targets = action.target == CardAction.TARGET.PLAYER ?
+                    new CombatantController[] { CombatManager.Instance.player } :
+                    CombatManager.Instance.enemies;
+            }
+            ActionsManager.Instance.AddToTop(actions);
+        }
     }
 }

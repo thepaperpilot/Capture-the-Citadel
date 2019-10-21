@@ -34,7 +34,7 @@ public class AbstractEnemy : ScriptableObject
     [Serializable]
     public struct Attack {
         [ListDrawerSettings(Expanded=true)]
-        public CombatAction[] actions;
+        public CardAction[] actions;
         [EnumToggleButtons, ShowIf("ShowDirection")]
         public MOVE_DIRECTION moveDirection;
 

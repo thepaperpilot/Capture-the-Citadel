@@ -7,7 +7,7 @@ public class HealAction : AbstractAction
 {
     public int amount;
 
-    public HealAction(int amount) {
+    public HealAction(CombatantController target, int amount) {
         this.amount = amount;
     }
 
