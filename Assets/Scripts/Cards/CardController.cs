@@ -39,13 +39,13 @@ public class CardController : MonoBehaviour
     
     public void Setup(AbstractCard card) {
         switch (card.rarity) {
-            case AbstractCard.CARD_RARITY.COMMON:
+            case AbstractCard.Rarities.COMMON:
                 border.material = common;
                 break;
-            case AbstractCard.CARD_RARITY.UNCOMMON:
+            case AbstractCard.Rarities.UNCOMMON:
                 border.material = uncommon;
                 break;
-            case AbstractCard.CARD_RARITY.RARE:
+            case AbstractCard.Rarities.RARE:
                 border.material = rare;
                 break;
         }

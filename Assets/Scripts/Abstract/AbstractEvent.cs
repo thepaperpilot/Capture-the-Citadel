@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Events/Generic Event")]
 public class AbstractEvent : ScriptableObjectAction
 {
-    public enum OUTCOME_TYPE {
+    public enum OutcomeTypes {
         CARD,
         HEALTH,
         GOLD,
@@ -17,31 +17,31 @@ public class AbstractEvent : ScriptableObjectAction
     [Serializable]
     public struct Option {
         [EnumToggleButtons]
-        public OUTCOME_TYPE type;
+        public OutcomeTypes type;
         [Required]
         public string description;
-        [ShowIf("type", OUTCOME_TYPE.HEALTH)]
+        [ShowIf("type", OutcomeTypes.HEALTH)]
         public int amount;
-        [Space, ShowIf("type", OUTCOME_TYPE.CARD), InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+        [Space, ShowIf("type", OutcomeTypes.CARD), InlineEditor(InlineEditorObjectFieldModes.Foldout)]
         [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
         public AbstractCard[] cards;
         [AssetList, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
-        [Space, ShowIf("type", OUTCOME_TYPE.ACTION)]
+        [Space, ShowIf("type", OutcomeTypes.ACTION)]
         public ScriptableObjectAction action;
 
         public void Select()
         {
             switch (type) {
-                case OUTCOME_TYPE.CARD:
+                case OutcomeTypes.CARD:
                     ActionsManager.Instance.AddToTop(new AddCardsAction(cards));
                     break;
-                case OUTCOME_TYPE.HEALTH:
+                case OutcomeTypes.HEALTH:
                     ActionsManager.Instance.AddToTop(new HealAction(CombatManager.Instance.player, amount));
                     break;
-                case OUTCOME_TYPE.GOLD:
+                case OutcomeTypes.GOLD:
                     ActionsManager.Instance.AddToTop(new GainGoldAction(amount));
                     break;
-                case OUTCOME_TYPE.ACTION:
+                case OutcomeTypes.ACTION:
                     ActionsManager.Instance.AddToTop(action);
                     break;
             }

@@ -14,19 +14,19 @@ public class AbstractEnemy : ScriptableObject
     public int health;
     public int spawnPoint;
 
-    public enum STRATEGY_TYPE {
+    public enum StrategyTypes {
         LOOP,
         RANDOM
     }
 
-    public enum CONDITIONS {
+    public enum Conditions {
         HALF_HEALTH,
         NUM_TURNS,
         TOO_FAR,
         TOO_CLOSE
     }
 
-    public enum MOVE_DIRECTION {
+    public enum MoveDirections {
         CLOSER,
         FARTHER
     }
@@ -36,7 +36,7 @@ public class AbstractEnemy : ScriptableObject
         [ListDrawerSettings(Expanded=true)]
         public CardAction[] actions;
         [EnumToggleButtons, ShowIf("ShowDirection")]
-        public MOVE_DIRECTION moveDirection;
+        public MoveDirections moveDirection;
 
 #if UNITY_EDITOR
         private bool ShowDirection() {
@@ -48,19 +48,19 @@ public class AbstractEnemy : ScriptableObject
     [Serializable, BoxGroup]
     public struct Strategy {
         [HideLabel, EnumToggleButtons]
-        public STRATEGY_TYPE type;
+        public StrategyTypes type;
         public Attack[] moves;
     }
 
     [Serializable]
     public struct StrategyChange {
-        public CONDITIONS condition;
-        [HideIf("condition", CONDITIONS.HALF_HEALTH)]
+        public Conditions condition;
+        [HideIf("condition", Conditions.HALF_HEALTH)]
         public int amount;
 
         public Strategy newStrategy;
 
-        [ShowIf("@newStrategy.type", STRATEGY_TYPE.LOOP)]
+        [ShowIf("@newStrategy.type", StrategyTypes.LOOP)]
         [LabelText("Return to normal after first loop")]
         public bool returnAfter;
     }

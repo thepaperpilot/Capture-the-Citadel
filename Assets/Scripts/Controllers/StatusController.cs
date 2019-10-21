@@ -34,37 +34,37 @@ public class StatusController : MonoBehaviour
     }
 
     public void OnTurnStart() {
-        OnTrigger(ActiveStatus.Trigger.TURN_START, new CombatantController[] { combatant });
+        OnTrigger(ActiveStatus.Triggers.TURN_START, new CombatantController[] { combatant });
     }
 
     public void OnAttack(CombatantController[] targets) {
-        OnTrigger(ActiveStatus.Trigger.DAMAGE_DEALT, targets);
+        OnTrigger(ActiveStatus.Triggers.DAMAGE_DEALT, targets);
     }
 
     public void OnAttacked(CombatantController attacker) {
-        OnTrigger(ActiveStatus.Trigger.DAMAGE_TAKEN, new CombatantController[] { attacker });
+        OnTrigger(ActiveStatus.Triggers.DAMAGE_TAKEN, new CombatantController[] { attacker });
     }
 
     private int GetEffectValue(int baseValue, Expression.Effects effect) {
         int value = baseValue;
         IEnumerable<Expression> expressions = statuses.
-            Where(status => status.type == AbstractStatus.Type.PASSIVE).
+            Where(status => status.type == AbstractStatus.Types.PASSIVE).
             Select(status => status.expression).
             Where(expression => expression.effect == effect);
     
-        foreach (Expression expression in expressions.Where(expression => expression.modifier == Expression.Modifier.ADD)) {
+        foreach (Expression expression in expressions.Where(expression => expression.modifier == Expression.Modifiers.ADD)) {
             value += expression.amount;
         }
-        foreach (Expression expression in expressions.Where(expression => expression.modifier == Expression.Modifier.MULTIPLY)) {
+        foreach (Expression expression in expressions.Where(expression => expression.modifier == Expression.Modifiers.MULTIPLY)) {
             value *= expression.amount;
         }
 
         return value;
     }
 
-    private void OnTrigger(ActiveStatus.Trigger trigger, CombatantController[] others) {
+    private void OnTrigger(ActiveStatus.Triggers trigger, CombatantController[] others) {
         IEnumerable<ActiveStatus> activeStatuses = statuses.
-            Where(status => status.type == AbstractStatus.Type.ACTIVE).
+            Where(status => status.type == AbstractStatus.Types.ACTIVE).
             Select(status => status.activeStatus).
             Where(activeStatus => activeStatus.trigger == trigger);
         

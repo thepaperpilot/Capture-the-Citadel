@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Cards/Generic Card")]
 public class AbstractCard : ScriptableObject
 {
-    public enum CARD_RARITY {
+    public enum Rarities {
         COMMON,
         UNCOMMON,
         RARE
@@ -28,7 +28,7 @@ public class AbstractCard : ScriptableObject
     [HideInInlineEditors, Range(0, 5), OnValueChanged("DrawPreview")]
     public int energyCost;
     [HideInInlineEditors, EnumToggleButtons, OnValueChanged("DrawPreview")]
-    public CARD_RARITY rarity;
+    public Rarities rarity;
     [HideInInlineEditors, Space]
     public CardAction[] actions;
 #if UNITY_EDITOR
@@ -56,11 +56,11 @@ public class AbstractCard : ScriptableObject
 #endif
 
     public void Play() {
-        if (actions.Any(action => action.target == CardAction.TARGET.ENEMY)) {
+        if (actions.Any(action => action.target == CardAction.Targets.ENEMY)) {
             // TODO enemy selection system
         } else {
             foreach (CardAction action in actions) {
-                action.targets = action.target == CardAction.TARGET.PLAYER ?
+                action.targets = action.target == CardAction.Targets.PLAYER ?
                     new CombatantController[] { CombatManager.Instance.player } :
                     CombatManager.Instance.enemies;
             }

@@ -34,18 +34,18 @@ public class EnemyController : CombatantController
         foreach (AbstractEnemy.StrategyChange change in enemy.conditionalStrategyChanges) {
             if (strategy.Equals(change.newStrategy)) continue;
             switch (change.condition) {
-                case AbstractEnemy.CONDITIONS.HALF_HEALTH:
+                case AbstractEnemy.Conditions.HALF_HEALTH:
                     if (health < enemy.health * .5f)
                         ChangeStrategy(change);
                     break;
-                case AbstractEnemy.CONDITIONS.NUM_TURNS:
+                case AbstractEnemy.Conditions.NUM_TURNS:
                     if (turn == change.amount)
                         ChangeStrategy(change);
                     break;
-                case AbstractEnemy.CONDITIONS.TOO_CLOSE:
+                case AbstractEnemy.Conditions.TOO_CLOSE:
                     // TODO positioning system
                     break;
-                case AbstractEnemy.CONDITIONS.TOO_FAR:
+                case AbstractEnemy.Conditions.TOO_FAR:
                     // TODO positioning system
                     break;
             }
@@ -54,13 +54,13 @@ public class EnemyController : CombatantController
         // Perform our actions
         foreach (CardAction action in nextMove.actions) {
             switch (action.target) {
-                case CardAction.TARGET.ALL_ENEMIES:
+                case CardAction.Targets.ALL_ENEMIES:
                     action.targets = CombatManager.Instance.enemies;
                     break;
-                case CardAction.TARGET.ENEMY:
+                case CardAction.Targets.ENEMY:
                     action.targets = new CombatantController[] { this };
                     break;
-                case CardAction.TARGET.PLAYER:
+                case CardAction.Targets.PLAYER:
                     action.targets = new CombatantController[] { CombatManager.Instance.player };
                     break;
             }
@@ -71,9 +71,9 @@ public class EnemyController : CombatantController
         // and update next move
         if (strategy.Equals(strategyChange.newStrategy) && strategyChange.returnAfter && nextMove.Equals(strategy.moves.Last())) {
             strategy = enemy.normalStrategy;
-            nextMove = strategy.type == AbstractEnemy.STRATEGY_TYPE.LOOP ? strategy.moves[0] : strategy.moves[Random.Range(0, strategy.moves.Length)];
+            nextMove = strategy.type == AbstractEnemy.StrategyTypes.LOOP ? strategy.moves[0] : strategy.moves[Random.Range(0, strategy.moves.Length)];
         } else {
-            if (strategy.type == AbstractEnemy.STRATEGY_TYPE.LOOP) {
+            if (strategy.type == AbstractEnemy.StrategyTypes.LOOP) {
                 int index = System.Array.IndexOf(strategy.moves, nextMove) % strategy.moves.Length;
                 nextMove = strategy.moves[index + 1];
             } else {

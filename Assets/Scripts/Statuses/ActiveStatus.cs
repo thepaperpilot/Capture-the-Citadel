@@ -8,13 +8,13 @@ using UnityEngine;
 public class ActiveStatus : CombatAction
 {
 
-    public enum Trigger {
+    public enum Triggers {
         TURN_START,
         DAMAGE_DEALT,
         DAMAGE_TAKEN
     }
 
-    public Trigger trigger;
+    public Triggers trigger;
     [ShowIf("ShowAffectsSelf")]
     public bool affectsSelf = true;
     [SerializeField]
@@ -33,7 +33,7 @@ public class ActiveStatus : CombatAction
 
 #if UNITY_EDITOR
     private bool ShowAffectsSelf() {
-        return trigger != Trigger.TURN_START;
+        return trigger != Triggers.TURN_START;
     }
 #endif
 }

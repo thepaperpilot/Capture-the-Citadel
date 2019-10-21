@@ -11,24 +11,24 @@ public class Expression
         DAMAGE
     }
     
-    public enum Modifier {
+    public enum Modifiers {
         ADD,
         MULTIPLY
     }
 
     
-    [HorizontalGroup("Expression"), HideLabel, ValueDropdown("Modifiers")]
-    public Modifier modifier;
+    [HorizontalGroup("Expression"), HideLabel, ValueDropdown("GetModifiers")]
+    public Modifiers modifier;
     [HorizontalGroup("Expression"), HideLabel]
     public int amount;
     [HorizontalGroup("Expression"), HideLabel]
     public Effects effect;
 
 #if UNITY_EDITOR
-    private static IEnumerable Modifiers = new ValueDropdownList<Modifier>()
+    private static IEnumerable GetModifiers = new ValueDropdownList<Modifiers>()
     {
-        { "+", Modifier.ADD },
-        { "*", Modifier.MULTIPLY }
+        { "+", Modifiers.ADD },
+        { "*", Modifiers.MULTIPLY }
     };
 #endif
 }

@@ -6,12 +6,12 @@ using UnityEngine;
 [Serializable]
 public class CardAction : CombatAction
 {
-    public enum TARGET {
+    public enum Targets {
         PLAYER,
         ENEMY,
         ALL_ENEMIES
     }
 
     [EnumToggleButtons]
-    public TARGET target;
+    public Targets target;
 }

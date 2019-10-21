@@ -7,12 +7,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Statuses/Generic Status")]
 public class AbstractStatus : ScriptableObject
 {
-    public enum Type {
+    public enum Types {
         PASSIVE,
         ACTIVE
     }
 
-    public enum Trigger {
+    public enum Triggers {
         TURN_START,
         DAMAGE_DEALT,
         DAMAGE_TAKEN
@@ -23,12 +23,12 @@ public class AbstractStatus : ScriptableObject
 
     [BoxGroup("Status Type"), PropertySpace(0, 5)]
     [HideLabel, EnumToggleButtons]
-    public Type type;
+    public Types type;
 
-    [ShowIfGroup("Status Type/passive", MemberName="type", Value=Type.PASSIVE), InlineProperty, HideLabel]
+    [ShowIfGroup("Status Type/passive", MemberName="type", Value=Types.PASSIVE), InlineProperty, HideLabel]
     public Expression expression;
 
-    [ShowIfGroup("Status Type/active", MemberName="type", Value=Type.ACTIVE), InlineProperty, HideLabel]
+    [ShowIfGroup("Status Type/active", MemberName="type", Value=Types.ACTIVE), InlineProperty, HideLabel]
     public ActiveStatus activeStatus;
 
     [HideInInspector]
