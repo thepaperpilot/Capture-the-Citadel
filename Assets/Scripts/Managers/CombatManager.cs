@@ -66,4 +66,8 @@ public class CombatManager : MonoBehaviour
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
         }
     }
+
+    public bool IsPlayerTurn() {
+        return currentTurn == player;
+    }
 }
