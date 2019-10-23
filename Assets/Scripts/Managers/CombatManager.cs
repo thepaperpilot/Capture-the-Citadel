@@ -8,7 +8,7 @@ public class CombatManager : MonoBehaviour
     public static CombatManager Instance;
 
     [HideInPlayMode]
-    public CombatantController player;
+    public PlayerController player;
     [HideInInspector]
     public CombatantController[] enemies;
 
@@ -28,6 +28,7 @@ public class CombatManager : MonoBehaviour
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            CardsManager.Instance.controller = player;
         } else {
             Destroy(this);
         }
@@ -37,7 +38,8 @@ public class CombatManager : MonoBehaviour
         this.combat = combat;
         combatants.Clear();
         combatants.Add(player);
-        player.transform.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+        player.transform.parent.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+        CardsManager.Instance.ResetDeck();
         enemies = new CombatantController[combat.enemies.Length];
         for (int i = 0; i < combat.enemies.Length; i++) {
             AbstractEnemy enemy = combat.enemies[i];

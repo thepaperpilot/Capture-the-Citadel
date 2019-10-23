@@ -28,4 +28,8 @@ MonoBehaviour:
     decaysAfterUse:
       isDecaying: 1
       amount: 1
+    decaysWhenHit:
+      isDecaying: 0
+      amount: 1
+    stacks: 0
   combatant: {fileID: 0}

@@ -15,6 +15,7 @@ public class CardsManager : SerializedMonoBehaviour
     [Space, HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public  List<AbstractCard> deck;
+    public int handSize = 5;
 
     [Title("Combat")]
     [Space, HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
@@ -26,6 +27,9 @@ public class CardsManager : SerializedMonoBehaviour
     [HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public List<AbstractCard> discards;
+
+    [HideInInspector]
+    public PlayerController controller;
 
     private void Awake() {
         if (Instance == null) {
@@ -39,13 +43,13 @@ public class CardsManager : SerializedMonoBehaviour
     private void Start() {
         SceneManager.sceneLoaded += (scene, mode) => ResetDeck();
         deck = new List<AbstractCard>(starterDeck);
-        ResetDeck();
     }
 
-    private void ResetDeck() {
+    public void ResetDeck() {
         hand = new List<AbstractCard>();
         drawPile = new List<AbstractCard>(deck);
         discards = new List<AbstractCard>();
+        ActionsManager.Instance.AddToTop(new DrawAction(handSize));
     }
 
     public IEnumerator Draw(int amount) {
@@ -53,8 +57,9 @@ public class CardsManager : SerializedMonoBehaviour
             ActionsManager.Instance.AddToTop(new DrawAction(amount - drawPile.Count()));
             ActionsManager.Instance.AddToTop(new ShuffleDiscardsAction());
         }
-        hand.AddRange(drawPile.Take(Mathf.Max(amount, drawPile.Count())));
-        yield return null;
+        IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(Mathf.Max(amount, drawPile.Count()));
+        hand.AddRange(cardsToDraw);
+        yield return controller.Draw(cardsToDraw);
     }
 
     public IEnumerator Discard(AbstractCard card) {
