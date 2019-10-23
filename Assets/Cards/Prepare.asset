@@ -20,6 +20,6 @@ MonoBehaviour:
   actions:
   - type: 3
     status: {fileID: 11400000, guid: 524275595e50b88409d0d0b786cfebb8, type: 2}
-    amount: 0
+    amount: 1
     targets: []
     target: 0

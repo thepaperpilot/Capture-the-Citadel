@@ -23,6 +23,10 @@ public class CombatAction : AbstractAction
     // Targets must be set before adding this action to the ActionsManager
     public CombatantController[] targets;
 
+    protected virtual int GetAmount() {
+        return amount;
+    }
+
     public IEnumerator Run() {
         foreach (CombatantController controller in targets) {
             switch (type) {

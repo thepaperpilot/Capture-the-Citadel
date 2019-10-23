@@ -21,17 +21,20 @@ MonoBehaviour:
     moves:
     - actions:
       - type: 3
-        target: 0
-        status: {fileID: 0}
+        status: {fileID: 11400000, guid: 524275595e50b88409d0d0b786cfebb8, type: 2}
         amount: 0
+        targets: []
+        target: 0
       - type: 2
-        target: 0
         status: {fileID: 0}
         amount: 0
+        targets: []
+        target: 0
       - type: 0
-        target: 0
         status: {fileID: 0}
         amount: 0
+        targets: []
+        target: 0
       moveDirection: 0
   conditionalStrategyChanges:
   - condition: 0
@@ -41,8 +44,9 @@ MonoBehaviour:
       moves:
       - actions:
         - type: 0
-          target: 0
           status: {fileID: 0}
           amount: 0
+          targets: []
+          target: 0
         moveDirection: 0
     returnAfter: 0

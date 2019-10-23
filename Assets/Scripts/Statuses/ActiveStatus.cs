@@ -19,9 +19,24 @@ public class ActiveStatus : CombatAction
     public bool affectsSelf = true;
     [SerializeField]
     private Decay decaysAfterUse;
+    [SerializeField, HideIf("trigger", Triggers.DAMAGE_TAKEN)]
+    private Decay decaysWhenHit;
 
-    public int GetDecayedAmount(int currentAmount) {
+    // Variable used for temporarily setting the amount of stacks before adding the
+    // action to the queue
+    [HideInInspector]
+    public int stacks;
+
+    public int GetPostUseAmount(int currentAmount) {
         return decaysAfterUse.isDecaying ? currentAmount - decaysAfterUse.amount : currentAmount;
+    }
+
+    public int GetPostHitAmount(int currentAmount) {
+        return decaysWhenHit.isDecaying ? currentAmount - decaysWhenHit.amount : currentAmount;
+    }
+
+    protected override int GetAmount() {
+        return amount * stacks;
     }
 
     [Serializable, Toggle("isDecaying")]

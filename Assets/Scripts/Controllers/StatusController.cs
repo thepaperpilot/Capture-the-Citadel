@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,20 +8,18 @@ public class StatusController : MonoBehaviour
 {
     private CombatantController combatant;
 
+    readonly private Dictionary<AbstractStatus, int> statuses = new Dictionary<AbstractStatus, int>();
+
     private void Awake() {
         combatant = GetComponent<CombatantController>();
     }
 
-    readonly public List<AbstractStatus> statuses = new List<AbstractStatus>();
-
     private void ResetStatuses(Scene scene, LoadSceneMode mode) {
-        statuses.RemoveRange(0, statuses.Count);
+        statuses.Clear();
     }
 
     public void AddStatus(AbstractStatus status, int stacks = 1) {
-        // TODO status effect stacks
-        // (and make stacks of multipliers just increase the multiplier)
-        statuses.Add(status);
+        statuses[status] = (statuses.ContainsKey(status) ? statuses[status] : 0) + stacks;
     }
 
     public void RemoveStatus(AbstractStatus status) {
@@ -43,37 +40,61 @@ public class StatusController : MonoBehaviour
 
     public void OnAttacked(CombatantController attacker) {
         OnTrigger(ActiveStatus.Triggers.DAMAGE_TAKEN, new CombatantController[] { attacker });
+
+        // Handle statuses that decay when damage taken
+        IEnumerable<KeyValuePair<AbstractStatus, int>> pairs = statuses.
+            Where(status => status.Key.type == AbstractStatus.Types.ACTIVE &&
+                  status.Key.activeStatus.trigger != ActiveStatus.Triggers.DAMAGE_TAKEN);
+        foreach (KeyValuePair<AbstractStatus, int> pair in pairs) {
+            int newAmount = pair.Key.activeStatus.GetPostHitAmount(pair.Value);
+            if (newAmount == 0)
+                statuses.Remove(pair.Key);
+            else
+                statuses[pair.Key] = newAmount;
+        }
     }
 
     private int GetEffectValue(int baseValue, Expression.Effects effect) {
         int value = baseValue;
-        IEnumerable<Expression> expressions = statuses.
-            Where(status => status.type == AbstractStatus.Types.PASSIVE).
-            Select(status => status.expression).
-            Where(expression => expression.effect == effect);
+        IEnumerable<KeyValuePair<AbstractStatus, int>> pairs = statuses.
+            Where(status => status.Key.type == AbstractStatus.Types.PASSIVE &&
+                  status.Key.expression.effect == effect);
     
-        foreach (Expression expression in expressions.Where(expression => expression.modifier == Expression.Modifiers.ADD)) {
-            value += expression.amount;
+        foreach (KeyValuePair<AbstractStatus, int> pair in
+            pairs.Where(expression => expression.Key.expression.modifier == Expression.Modifiers.ADD)) {
+            value += pair.Key.expression.amount * pair.Value;
         }
-        foreach (Expression expression in expressions.Where(expression => expression.modifier == Expression.Modifiers.MULTIPLY)) {
-            value *= expression.amount;
+        foreach (KeyValuePair<AbstractStatus, int> pair in
+            pairs.Where(expression => expression.Key.expression.modifier == Expression.Modifiers.MULTIPLY)) {
+            // Set up so that stacks add to the multiplier additively
+            // e.g. if the multiplier is 2, then 1 stack is 2x, 2 stacks is 3x, 5 stacks is 6x
+            // e.g. if the multiplier is 1.1, then 1 stack is 1.1x, 2 stacks is 1.2x, 5 stacks is 1.5x
+            // *Different* multiplying statuses will still apply multiplicatively, though
+            value *= 1 + (pair.Key.expression.amount - 1) * pair.Value;
         }
 
         return value;
     }
 
     private void OnTrigger(ActiveStatus.Triggers trigger, CombatantController[] others) {
-        IEnumerable<ActiveStatus> activeStatuses = statuses.
-            Where(status => status.type == AbstractStatus.Types.ACTIVE).
-            Select(status => status.activeStatus).
-            Where(activeStatus => activeStatus.trigger == trigger);
+        IEnumerable<KeyValuePair<AbstractStatus, int>> pairs = statuses.
+            Where(status => status.Key.type == AbstractStatus.Types.ACTIVE &&
+                  status.Key.activeStatus.trigger == trigger);
         
-        foreach (ActiveStatus activeStatus in activeStatuses) {
-            if (activeStatus.affectsSelf)
-                activeStatus.targets = new CombatantController[] { combatant };
+        foreach (KeyValuePair<AbstractStatus, int> pair in pairs) {
+            if (pair.Key.activeStatus.affectsSelf)
+                pair.Key.activeStatus.targets = new CombatantController[] { combatant };
             else
-                activeStatus.targets = others;
+                pair.Key.activeStatus.targets = others;
+            pair.Key.activeStatus.stacks = pair.Value;
+            
+            int newAmount = pair.Key.activeStatus.GetPostUseAmount(pair.Value);
+            if (newAmount == 0)
+                statuses.Remove(pair.Key);
+            else
+                statuses[pair.Key] = newAmount;
         }
-        ActionsManager.Instance.AddToTop(activeStatuses.ToArray());
+
+        ActionsManager.Instance.AddToTop(pairs.Select(p => p.Key.activeStatus).ToArray());
     }
 }
