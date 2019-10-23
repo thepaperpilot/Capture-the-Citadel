@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
+    SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -57,7 +57,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
+  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
+  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   deck: []
+  handSize: 5
   hand: []
   drawPile: []
   discards: []
+  controller: {fileID: 0}

@@ -57,7 +57,7 @@ public class CardsManager : SerializedMonoBehaviour
             ActionsManager.Instance.AddToTop(new DrawAction(amount - drawPile.Count()));
             ActionsManager.Instance.AddToTop(new ShuffleDiscardsAction());
         }
-        IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(Mathf.Max(amount, drawPile.Count()));
+        IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(Mathf.Min(amount, drawPile.Count()));
         hand.AddRange(cardsToDraw);
         yield return controller.Draw(cardsToDraw);
     }

@@ -7,7 +7,7 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
 
-    [HideInPlayMode]
+    [HideInInspector]
     public PlayerController player;
     [HideInInspector]
     public CombatantController[] enemies;
@@ -18,7 +18,6 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Transform[] enemySpawnPoints;
     [Space, HideInEditorMode]
     [SerializeField] private CombatantController currentTurn;
-
 
     private AbstractCombat combat;
 
@@ -37,8 +36,9 @@ public class CombatManager : MonoBehaviour
     public void StartCombat(AbstractCombat combat) {
         this.combat = combat;
         combatants.Clear();
+        player = FindObjectOfType<PlayerController>();
         combatants.Add(player);
-        player.transform.parent.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+        player.playArea.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
         CardsManager.Instance.ResetDeck();
         enemies = new CombatantController[combat.enemies.Length];
         for (int i = 0; i < combat.enemies.Length; i++) {
@@ -54,6 +54,7 @@ public class CombatManager : MonoBehaviour
         }
         // TODO add actions for relics and start the player turn after that
         currentTurn = player;
+        ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));
     }
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
@@ -64,6 +65,8 @@ public class CombatManager : MonoBehaviour
             ActionsManager.Instance.AddToTop(new EnemyTurnAction(currentTurn as EnemyController));
             // Add this so that the enemy turn action can add more actions to top, and their turn will end once those finish
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
+        } else {
+            ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));
         }
     }
 

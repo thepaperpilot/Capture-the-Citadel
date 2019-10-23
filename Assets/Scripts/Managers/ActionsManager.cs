@@ -41,6 +41,7 @@ public class ActionsManager : SerializedMonoBehaviour
 
     private void NextAction() {
         AbstractAction action = actions.First();
+        Debug.Log("Running action: " + action);
         actions.RemoveAt(0);
         acting = true;
         StartCoroutine(RunAction(action));
