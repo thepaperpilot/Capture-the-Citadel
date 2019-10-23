@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2573169198504881267}
   m_Layer: 0
-  m_Name: Duel Link
+  m_Name: Duel Disk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
