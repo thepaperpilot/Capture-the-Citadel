@@ -8,6 +8,8 @@ TagManager:
   - projectile
   - FxTemporaire
   - TeleportIgnore
+  - Card
+  - Grabbable
   layers:
   - Default
   - TransparentFX
