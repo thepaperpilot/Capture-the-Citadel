@@ -1,46 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Cards/Generic Card")]
 public class AbstractCard : ScriptableObject
 {
-    public enum CARD_RARITY {
+    public enum Rarities {
         COMMON,
         UNCOMMON,
         RARE
     }
 
-    public enum EFFECT_TYPE {
-        DAMAGE,
-        HEAL,
-        DRAW,
-        STATUS
-    }
-
-    public enum EFFECT_TARGET {
-        PLAYER,
-        ENEMY,
-        ALL_ENEMIES
-    }
-
-    [Serializable]
-    public struct Effect {
-        [EnumToggleButtons]
-        public EFFECT_TYPE type;
-        [EnumToggleButtons]
-        public EFFECT_TARGET target;
-        [ShowIf("type", EFFECT_TYPE.STATUS)]
-        public AbstractStatus status;
-        public int amount;
-    }
-
     [Space, HorizontalGroup("Split", 100)]
     [HideInInlineEditors, HideLabel, PreviewField(100), OnValueChanged("DrawPreview")]
     public Material image;
-    [Space, VerticalGroup("Split/Properties")]
+    [Space, VerticalGroup("Split/Properties"), Delayed]
     [HideInInlineEditors, InfoBox("Note: Text components aren't rendering in the preview, so you won't see the name or description :(")]
     // TODO if you can make a function run when the field loses focus, make it rename the scriptable object file as per https://answers.unity.com/questions/339997/change-file-name-in-a-scriptable-object.html
     new public string name;
@@ -51,9 +28,9 @@ public class AbstractCard : ScriptableObject
     [HideInInlineEditors, Range(0, 5), OnValueChanged("DrawPreview")]
     public int energyCost;
     [HideInInlineEditors, EnumToggleButtons, OnValueChanged("DrawPreview")]
-    public CARD_RARITY rarity;
+    public Rarities rarity;
     [HideInInlineEditors, Space]
-    public Effect[] effects;
+    public CardAction[] actions;
 #if UNITY_EDITOR
     [OnInspectorGUI("CheckPreview"), ShowInInspector, HideLabel, InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden), Space]
     private GameObject preview;
@@ -69,6 +46,7 @@ public class AbstractCard : ScriptableObject
     
     [HideInInlineEditors, Button("Regenerate Preview")]
     private void DrawPreview() {
+        if (name == "") return;
         GameObject temp = UnityEditor.PrefabUtility.LoadPrefabContents("Assets/Prefabs/Card.prefab");
         temp.GetComponent<CardController>().Setup(this);
         preview = null;
@@ -78,19 +56,15 @@ public class AbstractCard : ScriptableObject
 #endif
 
     public void Play() {
-        ActionsManager.Instance.AddToBottom(new PlayCardAction(this));
-    }
-
-    public class PlayCardAction : AbstractAction {
-        private AbstractCard card;
-
-        public PlayCardAction(AbstractCard card) {
-            this.card = card;
-        }
-
-        public override IEnumerator Run() {
-            // TODO iterate through each effect
-            yield return null;
+        if (actions.Any(action => action.target == CardAction.Targets.ENEMY)) {
+            // TODO enemy selection system
+        } else {
+            foreach (CardAction action in actions) {
+                action.targets = action.target == CardAction.Targets.PLAYER ?
+                    new CombatantController[] { CombatManager.Instance.player } :
+                    CombatManager.Instance.enemies;
+            }
+            ActionsManager.Instance.AddToTop(actions);
         }
     }
 }

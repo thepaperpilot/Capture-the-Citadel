@@ -44,15 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
+    SerializedFormat: 0
+    SerializedBytes: 01000d00000072616e646f6d416374696f6e732f0000000000210000004162737472616374416374696f6e5b5d2c20417373656d626c792d435368617270000000000601000000000000000c000000000705010007000000616374696f6e732f01000000004e00000053797374656d2e436f6c6c656374696f6e732e47656e657269632e4c69737460315b5b4162737472616374416374696f6e2c20417373656d626c792d4353686172705d5d2c206d73636f726c6962010000000600000000000000000705
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 434dde3309efbc24596005ef141a07d7, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  randomActions:
-  - {fileID: 11400000, guid: 434dde3309efbc24596005ef141a07d7, type: 2}
-  actions: []
   acting: 0

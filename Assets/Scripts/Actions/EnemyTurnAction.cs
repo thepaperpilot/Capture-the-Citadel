@@ -11,8 +11,9 @@ public class EnemyTurnAction : AbstractAction
         this.controller = controller;
     }
 
-    public override IEnumerator Run()
+    public IEnumerator Run()
     {
+        controller.PlayTurn();
         yield return null;
     }
 }

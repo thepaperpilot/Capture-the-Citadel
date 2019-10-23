@@ -9,10 +9,9 @@ public class DrawAction : AbstractAction
 
     public DrawAction(int amount, AbstractAction[] chainedEvents = null) {
         this.amount = amount;
-        this.chainedEvents = chainedEvents;
     }
 
-    public override IEnumerator Run()
+    public IEnumerator Run()
     {
         yield return CardsManager.Instance.Draw(amount);
     }

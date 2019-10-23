@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EndTurnAction : AbstractAction
 {
-    public override IEnumerator Run()
+    public IEnumerator Run()
     {
         CombatManager.Instance.EndTurn();
         yield return null;

@@ -4,9 +4,10 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Combats/Generic Combat")]
-public class AbstractCombat : AbstractAction
+public class AbstractCombat : ScriptableObjectAction
 {
-    [AssetSelector(IsUniqueList=false, Paths="Assets/Enemies", FlattenTreeView=true), InlineEditor(InlineEditorObjectFieldModes.Foldout), Space]
+    [AssetSelector(IsUniqueList=false, Paths="Assets/Enemies", FlattenTreeView=true)]
+    [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     public AbstractEnemy[] enemies;
 
     [BoxGroup("Rewards")]
