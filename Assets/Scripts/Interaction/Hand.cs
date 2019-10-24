@@ -33,8 +33,8 @@ public class Hand : MonoBehaviour
 
     [SerializeField] Transform grabTarget;
     [SerializeField] Transform pinchTarget;
-    [SerializeField] float grabRadius = 0.2f;
-    [SerializeField] float pinchRadius = 0.1f;
+    [SerializeField] float grabRadius = 0.05f;
+    [SerializeField] float pinchRadius = 0.02f;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +50,15 @@ public class Hand : MonoBehaviour
             triggerAxis = "VRTK_Axis9_LeftTrigger";
             gripAxis = "VRTK_Axis11_LeftGrip";
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(grabTarget.position, grabRadius);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(pinchTarget.position, pinchRadius);
     }
 
     // Update is called once per frame
@@ -93,7 +102,7 @@ public class Hand : MonoBehaviour
                 }
                 break;
             case HandAnimPose.HOLDING:
-                if (gripPressed || heldObject == null)
+                if (gripPressed || heldObject == null || heldObject.transform.parent != transform)
                 {
                     Release();
                     if (inPointArea)
@@ -118,7 +127,7 @@ public class Hand : MonoBehaviour
                 }
                 break;
             case HandAnimPose.PINCH:
-                if (!triggerPressed || heldObject == null)
+                if (!triggerPressed)
                 {
                     Release();
                     if (inPointArea)
@@ -136,7 +145,6 @@ public class Hand : MonoBehaviour
 
     public void TriggerButtonChanged(bool pressed)
     {
-        Debug.Log("Pressed " + triggerAxis);
         triggerPressed = pressed;
     }
 
@@ -162,7 +170,7 @@ public class Hand : MonoBehaviour
                 Release();
                 heldObject = collider.gameObject;
                 collider.transform.SetParent(transform);
-                heldObject.transform.localPosition = Vector3.zero;
+                heldObject.transform.localPosition = grabTarget.localPosition;
                 heldObject.transform.localRotation = Quaternion.identity;
                 Rigidbody childRB = heldObject.GetComponent<Rigidbody>();
                 if(childRB != null)
@@ -201,6 +209,22 @@ public class Hand : MonoBehaviour
             }
             heldObject.transform.SetParent(null);
             heldObject = null;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PointingZone"))
+        {
+            inPointArea = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("PointingZone"))
+        {
+            inPointArea = false;
         }
     }
 }

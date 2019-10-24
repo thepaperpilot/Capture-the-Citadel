@@ -88,7 +88,7 @@ MeshCollider:
   m_GameObject: {fileID: 2646607140197997935}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -308,6 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3064187619262401227}
   - component: {fileID: 7172369068257175043}
+  - component: {fileID: 367139311085832510}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -356,6 +357,19 @@ MonoBehaviour:
   common: {fileID: 2100000, guid: ca00652da32758d48b1ac8612a84dee6, type: 2}
   uncommon: {fileID: 2100000, guid: d80afa0d89847a046a2e25a1bf2639ea, type: 2}
   rare: {fileID: 2100000, guid: 4b48b8683f498724e8ca2bd1e9d43845, type: 2}
+--- !u!65 &367139311085832510
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4525775403315130319}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1, z: 0.075}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4831095058850871430
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +458,7 @@ MeshCollider:
   m_GameObject: {fileID: 4831095058850871430}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -537,7 +551,7 @@ MeshCollider:
   m_GameObject: {fileID: 4902487702848792751}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -835,7 +849,7 @@ MeshCollider:
   m_GameObject: {fileID: 5230124365182461888}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
