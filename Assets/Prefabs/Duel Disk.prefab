@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4484726925636894547}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: -0, z: -3.5}
+  m_LocalPosition: {x: 0, y: -0, z: -7.5}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 2573169198504881267}
@@ -310,8 +310,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   back: {fileID: 8223417867317328053}
   sides: {fileID: 4688840066002926025}
+  cardPrefab: {fileID: 4525775403315130319, guid: d577bd86fccc5fc47be092c2e3d80a57,
+    type: 3}
+  hand: {fileID: 1396087813960823047}
   slidingDuration: 0.5
   slidingDistance: 4
+  timeBetweenDraws: 0.25
+  timeToRearrange: 0.25
+  arcRadius: 2.5
+  arcLength: 100
+  maxArcDistance: 15
   deckSize: 0
 --- !u!114 &2659370527528635578
 MonoBehaviour:
@@ -325,9 +333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df626578979a3342b0350914ae492a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 4525775403315130319, guid: d577bd86fccc5fc47be092c2e3d80a57,
-    type: 3}
-  hand: {fileID: 1396087813960823047}
   playArea: {fileID: 2573169198504881267}
 --- !u!1 &6117525302326413755
 GameObject:

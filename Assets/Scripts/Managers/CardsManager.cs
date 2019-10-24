@@ -48,6 +48,7 @@ public class CardsManager : SerializedMonoBehaviour
     public void ResetDeck() {
         hand = new List<AbstractCard>();
         drawPile = new List<AbstractCard>(deck);
+        Shuffle(drawPile);
         discards = new List<AbstractCard>();
         ActionsManager.Instance.AddToTop(new DrawAction(handSize));
     }
@@ -59,7 +60,7 @@ public class CardsManager : SerializedMonoBehaviour
         }
         IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(Mathf.Min(amount, drawPile.Count()));
         hand.AddRange(cardsToDraw);
-        yield return controller.Draw(cardsToDraw);
+        yield return controller.Draw(cardsToDraw.ToArray());
     }
 
     public IEnumerator Discard(AbstractCard card) {
@@ -70,16 +71,20 @@ public class CardsManager : SerializedMonoBehaviour
 
     [HideInEditorMode, Button(ButtonSizes.Medium)]
     public IEnumerator ShuffleDiscards() {
-        int n = discards.Count;
-        while (n > 1) {
-            n--;
-            int k = Random.Range(0, n + 1);
-            AbstractCard value = discards[k];
-            discards[k] = discards[n];
-            discards[n] = value;
-        }
+        Shuffle(discards);
         drawPile.AddRange(discards);
         discards.Clear();
         yield return null;
+    }
+
+    public void Shuffle(List<AbstractCard> cards) {
+        int n = cards.Count;
+        while (n > 1) {
+            n--;
+            int k = Random.Range(0, n + 1);
+            AbstractCard value = cards[k];
+            cards[k] = cards[n];
+            cards[n] = value;
+        }
     }
 }
