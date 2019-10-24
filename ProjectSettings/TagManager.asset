@@ -10,6 +10,7 @@ TagManager:
   - TeleportIgnore
   - Card
   - Grabbable
+  - PointingZone
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - 
   - 3rd Person
-  - 
+  - Hands
   - 
   - 
   - 
