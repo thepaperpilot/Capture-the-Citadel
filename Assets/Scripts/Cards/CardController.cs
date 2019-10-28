@@ -6,24 +6,27 @@ using UnityEngine;
 
 public class CardController : MonoBehaviour
 {
-    [BoxGroup("Components")]
+    [FoldoutGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private MeshRenderer back;
-    [BoxGroup("Components")]
+    [FoldoutGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private MeshRenderer front;
-    [BoxGroup("Components")]
+    [FoldoutGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private MeshRenderer border;
-    [BoxGroup("Components")]
+    [FoldoutGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     new private TextMeshPro name;
-    [BoxGroup("Components")]
+    [FoldoutGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private SpriteRenderer image;
-    [BoxGroup("Components")]
+    [FoldoutGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private TextMeshPro description;
+    [FoldoutGroup("Components")]
+    [SerializeField, ChildGameObjectsOnly]
+    private TextMeshPro cost;
 
     [FoldoutGroup("Card Borders", true)]
     [HorizontalGroup("Card Borders/h")]
@@ -76,5 +79,6 @@ public class CardController : MonoBehaviour
         name.text = card.name;
         image.sprite = card.image;
         description.text = card.description;
+        cost.text = card.energyCost.ToString();
     }
 }
