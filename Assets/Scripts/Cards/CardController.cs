@@ -20,7 +20,7 @@ public class CardController : MonoBehaviour
     new private TextMeshPro name;
     [BoxGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
-    private MeshRenderer image;
+    private SpriteRenderer image;
     [BoxGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private TextMeshPro description;
@@ -74,7 +74,7 @@ public class CardController : MonoBehaviour
         */
 #endif
         name.text = card.name;
-        image.material = card.image;
+        image.sprite = card.image;
         description.text = card.description;
     }
 }

@@ -27,7 +27,6 @@ public class CombatManager : MonoBehaviour
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            CardsManager.Instance.controller = player;
         } else {
             Destroy(this);
         }
@@ -37,6 +36,7 @@ public class CombatManager : MonoBehaviour
         this.combat = combat;
         combatants.Clear();
         player = FindObjectOfType<PlayerController>();
+        CardsManager.Instance.controller = player;
         combatants.Add(player);
         player.playArea.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
         CardsManager.Instance.ResetDeck();
