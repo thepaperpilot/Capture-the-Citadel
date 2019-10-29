@@ -57,7 +57,7 @@ public class CombatManager : MonoBehaviour
         }
         currentTurn = player;
         RelicsManager.Instance.OnCombatStart();
-        ActionsManager.Instance.AddToBottom(new PlayerTurnAction(player));
+        ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));
     }
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
