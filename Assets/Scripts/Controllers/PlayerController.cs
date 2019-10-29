@@ -16,6 +16,10 @@ public class PlayerController : CombatantController
         deckController = GetComponent<DeckController>();
     }
 
+    public void SetupDropzones() {
+        deckController.SetupDropzones();
+    }
+
     public IEnumerator StartTurn() {
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
         yield return deckController.SlideOut();

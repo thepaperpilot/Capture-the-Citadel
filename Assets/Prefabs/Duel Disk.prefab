@@ -29,7 +29,6 @@ Transform:
   m_Children:
   - {fileID: 3180979821678271921}
   - {fileID: 2672215805398909304}
-  - {fileID: 1396087813960823047}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -149,12 +148,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4484726925636894547}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: -0, z: -7.5}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2573169198504881267}
-  m_RootOrder: 2
+  m_Father: {fileID: 2672215805398909304}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!1 &5339346431876786852
 GameObject:
@@ -281,6 +280,7 @@ Transform:
   - {fileID: 8223417867317328053}
   - {fileID: 5361327771213907012}
   - {fileID: 4688840066002926025}
+  - {fileID: 1396087813960823047}
   m_Father: {fileID: 2573169198504881267}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
@@ -312,6 +312,8 @@ MonoBehaviour:
   sides: {fileID: 4688840066002926025}
   cardPrefab: {fileID: 4525775403315130319, guid: d577bd86fccc5fc47be092c2e3d80a57,
     type: 3}
+  dropzonePrefab: {fileID: 3959627023858434066, guid: edd60cf61f192354282b6663e074c819,
+    type: 3}
   hand: {fileID: 1396087813960823047}
   slidingDuration: 0.5
   slidingDistance: 4
@@ -333,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df626578979a3342b0350914ae492a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   playArea: {fileID: 2573169198504881267}
 --- !u!1 &6117525302326413755
 GameObject:

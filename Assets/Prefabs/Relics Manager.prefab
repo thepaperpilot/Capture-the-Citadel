@@ -46,3 +46,8 @@ MonoBehaviour:
   relics:
   - relic: {fileID: 11400000, guid: 5c0b5e600154a014c84d511839dc5263, type: 2}
     card: {fileID: 0}
+  allRelics:
+  - {fileID: 11400000, guid: 5c0b5e600154a014c84d511839dc5263, type: 2}
+  common: 1
+  uncommon: 0.5
+  rare: 0.1

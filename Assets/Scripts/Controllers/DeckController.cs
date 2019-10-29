@@ -13,9 +13,15 @@ public class DeckController : MonoBehaviour
     [SerializeField, ChildGameObjectsOnly]
     private Transform sides;
 
-    [SerializeField, AssetsOnly, HideInPlayMode]
+    [SerializeField, AssetList(Path="Prefabs", CustomFilterMethod="FindCardControllers")]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
+    [HideInPlayMode]
     private GameObject cardPrefab;
-    [InfoBox("This should probably be a sibling. Definitely don't make it a child")]
+    [SerializeField, AssetList(Path="Prefabs", CustomFilterMethod="FindDropZoneControllers")]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
+    [HideInPlayMode]
+    private GameObject dropzonePrefab;
+    //[Space, InfoBox("This should probably be a sibling. Definitely don't make it a child")]
     [SerializeField, SceneObjectsOnly, PropertySpace(0, 10), HideInPlayMode]
     private Transform hand;
 
@@ -47,12 +53,45 @@ public class DeckController : MonoBehaviour
 
     private Vector3 cardPosition;
     private List<CardController> cardsInHand = new List<CardController>();
+    private List<DropZoneController> dropzones = new List<DropZoneController>();
+
+    public void SetupDropzones() {
+        foreach (RelicsManager.RelicData rData in RelicsManager.Instance.relics) {
+            foreach (AbstractRelic.RelicAction action in rData.relic.triggers.Where(t => t.trigger == AbstractRelic.Triggers.DROP_ZONE)) {
+                GameObject dropzone = Instantiate(dropzonePrefab, hand);
+                DropZoneController controller = dropzone.GetComponent<DropZoneController>();
+                controller.Setup(action);
+                dropzones.Add(controller);
+            }
+        }
+    }
 
     public IEnumerator SlideOut() {
         yield return MoveTo(transform, slidingDuration, transform.localPosition + Vector3.back * slidingDistance);
+        yield return RearrangeCards();
     }
     
-    public IEnumerator SlideIn() {
+    public IEnumerator SlideIn() {        
+        int numCards = cardsInHand.Count;
+        int numDropzones = dropzones.Count;
+        if (numCards > 0 || numDropzones > 0) {
+            IEnumerator[] coroutines = new IEnumerator[numCards + numDropzones];
+            for (int i = 0; i < numCards; i++) {
+                Vector3 newPosition = new Vector3(0, 0, .02f * i);
+                Quaternion newRotation = Quaternion.identity;
+                coroutines[i] = MoveTo(cardsInHand[i].transform, timeToRearrange, newPosition, newRotation);
+                StartCoroutine(coroutines[i]);
+            }
+            for (int i = 0; i < numDropzones; i++) {
+                Vector3 newPosition = new Vector3(0, 0, .02f * i);
+                Quaternion newRotation = Quaternion.identity;
+                coroutines[numCards + i] = MoveTo(dropzones[i].transform, timeToRearrange, newPosition, newRotation);
+                StartCoroutine(coroutines[numCards + i]);
+            }
+            
+            yield return new WaitForSeconds(timeToRearrange);
+        }
+
         yield return MoveTo(transform, slidingDuration, transform.localPosition + Vector3.forward * slidingDistance);
     }
 
@@ -83,20 +122,32 @@ public class DeckController : MonoBehaviour
 
     private IEnumerator RearrangeCards() {
         int numCards = cardsInHand.Count;
-        float arcDistance = Mathf.Min(maxArcDistance, arcLength / numCards) * Mathf.Deg2Rad;
+        int numDropzones = dropzones.Count;
+        if (numCards == 0 && numDropzones == 0)
+            yield break;
 
-        IEnumerator[] coroutines = new IEnumerator[numCards];
-        float angle = Mathf.PI / 2 - arcDistance * (numCards - 1) / 2;
-        for (int i = 0; i < numCards; i++, angle += arcDistance) {
+        float cardArcDistance = Mathf.Min(maxArcDistance, arcLength / numCards) * Mathf.Deg2Rad;
+        float dropzoneArcDistance = Mathf.Min(maxArcDistance, arcLength / numDropzones) * Mathf.Deg2Rad;
+
+        IEnumerator[] coroutines = new IEnumerator[numCards + numDropzones];
+        float angle = Mathf.PI / 2 - cardArcDistance * (numCards - 1) / 2;
+        for (int i = 0; i < numCards; i++, angle += cardArcDistance) {
             Vector3 newPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * arcRadius;
             newPosition.z += .02f * i;
             Quaternion newRotation = Quaternion.LookRotation(-hand.right, newPosition);
             coroutines[i] = MoveTo(cardsInHand[i].transform, timeToRearrange, newPosition, newRotation);
             StartCoroutine(coroutines[i]);
         }
-        
-        while (!coroutines.Any(e => e == null))
-            yield return null;
+        angle = Mathf.PI / 2 - dropzoneArcDistance * (numDropzones - 1) / 2;
+        for (int i = 0; i < numDropzones; i++, angle += dropzoneArcDistance) {
+            Vector3 newPosition = new Vector3(Mathf.Cos(angle), -Mathf.Sin(angle), 0) * arcRadius;
+            newPosition.z += .02f * i;
+            Quaternion newRotation = Quaternion.LookRotation(-hand.right, -newPosition);
+            coroutines[numCards + i] = MoveTo(dropzones[i].transform, timeToRearrange, newPosition, newRotation);
+            StartCoroutine(coroutines[numCards + i]);
+        }
+
+        yield return new WaitForSeconds(timeToRearrange);            
     }
 
     private IEnumerator MoveTo(Transform transform, float duration, Vector3 newPosition, Quaternion? newRotation = null) {
@@ -129,6 +180,14 @@ public class DeckController : MonoBehaviour
 
     private void RearrangeHand() {
         StartCoroutine(RearrangeCards());
+    }
+
+    private bool FindCardControllers(GameObject obj) {
+        return obj.GetComponentInChildren<CardController>() != null;
+    }
+
+    private bool FindDropZoneControllers(GameObject obj) {
+        return obj.GetComponentInChildren<DropZoneController>() != null;
     }
 #endif
 }

@@ -42,6 +42,7 @@ public class CombatManager : MonoBehaviour
         CardsManager.Instance.controller = player;
         combatants.Add(player);
         player.playArea.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+        player.SetupDropzones();
         CardsManager.Instance.ResetDeck();
         enemies = new CombatantController[combat.enemies.Length];
         for (int i = 0; i < combat.enemies.Length; i++) {

@@ -78,9 +78,11 @@ public class AbstractRelic : ScriptableObject
         [BoxGroup("Trigger")]
         [ShowIf("trigger", Triggers.DROP_ZONE), PreviewField(50)]
         public Sprite sprite;
+        [BoxGroup("Trigger")]
+        [ShowIf("trigger", Triggers.DROP_ZONE)]
+        public Color color;
 
         [BoxGroup("Effect")]
-        [EnumToggleButtons]
         public Effects effect;
         [BoxGroup("Effect")]
         [HideIf("@effect == Effects.AFFECT_CARD || effect == Effects.DRAW")]
