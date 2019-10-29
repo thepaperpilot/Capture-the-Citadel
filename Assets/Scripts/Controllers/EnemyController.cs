@@ -9,8 +9,6 @@ public class EnemyController : CombatantController
     [SerializeField, HideInEditorMode]
     private int turn = 0;
     [SerializeField, HideInEditorMode]
-    private int health = 0;
-    [SerializeField, HideInEditorMode]
     private AbstractEnemy.Strategy strategy;
     private AbstractEnemy.StrategyChange strategyChange;
     [SerializeField, HideInEditorMode]

@@ -6,6 +6,21 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Combats/Generic Combat")]
 public class AbstractCombat : ScriptableObjectAction
 {
+    public enum RelicRewards {
+        NO_RELIC,
+        RANDOM_RELIC,
+        SET_RARITY,
+        SET_RELIC
+    }
+
+    private IEnumerable Rarities = new ValueDropdownList<AbstractRelic.Rarities> {
+        { "Common", AbstractRelic.Rarities.COMMON },
+        { "Uncommon", AbstractRelic.Rarities.UNCOMMON },
+        { "Rare", AbstractRelic.Rarities.RARE },
+        { "Boss", AbstractRelic.Rarities.BOSS },
+        { "Shop", AbstractRelic.Rarities.SHOP }
+    };
+    
     [AssetSelector(IsUniqueList=false, Paths="Assets/Enemies", FlattenTreeView=true)]
     [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     public AbstractEnemy[] enemies;
@@ -14,9 +29,11 @@ public class AbstractCombat : ScriptableObjectAction
     [MinMaxSlider(0, 200, true)]
     public Vector2Int goldRange = new Vector2Int(50, 75);
     [BoxGroup("Rewards")]
-    public bool hasRelic = false;
-    [BoxGroup("Rewards"), ShowIf("@hasRelic")]
-    public bool hasRareRelic = false;
+    public RelicRewards relicReward;
+    [BoxGroup("Rewards"), ShowIf("relicReward", RelicRewards.SET_RARITY), ValueDropdown("Rarities")]
+    public AbstractRelic.Rarities relicRarity;
+    [BoxGroup("Rewards"), ShowIf("relicReward", RelicRewards.SET_RELIC), AssetList, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+    public AbstractRelic relic;
 
     public override IEnumerator Run()
     {

@@ -19,6 +19,16 @@ public class RelicsManager : MonoBehaviour
 
     public List<RelicData> relics = new List<RelicData>();
 
+    [AssetList(AutoPopulate=true)]
+    public AbstractRelic[] allRelics;
+
+    [BoxGroup("Relic weights")]
+    public float common = 1;
+    [BoxGroup("Relic weights")]
+    public float uncommon = .5f;
+    [BoxGroup("Relic weights")]
+    public float rare = .1f;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -49,11 +59,39 @@ public class RelicsManager : MonoBehaviour
     }
 
     public void GetNewRelic() {
-        // TODO
+        IEnumerable<AbstractRelic> validRelics = allRelics.Where(r => !relics.Any(rData => rData.relic == r));
+        float total = validRelics.Sum(r =>
+            r.rarity == AbstractRelic.Rarities.COMMON ? common :
+            r.rarity == AbstractRelic.Rarities.UNCOMMON ? uncommon :
+            r.rarity == AbstractRelic.Rarities.RARE ? rare : 0);
+
+        float target = UnityEngine.Random.Range(0, total);
+        float current = 0;
+        AbstractRelic relic = validRelics.SkipWhile(r => {
+            float next = current + (
+                r.rarity == AbstractRelic.Rarities.COMMON ? common :
+                r.rarity == AbstractRelic.Rarities.UNCOMMON ? uncommon :
+                r.rarity == AbstractRelic.Rarities.RARE ? rare : 0);
+            return next > target;
+        }).FirstOrDefault();
+        if (relic != null) {
+            relics.Add(new RelicData() {
+                relic = validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1))
+            });
+        } else {
+            // TODO
+        }
     }
 
     public void GetNewRelic(AbstractRelic.Rarities rarity) {
-        // TODO
+        IEnumerable<AbstractRelic> validRelics = allRelics.Where(r => r.rarity == rarity && !relics.Any(rData => rData.relic == r));
+        if (validRelics.Count() > 0) {
+            relics.Add(new RelicData() {
+                relic = validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1))
+            });
+        } else {
+            // TODO
+        }
     }
 
     // TODO refactor to make this nicer lmao

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -71,6 +72,30 @@ public class CombatManager : MonoBehaviour
         } else {
             RelicsManager.Instance.OnTurnStart(turn);
             ActionsManager.Instance.AddToBottom(new PlayerTurnAction(player));
+        }
+    }
+
+    public void KillEnemy(CombatantController enemy) {
+        combatants.Remove(enemy);
+        if (combatants.Count == 1 && combatants[0] == player)
+            EndCombat();
+    }
+
+    public void EndCombat() {
+        ActionsManager.Instance.AddToTop(new GainGoldAction(Random.Range(combat.goldRange.x, combat.goldRange.y)));
+        switch (combat.relicReward) {
+            case AbstractCombat.RelicRewards.RANDOM_RELIC:
+                RelicsManager.Instance.GetNewRelic();
+                break;
+            case AbstractCombat.RelicRewards.SET_RARITY:
+                RelicsManager.Instance.GetNewRelic(combat.relicRarity);
+                break;
+            case AbstractCombat.RelicRewards.SET_RELIC:
+                if (!RelicsManager.Instance.relics.Any(r => r.relic == combat.relic))
+                    RelicsManager.Instance.relics.Add(new RelicsManager.RelicData() {
+                        relic = combat.relic
+                    });
+                break;
         }
     }
 
