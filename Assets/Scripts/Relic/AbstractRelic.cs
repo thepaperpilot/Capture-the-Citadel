@@ -29,7 +29,8 @@ public class AbstractRelic : ScriptableObject
     public enum Effects {
         ADD_STATUS,
         AFFECT_CARD,
-        DAMAGE
+        DAMAGE,
+        DRAW
     }
 
     public enum Targets {
@@ -80,14 +81,14 @@ public class AbstractRelic : ScriptableObject
 
         [BoxGroup("Effect")]
         [EnumToggleButtons]
-        [HideIf("@trigger == Triggers.DAMAGE_GIVEN || trigger == Triggers.DAMAGE_TAKEN")]
         public Effects effect;
         [BoxGroup("Effect")]
-        [EnumToggleButtons]
+        [HideIf("@effect == Effects.AFFECT_CARD || effect == Effects.DRAW")]
         [ShowIf("@trigger == Triggers.DAMAGE_GIVEN || trigger == Triggers.DAMAGE_TAKEN")]
         public TargetedTriggerTargets targetedEffect;
         [BoxGroup("Effect")]
-        [HideIf("effect", Effects.AFFECT_CARD)]
+        [HideIf("@effect == Effects.AFFECT_CARD || effect == Effects.DRAW")]
+        [HideIf("@trigger == Triggers.DAMAGE_GIVEN || trigger == Triggers.DAMAGE_TAKEN")]
         public Targets target;
         [BoxGroup("Effect")]
         [ShowIf("effect", Effects.ADD_STATUS), InlineEditor(InlineEditorObjectFieldModes.Foldout), AssetList]
@@ -100,9 +101,42 @@ public class AbstractRelic : ScriptableObject
         public RelicsManager.RelicData relicData;
         [HideInInspector]
         public int data;
+        [HideInInspector]
+        public AbstractCard discard;
+        [HideInInspector]
+        // Targets must be set before adding this action to the ActionsManager
+        public CombatantController[] targets;
 
         public IEnumerator Run() {
-            // TODO
+            // Make sure all conditions are met
+            if ((trigger == Triggers.TURN_START && !everyTurn) ||
+                trigger == Triggers.DAMAGE_GIVEN ||
+                trigger == Triggers.DAMAGE_TAKEN) {
+                if (data < range.x || data > range.y)
+                    yield break;
+            }
+
+            // Handle effects that only apply to the player
+            if (effect == Effects.AFFECT_CARD) {
+                // TODO
+                yield break;
+            } else if (effect == Effects.DRAW) {
+                ActionsManager.Instance.AddToTop(new DrawAction(amount));
+                yield break;
+            }
+
+            // Handle effects that can target others
+            foreach (CombatantController controller in targets) {
+                switch (effect) {
+                    case Effects.ADD_STATUS:
+                        controller.GetComponent<StatusController>().AddStatus(status, amount);
+                        break;
+                    case Effects.DAMAGE:
+                        ActionsManager.Instance.AddToTop(new HealAction(controller, -amount));
+                        break;
+                }
+            }
+            
             yield return null;
         }
     }
