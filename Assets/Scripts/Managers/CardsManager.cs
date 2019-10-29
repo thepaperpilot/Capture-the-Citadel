@@ -76,6 +76,7 @@ public class CardsManager : SerializedMonoBehaviour
         Shuffle(discards);
         drawPile.AddRange(discards);
         discards.Clear();
+        RelicsManager.Instance.OnShuffle();
         yield return null;
     }
 

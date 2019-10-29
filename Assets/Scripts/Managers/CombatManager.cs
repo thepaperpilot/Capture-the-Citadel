@@ -18,6 +18,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private Transform[] enemySpawnPoints;
     [Space, HideInEditorMode]
     [SerializeField] private CombatantController currentTurn;
+    private int turn;
 
     private AbstractCombat combat;
 
@@ -33,6 +34,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartCombat(AbstractCombat combat) {
+        turn = 0;
         this.combat = combat;
         combatants.Clear();
         player = FindObjectOfType<PlayerController>();
@@ -52,21 +54,23 @@ public class CombatManager : MonoBehaviour
                 enemies[i] = controller;
             }
         }
-        // TODO add actions for relics and start the player turn after that
         currentTurn = player;
-        ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));
+        RelicsManager.Instance.OnCombatStart();
+        ActionsManager.Instance.AddToBottom(new PlayerTurnAction(player));
     }
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void EndTurn() {
         int index = (combatants.IndexOf(currentTurn) + 1) % combatants.Count;
         currentTurn = combatants[index];
+        turn++;
         if (currentTurn != player) {
             ActionsManager.Instance.AddToTop(new EnemyTurnAction(currentTurn as EnemyController));
             // Add this so that the enemy turn action can add more actions to top, and their turn will end once those finish
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
         } else {
-            ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));
+            RelicsManager.Instance.OnTurnStart(turn);
+            ActionsManager.Instance.AddToBottom(new PlayerTurnAction(player));
         }
     }
 
