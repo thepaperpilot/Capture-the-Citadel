@@ -63,6 +63,7 @@ public class AbstractCard : ScriptableObject
                 action.targets = action.target == CardAction.Targets.PLAYER ?
                     new CombatantController[] { CombatManager.Instance.player } :
                     CombatManager.Instance.enemies;
+                action.actor = CombatManager.Instance.player;
             }
             ActionsManager.Instance.AddToTop(actions);
         }

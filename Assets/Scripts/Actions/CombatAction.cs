@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ public class CombatAction : AbstractAction
     [HideInInspector]
     // Targets must be set before adding this action to the ActionsManager
     public CombatantController[] targets;
+    [HideInInspector]
+    public CombatantController actor;
 
     protected virtual int GetAmount() {
         return amount;
@@ -31,6 +34,11 @@ public class CombatAction : AbstractAction
         foreach (CombatantController controller in targets) {
             switch (type) {
                 case TYPE.DAMAGE:
+                    if (actor == CombatManager.Instance.player && CombatManager.Instance.enemies.Contains(controller))
+                        RelicsManager.Instance.OnDamageGiven(amount, controller);
+                    else if (CombatManager.Instance.enemies.Contains(actor) && controller == CombatManager.Instance.player)
+                        RelicsManager.Instance.OnDamageTaken(amount, controller);
+
                     ActionsManager.Instance.AddToTop(new HealAction(controller, -amount));
                     break;
                 case TYPE.DRAW:

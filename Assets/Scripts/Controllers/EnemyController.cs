@@ -61,6 +61,7 @@ public class EnemyController : CombatantController
                     action.targets = new CombatantController[] { CombatManager.Instance.player };
                     break;
             }
+            action.actor = this;
         }
         ActionsManager.Instance.AddToTop(nextMove.actions);
 

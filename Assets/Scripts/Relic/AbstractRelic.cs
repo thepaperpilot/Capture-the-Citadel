@@ -132,11 +132,13 @@ public class AbstractRelic : ScriptableObject
                         controller.GetComponent<StatusController>().AddStatus(status, amount);
                         break;
                     case Effects.DAMAGE:
+                        if (controller != CombatManager.Instance.player)
+                            RelicsManager.Instance.OnDamageGiven(amount, controller);
                         ActionsManager.Instance.AddToTop(new HealAction(controller, -amount));
                         break;
                 }
             }
-            
+
             yield return null;
         }
     }
