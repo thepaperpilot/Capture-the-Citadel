@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4e47377ec7faf48a31ea5cedbfcda5, type: 3}
   m_Name: New Abstract Event
   m_EditorClassIdentifier: 
+  level: {fileID: 11400000, guid: c41976471ab400941b92124ff433d5c2, type: 2}
   title: 
   description: 
   options:

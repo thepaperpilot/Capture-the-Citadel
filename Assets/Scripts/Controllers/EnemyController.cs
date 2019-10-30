@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class EnemyController : CombatantController
 {    
-    public int maxHealth;
-
     public enum StrategyTypes {
         LOOP,
         RANDOM

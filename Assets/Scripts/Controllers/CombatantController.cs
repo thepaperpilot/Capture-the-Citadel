@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(StatusController))]
 public class CombatantController : MonoBehaviour
 {
-    [SerializeField, HideInEditorMode]
+    public int maxHealth;
+
+    [HideInEditorMode]
     public int health = 0;
 }

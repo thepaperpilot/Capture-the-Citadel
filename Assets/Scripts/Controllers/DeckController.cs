@@ -12,6 +12,9 @@ public class DeckController : MonoBehaviour
     [BoxGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
     private Transform sides;
+    [BoxGroup("Components")]
+    [SerializeField, ChildGameObjectsOnly]
+    private Transform hand;
 
     [SerializeField, AssetList(Path="Prefabs", CustomFilterMethod="FindCardControllers")]
     [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
@@ -21,9 +24,6 @@ public class DeckController : MonoBehaviour
     [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
     [HideInPlayMode]
     private GameObject dropzonePrefab;
-    //[Space, InfoBox("This should probably be a sibling. Definitely don't make it a child")]
-    [SerializeField, SceneObjectsOnly, PropertySpace(0, 10), HideInPlayMode]
-    private Transform hand;
 
     [FoldoutGroup("Advanced"), SerializeField]
     [Title("Deck")]
@@ -77,13 +77,13 @@ public class DeckController : MonoBehaviour
         if (numCards > 0 || numDropzones > 0) {
             IEnumerator[] coroutines = new IEnumerator[numCards + numDropzones];
             for (int i = 0; i < numCards; i++) {
-                Vector3 newPosition = new Vector3(0, 0, .02f * i);
+                Vector3 newPosition = new Vector3(0, 0, 0);
                 Quaternion newRotation = Quaternion.identity;
                 coroutines[i] = MoveTo(cardsInHand[i].transform, timeToRearrange, newPosition, newRotation);
                 StartCoroutine(coroutines[i]);
             }
             for (int i = 0; i < numDropzones; i++) {
-                Vector3 newPosition = new Vector3(0, 0, .02f * i);
+                Vector3 newPosition = new Vector3(0, 0, 0);
                 Quaternion newRotation = Quaternion.identity;
                 coroutines[numCards + i] = MoveTo(dropzones[i].transform, timeToRearrange, newPosition, newRotation);
                 StartCoroutine(coroutines[numCards + i]);
@@ -95,6 +95,7 @@ public class DeckController : MonoBehaviour
         yield return MoveTo(transform, slidingDuration, transform.localPosition + Vector3.forward * slidingDistance);
     }
 
+    // TODO add variable to set card width (both here and in CardController)
     public void SetDeckSize(int numCards) {
         deckSize = numCards;
         gameObject.SetActive(numCards != 0);
@@ -132,17 +133,17 @@ public class DeckController : MonoBehaviour
         IEnumerator[] coroutines = new IEnumerator[numCards + numDropzones];
         float angle = Mathf.PI / 2 - cardArcDistance * (numCards - 1) / 2;
         for (int i = 0; i < numCards; i++, angle += cardArcDistance) {
-            Vector3 newPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * arcRadius;
+            Vector3 newPosition = new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0) * arcRadius;
             newPosition.z += .02f * i;
-            Quaternion newRotation = Quaternion.LookRotation(-hand.right, newPosition);
+            Quaternion newRotation = Quaternion.LookRotation(Vector3.forward, newPosition);
             coroutines[i] = MoveTo(cardsInHand[i].transform, timeToRearrange, newPosition, newRotation);
             StartCoroutine(coroutines[i]);
         }
         angle = Mathf.PI / 2 - dropzoneArcDistance * (numDropzones - 1) / 2;
         for (int i = 0; i < numDropzones; i++, angle += dropzoneArcDistance) {
-            Vector3 newPosition = new Vector3(Mathf.Cos(angle), -Mathf.Sin(angle), 0) * arcRadius;
+            Vector3 newPosition = new Vector3(-Mathf.Sin(angle), Mathf.Cos(angle), 0) * arcRadius;
             newPosition.z += .02f * i;
-            Quaternion newRotation = Quaternion.LookRotation(-hand.right, -newPosition);
+            Quaternion newRotation = Quaternion.LookRotation(Vector3.forward, -newPosition);
             coroutines[numCards + i] = MoveTo(dropzones[i].transform, timeToRearrange, newPosition, newRotation);
             StartCoroutine(coroutines[numCards + i]);
         }

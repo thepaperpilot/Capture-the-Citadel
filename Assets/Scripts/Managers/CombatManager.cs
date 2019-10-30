@@ -31,21 +31,20 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartCombat(AbstractCombat combat) {
+        combatants.Clear();
+        player = LevelManager.Instance.GetComponentInChildren<PlayerController>();
+        combatants.Add(player);
+        enemies = LevelManager.Instance.GetComponentsInChildren<EnemyController>();
+        combatants.AddRange(enemies);
+
+        PlayerManager.Instance.SetupDropzones();
+        CardsManager.Instance.ResetDeck();
+
         turn = 0;
         this.combat = combat;
-        combatants.Clear();
-        player = ActionsManager.Instance.GetComponentInChildren<PlayerController>();
-        CardsManager.Instance.controller = player;
-        combatants.Add(player);
-        player.playArea.SetPositionAndRotation(player.transform.position, player.transform.rotation);
-        player.SetupDropzones();
-        CardsManager.Instance.ResetDeck();
-        // ActionsManager is where the level will be
-        enemies = ActionsManager.Instance.GetComponentsInChildren<EnemyController>();
-        combatants.AddRange(enemies);
         currentTurn = player;
         RelicsManager.Instance.OnCombatStart();
-        ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));
+        ActionsManager.Instance.AddToTop(new PlayerTurnAction());
     }
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
@@ -59,7 +58,7 @@ public class CombatManager : MonoBehaviour
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
         } else {
             RelicsManager.Instance.OnTurnStart(turn);
-            ActionsManager.Instance.AddToBottom(new PlayerTurnAction(player));
+            ActionsManager.Instance.AddToBottom(new PlayerTurnAction());
         }
     }
 

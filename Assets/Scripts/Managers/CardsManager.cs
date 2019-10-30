@@ -28,9 +28,6 @@ public class CardsManager : SerializedMonoBehaviour
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public List<AbstractCard> discards;
 
-    [HideInInspector]
-    public PlayerController controller;
-
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -62,7 +59,7 @@ public class CardsManager : SerializedMonoBehaviour
         IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(count);
         drawPile.RemoveRange(0, count);
         hand.AddRange(cardsToDraw);
-        yield return controller.Draw(cardsToDraw.ToArray());
+        yield return PlayerManager.Instance.Draw(cardsToDraw.ToArray());
     }
 
     public IEnumerator Discard(AbstractCard card) {
