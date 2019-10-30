@@ -11,6 +11,9 @@ TagManager:
   - Card
   - Grabbable
   - PointingZone
+  - PlayerSpawn
+  - Obstacle
+  - Enemy
   layers:
   - Default
   - TransparentFX
