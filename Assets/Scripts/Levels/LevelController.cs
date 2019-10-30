@@ -16,7 +16,10 @@ public class LevelController : MonoBehaviour
     }
 
     static float gridSize = 1.75f;
-    Hex playerHex;
+    public Hex playerHex;
+
+    [SerializeField]
+    private GameObject groundPlane;
 
     [FoldoutGroup("Prefabs", true)]
     [BoxGroup("Prefabs/Hexes")]
@@ -28,6 +31,7 @@ public class LevelController : MonoBehaviour
 
     public void Setup(AbstractLevel level)
     {
+        groundPlane.transform.localScale = new Vector3(level.layout.GetLength(0)+1, 1, level.layout.GetLength(1)+1);
         Hex[,] hexes = new Hex[level.layout.GetLength(0), level.layout.GetLength(1)];
         for(int row = 0; row < level.layout.GetLength(1); row++)
         {
@@ -42,6 +46,58 @@ public class LevelController : MonoBehaviour
                     {
                         hexes[col, row].occupant = Instantiate(wallHex, temp.transform.position, Quaternion.identity, temp.transform);
                     }
+                    if (level.content[col, row] != null)
+                    {
+                        GameObject occupant = Instantiate(level.content[col, row], temp.transform.position, Quaternion.identity, temp.transform);
+                        hexes[col, row].occupant = occupant;
+                        if (occupant.CompareTag("PlayerSpawn"))
+                        {
+                            playerHex = hexes[col,row];
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        //Link Neighbors
+        for (int row = 0; row < hexes.GetLength(1); row++)
+        {
+            for (int col = 0; col < hexes.GetLength(0); col++)
+            {
+                if(hexes[col,row] != null)
+                {
+                    int offset = row % 2 == 0 ? 1 : 0;
+                    try
+                    {
+                        hexes[col, row].neighbors.Add(hexes[col + 1, row]);
+                    }
+                    catch { }
+                    try
+                    {
+                        hexes[col, row].neighbors.Add(hexes[col+offset, row-1]);
+                    }
+                    catch { }
+                    try
+                    {
+                        hexes[col, row].neighbors.Add(hexes[col - 1 + offset, row-1]);
+                    }
+                    catch { }
+                    try
+                    {
+                        hexes[col, row].neighbors.Add(hexes[col - 1, row]);
+                    }
+                    catch { }
+                    try
+                    {
+                        hexes[col, row].neighbors.Add(hexes[col - 1+ offset, row+1]);
+                    }
+                    catch { }
+                    try
+                    {
+                        hexes[col, row].neighbors.Add(hexes[col+offset, row+1]);
+                    }
+                    catch { }
                 }
             }
         }

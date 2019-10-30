@@ -73,7 +73,6 @@ public class AbstractLevel : SerializedScriptableObject
         {
             for(int col = 0; col < maxColumns; col++)
             {
-                Debug.Log("Row: " + row + " Column: " + col);
                 try
                 {
                     newLayout[col, row] = layout[col, row];

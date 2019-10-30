@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58745026}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.01, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.875, y: -0.01, z: -0.875}
+  m_LocalScale: {x: 0.175, y: 1, z: 0.175}
   m_Children: []
   m_Father: {fileID: 5896889544501997005}
   m_RootOrder: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e0f565d243c904795bb220d97dc1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundPlane: {fileID: 7198630724096056140}
   floorHex: {fileID: 8827581735888100931, guid: 513e22172d3f07343a437d7d01daa412,
     type: 3}
   wallHex: {fileID: 2513313508809905007, guid: 5e900d1ecad5b2a45aef360b852f1e0e, type: 3}
@@ -164,8 +165,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7198630724096056140}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: -4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.75, y: 0, z: 1.75}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children:
   - {fileID: 58745030}
   m_Father: {fileID: 5168213736867109903}

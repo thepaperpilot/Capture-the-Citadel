@@ -22,7 +22,8 @@ Shader "Roystan/ToonWall"
 		_RimAmount("Rim Amount", Range(0, 1)) = 0.716
 		// Control how smoothly the rim blends when approaching unlit
 		// parts of the surface.
-		_RimThreshold("Rim Threshold", Range(0, 1)) = 0.1		
+		_RimThreshold("Rim Threshold", Range(0, 1)) = 0.1
+		_XMult("X Multiplier", Float) = 0.57735
 	}
 	SubShader
 	{
@@ -60,6 +61,7 @@ Shader "Roystan/ToonWall"
 				float4 pos : SV_POSITION;
 				float3 worldPos : TEXCOORD0;
 				float3 viewDir : TEXCOORD1;	
+				float3 localPos: TEXCOORD2;
 				half3 tspace0 : TEXCOORD3; // tangent.x, bitangent.x, normal.x
 				half3 tspace1 : TEXCOORD4; // tangent.y, bitangent.y, normal.y
 				half3 tspace2 : TEXCOORD5; // tangent.z, bitangent.z, normal.z
@@ -77,6 +79,7 @@ Shader "Roystan/ToonWall"
 			{
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
+				o.localPos = v.vertex.xyz;
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 
 				half3 wNormal = UnityObjectToWorldNormal(v.normal);
@@ -108,10 +111,16 @@ Shader "Roystan/ToonWall"
 			float _RimAmount;
 			float _RimThreshold;	
 			float _Scale;
+			float _XMult;
 
 			float4 frag (v2f i) : SV_Target
 			{
-				half3 tnormal = UnpackNormal(tex2D(_BumpMap, i.worldPos.zy / _Scale));
+				//float sideMult = 1;
+				//if (i.localPos.x > 0 && i.localPos.z < 0) {
+				//	sideMult = -1;
+				//}
+				float2 texCoord = float2(i.worldPos.z + i.worldPos.x * _XMult /** sideMult*/, i.worldPos.y);
+				half3 tnormal = UnpackNormal(tex2D(_BumpMap, texCoord / _Scale));
 				half3 normal;
 				normal.x = dot(i.tspace0, tnormal);
 				normal.y = dot(i.tspace1, tnormal);
@@ -155,7 +164,7 @@ Shader "Roystan/ToonWall"
 				rimIntensity = smoothstep(_RimAmount - 0.01, _RimAmount + 0.01, rimIntensity);
 				float4 rim = rimIntensity * _RimColor;
 
-				float4 sample = tex2D(_MainTex, i.worldPos.zy / _Scale);
+				float4 sample = tex2D(_MainTex, texCoord / _Scale);
 
 				return (light + _AmbientColor + specular + rim) * _Color * sample;
 			}
