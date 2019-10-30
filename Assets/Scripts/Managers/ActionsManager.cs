@@ -9,10 +9,15 @@ public class ActionsManager : SerializedMonoBehaviour
 {
     public static ActionsManager Instance;
 
+    [AssetList(Path="Prefabs", CustomFilterMethod="FindLevelControllers")]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
+    [HideInPlayMode]
+    public GameObject levelPrefab;
+
     [InfoBox("These are the actions that are randomly chosen between when entering a new floor")]
     [SerializeField, AssetSelector(FlattenTreeView=true, ExcludeExistingValuesInList=true)]
     [InlineEditor(InlineEditorObjectFieldModes.Foldout)]
-    private AbstractAction[] randomActions = new AbstractAction[0];
+    private ScriptableObjectAction[] randomActions = new ScriptableObjectAction[0];
     [SerializeField, HideInEditorMode]
     private List<AbstractAction> actions = new List<AbstractAction>();
     [SerializeField, HideInEditorMode]
@@ -81,4 +86,10 @@ public class ActionsManager : SerializedMonoBehaviour
         if (actions.Count > 0)
             NextAction();
     }
+
+#if UNITY_EDITOR
+    private bool FindLevelControllers(GameObject obj) {
+        return obj.GetComponentInChildren<LevelController>() != null;
+    }
+#endif
 }

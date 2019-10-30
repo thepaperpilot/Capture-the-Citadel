@@ -20,10 +20,6 @@ public class AbstractCombat : ScriptableObjectAction
         { "Boss", AbstractRelic.Rarities.BOSS },
         { "Shop", AbstractRelic.Rarities.SHOP }
     };
-    
-    [AssetSelector(IsUniqueList=false, Paths="Assets/Enemies", FlattenTreeView=true)]
-    [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
-    public AbstractEnemy[] enemies;
 
     [BoxGroup("Rewards")]
     [MinMaxSlider(0, 200, true)]
@@ -37,6 +33,7 @@ public class AbstractCombat : ScriptableObjectAction
 
     public override IEnumerator Run()
     {
+        yield return base.Run();
         CombatManager.Instance.StartCombat(this);
         yield return null;
     }
