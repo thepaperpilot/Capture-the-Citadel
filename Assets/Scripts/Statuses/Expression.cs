@@ -8,7 +8,8 @@ using UnityEngine;
 public class Expression
 {
     public enum Effects {
-        DAMAGE
+        DAMAGE,
+        DEFENSE
     }
     
     public enum Modifiers {

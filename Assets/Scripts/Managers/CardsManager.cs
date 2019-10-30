@@ -48,6 +48,7 @@ public class CardsManager : SerializedMonoBehaviour
     public void ResetDeck() {
         hand = new List<AbstractCard>();
         drawPile = new List<AbstractCard>(deck);
+        Shuffle(drawPile);
         discards = new List<AbstractCard>();
         ActionsManager.Instance.AddToTop(new DrawAction(handSize));
     }
@@ -57,9 +58,11 @@ public class CardsManager : SerializedMonoBehaviour
             ActionsManager.Instance.AddToTop(new DrawAction(amount - drawPile.Count()));
             ActionsManager.Instance.AddToTop(new ShuffleDiscardsAction());
         }
-        IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(Mathf.Max(amount, drawPile.Count()));
+        int count = Mathf.Min(amount, drawPile.Count());
+        IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(count);
+        drawPile.RemoveRange(0, count);
         hand.AddRange(cardsToDraw);
-        yield return controller.Draw(cardsToDraw);
+        yield return controller.Draw(cardsToDraw.ToArray());
     }
 
     public IEnumerator Discard(AbstractCard card) {
@@ -70,16 +73,21 @@ public class CardsManager : SerializedMonoBehaviour
 
     [HideInEditorMode, Button(ButtonSizes.Medium)]
     public IEnumerator ShuffleDiscards() {
-        int n = discards.Count;
+        Shuffle(discards);
+        drawPile.AddRange(discards);
+        discards.Clear();
+        RelicsManager.Instance.OnShuffle();
+        yield return null;
+    }
+
+    public void Shuffle(List<AbstractCard> cards) {
+        int n = cards.Count;
         while (n > 1) {
             n--;
             int k = Random.Range(0, n + 1);
-            AbstractCard value = discards[k];
-            discards[k] = discards[n];
-            discards[n] = value;
+            AbstractCard value = cards[k];
+            cards[k] = cards[n];
+            cards[n] = value;
         }
-        drawPile.AddRange(discards);
-        discards.Clear();
-        yield return null;
     }
 }

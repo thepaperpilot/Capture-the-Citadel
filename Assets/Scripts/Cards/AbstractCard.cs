@@ -16,7 +16,7 @@ public class AbstractCard : ScriptableObject
 
     [Space, HorizontalGroup("Split", 100)]
     [HideInInlineEditors, HideLabel, PreviewField(100), OnValueChanged("DrawPreview")]
-    public Material image;
+    public Sprite image;
     [Space, VerticalGroup("Split/Properties"), Delayed]
     [HideInInlineEditors, InfoBox("Note: Text components aren't rendering in the preview, so you won't see the name or description :(")]
     // TODO if you can make a function run when the field loses focus, make it rename the scriptable object file as per https://answers.unity.com/questions/339997/change-file-name-in-a-scriptable-object.html
@@ -63,6 +63,7 @@ public class AbstractCard : ScriptableObject
                 action.targets = action.target == CardAction.Targets.PLAYER ?
                     new CombatantController[] { CombatManager.Instance.player } :
                     CombatManager.Instance.enemies;
+                action.actor = CombatManager.Instance.player;
             }
             ActionsManager.Instance.AddToTop(actions);
         }

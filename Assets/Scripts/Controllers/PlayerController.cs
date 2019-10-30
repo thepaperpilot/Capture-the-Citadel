@@ -1,21 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[RequireComponent(typeof(DeckController))]
 public class PlayerController : CombatantController
 {
-    [AssetsOnly]
-    public GameObject cardPrefab;
+    [SceneObjectsOnly]
+    public Transform playArea;
 
-    public IEnumerator Draw(IEnumerable<AbstractCard> cardsToDraw) {
-        foreach (AbstractCard card in cardsToDraw) {
-            GameObject cardObject = Instantiate(cardPrefab, transform);
-            cardObject.GetComponent<CardController>().Setup(card);
-            // TODO move card to somewhere
-            // TODO let them pick up/select cards, handle any gestures necessary,
-            //  and perform the PlayCard action on successful gesturing
+    private DeckController deckController;
+
+    private void Awake() {
+        deckController = GetComponent<DeckController>();
+    }
+
+    public void SetupDropzones() {
+        deckController.SetupDropzones();
+    }
+
+    public IEnumerator StartTurn() {
+        deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
+        yield return deckController.SlideOut();
+    }
+
+    public IEnumerator Draw(AbstractCard[] cardsToDraw) {
+        IEnumerator[] coroutines = new IEnumerator[cardsToDraw.Count()];
+        for (int i = 0; i < cardsToDraw.Count(); i++) {
+            coroutines[i] = deckController.Draw(cardsToDraw[i]);
+            StartCoroutine(coroutines[i]);
+            yield return new WaitForSeconds(deckController.timeBetweenDraws);
         }
-        yield return null;
+        while (!coroutines.Any(e => e == null))
+            yield return null;
     }
 }
