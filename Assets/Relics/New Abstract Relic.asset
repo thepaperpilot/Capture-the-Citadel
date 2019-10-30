@@ -12,7 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e14a0500809cb46bb561d5f7a1bf49, type: 3}
   m_Name: New Abstract Relic
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  name: 
+  image: {fileID: 21300000, guid: aa8db8fe7131fb546bc41da692c33c10, type: 3}
+  name: Warrior Starter
   rarity: 0
-  triggers: []
+  triggers:
+  - trigger: 5
+    everyTurn: 0
+    range: {x: 0, y: 0}
+    sprite: {fileID: 21300000, guid: aa8db8fe7131fb546bc41da692c33c10, type: 3}
+    color: {r: 0.48415807, g: 0.5927176, b: 0.8018868, a: 1}
+    effect: 0
+    targetedEffect: 0
+    target: 0
+    status: {fileID: 11400000, guid: 5216d6c900d8d614b94843a63311764a, type: 2}
+    amount: 1
+    relicData:
+      relic: {fileID: 0}
+      card: {fileID: 0}
+    data: 0
+    discard: {fileID: 0}
+    targets: []

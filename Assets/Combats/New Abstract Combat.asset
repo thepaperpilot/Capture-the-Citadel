@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cceac65b4c1fa7d43ada8ce35f31a0e6, type: 3}
   m_Name: New Abstract Combat
   m_EditorClassIdentifier: 
-  chainedEvents: []
   enemies:
   - {fileID: 11400000, guid: 862891d28b3cb0b4d985c9837999568c, type: 2}
   goldRange: {x: 50, y: 75}
-  hasRelic: 0
-  hasRareRelic: 0
+  relicReward: 1
+  relicRarity: 2
+  relic: {fileID: 0}

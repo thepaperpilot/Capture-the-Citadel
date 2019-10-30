@@ -13,11 +13,7 @@ public class CombatManager : MonoBehaviour
     [HideInInspector]
     public CombatantController[] enemies;
 
-    [HideInPlayMode, ChildGameObjectsOnly]
-    [SerializeField] private Transform playerSpawnPoint;
-    [Space, HideInPlayMode, ChildGameObjectsOnly]
-    [SerializeField] private Transform[] enemySpawnPoints;
-    [Space, HideInEditorMode]
+    [HideInEditorMode]
     [SerializeField] private CombatantController currentTurn;
     private int turn;
 
@@ -38,24 +34,15 @@ public class CombatManager : MonoBehaviour
         turn = 0;
         this.combat = combat;
         combatants.Clear();
-        player = FindObjectOfType<PlayerController>();
+        player = ActionsManager.Instance.GetComponentInChildren<PlayerController>();
         CardsManager.Instance.controller = player;
         combatants.Add(player);
-        player.playArea.SetPositionAndRotation(playerSpawnPoint.position, playerSpawnPoint.rotation);
+        player.playArea.SetPositionAndRotation(player.transform.position, player.transform.rotation);
         player.SetupDropzones();
         CardsManager.Instance.ResetDeck();
-        enemies = new CombatantController[combat.enemies.Length];
-        for (int i = 0; i < combat.enemies.Length; i++) {
-            AbstractEnemy enemy = combat.enemies[i];
-            if (enemy.spawnPoint >= enemySpawnPoints.Length) {
-                Debug.LogError("Cannot spawn enemy in spawn point " + enemy.spawnPoint + " because only " + enemySpawnPoints.Length + " spawn points exist.");
-            } else {
-                EnemyController controller = Instantiate(enemy.enemyPrefab, enemySpawnPoints[enemy.spawnPoint]).GetComponent<EnemyController>();
-                controller.SetEnemy(enemy);
-                combatants.Add(controller);
-                enemies[i] = controller;
-            }
-        }
+        // ActionsManager is where the level will be
+        enemies = ActionsManager.Instance.GetComponentsInChildren<EnemyController>();
+        combatants.AddRange(enemies);
         currentTurn = player;
         RelicsManager.Instance.OnCombatStart();
         ActionsManager.Instance.AddToTop(new PlayerTurnAction(player));

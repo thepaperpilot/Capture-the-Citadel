@@ -1,46 +1,96 @@
+using System;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class EnemyController : CombatantController
-{
-    [SerializeField, InlineEditor, HideInEditorMode]
-    private AbstractEnemy enemy;
+{    
+    public int maxHealth;
+
+    public enum StrategyTypes {
+        LOOP,
+        RANDOM
+    }
+
+    public enum Conditions {
+        HALF_HEALTH,
+        NUM_TURNS,
+        TOO_FAR,
+        TOO_CLOSE
+    }
+
+    public enum MoveDirections {
+        CLOSER,
+        FARTHER
+    }
+
+    [Serializable]
+    public struct Attack {
+        [ListDrawerSettings(Expanded=true)]
+        public CardAction[] actions;
+        [EnumToggleButtons, ShowIf("ShowDirection")]
+        public MoveDirections moveDirection;
+
+#if UNITY_EDITOR
+        private bool ShowDirection() {
+            return actions.Where(effect => effect.type == CombatAction.TYPE.MOVE).Count() > 0;
+        }
+#endif
+    }
+
+    [Serializable, BoxGroup]
+    public struct Strategy {
+        [HideLabel, EnumToggleButtons]
+        public StrategyTypes type;
+        public Attack[] moves;
+    }
+
+    [Serializable]
+    public struct StrategyChange {
+        public Conditions condition;
+        [HideIf("condition", Conditions.HALF_HEALTH)]
+        public int amount;
+
+        public Strategy newStrategy;
+
+        [ShowIf("@newStrategy.type", StrategyTypes.LOOP)]
+        [LabelText("Return to normal after first loop")]
+        public bool returnAfter;
+    }
+
+    public Strategy normalStrategy;
+
+    [Space]
+    public StrategyChange[] conditionalStrategyChanges;
+    
     [SerializeField, HideInEditorMode]
     private int turn = 0;
     [SerializeField, HideInEditorMode]
-    private AbstractEnemy.Strategy strategy;
-    private AbstractEnemy.StrategyChange strategyChange;
+    private Strategy currentStrategy;
     [SerializeField, HideInEditorMode]
-    private AbstractEnemy.Attack nextMove;
-    
-    public void SetEnemy(AbstractEnemy enemy) {
-        this.enemy = enemy;
-        turn = 0;
-        health = enemy.health;
-        strategy = enemy.normalStrategy;
-        nextMove = strategy.moves[0];
-    }
+    private StrategyChange currentStrategyChange;
+    [SerializeField, HideInEditorMode]
+    private Attack nextMove;
 
     public void PlayTurn() {
         turn++;
         
         // Check if our current strategy must change
-        foreach (AbstractEnemy.StrategyChange change in enemy.conditionalStrategyChanges) {
-            if (strategy.Equals(change.newStrategy)) continue;
+        foreach (StrategyChange change in conditionalStrategyChanges) {
+            if (currentStrategy.Equals(change.newStrategy)) continue;
             switch (change.condition) {
-                case AbstractEnemy.Conditions.HALF_HEALTH:
-                    if (health < enemy.health * .5f)
+                case Conditions.HALF_HEALTH:
+                    if (health < maxHealth * .5f)
                         ChangeStrategy(change);
                     break;
-                case AbstractEnemy.Conditions.NUM_TURNS:
+                case Conditions.NUM_TURNS:
                     if (turn == change.amount)
                         ChangeStrategy(change);
                     break;
-                case AbstractEnemy.Conditions.TOO_CLOSE:
+                case Conditions.TOO_CLOSE:
                     // TODO positioning system
                     break;
-                case AbstractEnemy.Conditions.TOO_FAR:
+                case Conditions.TOO_FAR:
                     // TODO positioning system
                     break;
             }
@@ -65,22 +115,22 @@ public class EnemyController : CombatantController
 
         // Change back to normal strategy if applicable
         // and update next move
-        if (strategy.Equals(strategyChange.newStrategy) && strategyChange.returnAfter && nextMove.Equals(strategy.moves.Last())) {
-            strategy = enemy.normalStrategy;
-            nextMove = strategy.type == AbstractEnemy.StrategyTypes.LOOP ? strategy.moves[0] : strategy.moves[Random.Range(0, strategy.moves.Length)];
+        if (currentStrategy.Equals(currentStrategyChange.newStrategy) && currentStrategyChange.returnAfter && nextMove.Equals(currentStrategy.moves.Last())) {
+            currentStrategy = normalStrategy;
+            nextMove = currentStrategy.type == StrategyTypes.LOOP ? currentStrategy.moves[0] : currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         } else {
-            if (strategy.type == AbstractEnemy.StrategyTypes.LOOP) {
-                int index = System.Array.IndexOf(strategy.moves, nextMove) % strategy.moves.Length;
-                nextMove = strategy.moves[index + 1];
+            if (currentStrategy.type == StrategyTypes.LOOP) {
+                int index = System.Array.IndexOf(currentStrategy.moves, nextMove) % currentStrategy.moves.Length;
+                nextMove = currentStrategy.moves[index + 1];
             } else {
-                nextMove = strategy.moves[Random.Range(0, strategy.moves.Length)];
+                nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
             }
         }
     }
 
-    private void ChangeStrategy(AbstractEnemy.StrategyChange change) {
-        strategyChange = change;
-        strategy = change.newStrategy;
-        nextMove = strategy.moves[0];
+    private void ChangeStrategy(StrategyChange change) {
+        currentStrategyChange = change;
+        currentStrategy = change.newStrategy;
+        nextMove = currentStrategy.moves[0];
     }
 }

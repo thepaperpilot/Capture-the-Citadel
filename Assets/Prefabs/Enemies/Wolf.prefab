@@ -57,12 +57,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613e6c0b4037a264eb77e25103e28f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  turn: 0
   health: 0
-  strategy:
+  maxHealth: 10
+  normalStrategy:
+    type: 0
+    moves:
+    - actions:
+      - type: 0
+        status: {fileID: 0}
+        amount: 3
+        targets: []
+        actor: {fileID: 0}
+        target: 0
+      moveDirection: 0
+  conditionalStrategyChanges:
+  - condition: 2
+    amount: 2
+    newStrategy:
+      type: 0
+      moves:
+      - actions:
+        - type: 2
+          status: {fileID: 0}
+          amount: 2
+          targets: []
+          actor: {fileID: 0}
+          target: 0
+        moveDirection: 0
+    returnAfter: 1
+  turn: 0
+  currentStrategy:
     type: 0
     moves: []
+  currentStrategyChange:
+    condition: 0
+    amount: 0
+    newStrategy:
+      type: 0
+      moves: []
+    returnAfter: 0
   nextMove:
     actions: []
     moveDirection: 0
@@ -83,21 +116,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: -8241705642480610516, guid: c7c1c7de7b244eb4b83244c8592e4e01,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: bcdf5cfd8659d654bbeca0c1d9c0c9a0, type: 2}
-    - target: {fileID: -8200528038406696565, guid: c7c1c7de7b244eb4b83244c8592e4e01,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b63d203c3352262459b5542ad67cfe24, type: 2}
-    - target: {fileID: -7823447149713133865, guid: c7c1c7de7b244eb4b83244c8592e4e01,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3ed8cba3d09d9ff4d8b058a2d0d7d268, type: 2}
     - target: {fileID: -4216859302048453862, guid: c7c1c7de7b244eb4b83244c8592e4e01,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -168,7 +186,22 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.25000018
       objectReference: {fileID: 0}
+    - target: {fileID: -8241705642480610516, guid: c7c1c7de7b244eb4b83244c8592e4e01,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bcdf5cfd8659d654bbeca0c1d9c0c9a0, type: 2}
+    - target: {fileID: -8200528038406696565, guid: c7c1c7de7b244eb4b83244c8592e4e01,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b63d203c3352262459b5542ad67cfe24, type: 2}
     - target: {fileID: 5958056392375082228, guid: c7c1c7de7b244eb4b83244c8592e4e01,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3ed8cba3d09d9ff4d8b058a2d0d7d268, type: 2}
+    - target: {fileID: -7823447149713133865, guid: c7c1c7de7b244eb4b83244c8592e4e01,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

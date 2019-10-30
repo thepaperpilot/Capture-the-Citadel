@@ -55,6 +55,6 @@ public class AbstractEvent : ScriptableObjectAction
 
     public override IEnumerator Run()
     {
-        yield return null;
+        yield return base.Run();
     }
 }
