@@ -78,4 +78,12 @@ public class PlayerManager : MonoBehaviour
         while (!coroutines.Any(e => e == null))
             yield return null;
     }
+
+    public void AddCard(CardController card) {
+        deckController.DropCardInHand(card);
+    }
+
+    public void RemoveCard(CardController card) {
+        deckController.PickupCard(card);
+    }
 }

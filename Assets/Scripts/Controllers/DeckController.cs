@@ -121,6 +121,11 @@ public class DeckController : MonoBehaviour
         StartCoroutine(RearrangeCards());
     }
 
+    public void DropCardInHand(CardController card) {
+        cardsInHand.Add(card);
+        StartCoroutine(RearrangeCards());
+    }
+
     private IEnumerator RearrangeCards() {
         int numCards = cardsInHand.Count;
         int numDropzones = dropzones.Count;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Hand : MonoBehaviour
@@ -30,9 +31,12 @@ public class Hand : MonoBehaviour
     bool inPointArea;
 
     GameObject heldObject = null;
+    Transform heldObjectParent = null;
 
     [SerializeField] Transform grabTarget;
     [SerializeField] Transform pinchTarget;
+    [ShowIf("id", HandID.RIGHT)]
+    [SerializeField] Transform cardHolder;
     [SerializeField] float grabRadius = 0.05f;
     [SerializeField] float pinchRadius = 0.02f;
 
@@ -169,6 +173,7 @@ public class Hand : MonoBehaviour
             {
                 Release();
                 heldObject = collider.gameObject;
+                heldObjectParent = heldObject.transform.parent;
                 collider.transform.SetParent(transform);
                 heldObject.transform.localPosition = grabTarget.localPosition;
                 heldObject.transform.localRotation = Quaternion.identity;
@@ -186,14 +191,17 @@ public class Hand : MonoBehaviour
     void Pinch()
     {
         Collider[] hit = Physics.OverlapSphere(pinchTarget.position, pinchRadius);
-
         foreach (Collider collider in hit)
         {
             if (collider.CompareTag("Card"))
             {
                 Release();
                 heldObject = collider.gameObject;
-                collider.transform.SetParent(transform);
+                heldObjectParent = collider.transform.parent;
+                collider.transform.SetParent(cardHolder);
+                collider.transform.localPosition = Vector3.zero;
+                collider.transform.localRotation = Quaternion.identity;
+                PlayerManager.Instance.RemoveCard(heldObject.GetComponent<CardController>());
             }
         }
     }
@@ -207,7 +215,9 @@ public class Hand : MonoBehaviour
             {
                 childRB.isKinematic = true;
             }
-            heldObject.transform.SetParent(null);
+            heldObject.transform.SetParent(heldObjectParent);
+            if (heldObject.CompareTag("Card"))
+                PlayerManager.Instance.AddCard(heldObject.GetComponent<CardController>());
             heldObject = null;
         }
     }
