@@ -212,6 +212,11 @@ public class Hand : MonoBehaviour
 
     void Transform() {
         CardController card = heldObject.GetComponent<CardController>();
+        if (CombatManager.Instance.player.energy < card.card.energyCost) {
+            // TODO "Failed" sound effect or something
+            return;
+        }
+        CombatManager.Instance.player.energy -= card.card.energyCost;
         GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
         toy.GetComponentInChildren<Toy>().card = card.card;
         Destroy(heldObject);

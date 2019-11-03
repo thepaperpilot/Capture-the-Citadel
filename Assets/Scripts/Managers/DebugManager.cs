@@ -38,5 +38,9 @@ public class DebugManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return)) {
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
         }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            CombatManager.Instance.player.FillEnergy();
+        }
     }
 }
