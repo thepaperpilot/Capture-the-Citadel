@@ -143,6 +143,10 @@ public class Hand : MonoBehaviour
                         ChangeToState(HandAnimPose.OPEN);
                     }
                 }
+                else if (gripPressed) {
+                    Transform();
+                    ChangeToState(HandAnimPose.OPEN);
+                }
                 break;
         }
     }
@@ -204,6 +208,13 @@ public class Hand : MonoBehaviour
                 PlayerManager.Instance.RemoveCard(heldObject.GetComponent<CardController>());
             }
         }
+    }
+
+    void Transform() {
+        CardController card = heldObject.GetComponent<CardController>();
+        GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
+        toy.GetComponentInChildren<Toy>().card = card.card;
+        Destroy(heldObject);
     }
 
     void Release()
