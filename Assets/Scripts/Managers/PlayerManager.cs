@@ -69,14 +69,11 @@ public class PlayerManager : MonoBehaviour
     }
     
     public IEnumerator Draw(AbstractCard[] cardsToDraw) {
-        IEnumerator[] coroutines = new IEnumerator[cardsToDraw.Count()];
         for (int i = 0; i < cardsToDraw.Count(); i++) {
-            coroutines[i] = deckController.Draw(cardsToDraw[i]);
-            StartCoroutine(coroutines[i]);
+            StartCoroutine(deckController.Draw(cardsToDraw[i]));
             yield return new WaitForSeconds(deckController.timeBetweenDraws);
         }
-        while (!coroutines.Any(e => e == null))
-            yield return null;
+        yield return new WaitForSeconds(deckController.timeToRearrange);
     }
 
     public void AddCard(CardController card) {

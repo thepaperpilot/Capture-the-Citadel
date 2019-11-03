@@ -76,7 +76,7 @@ public class ActionsManager : SerializedMonoBehaviour
     }
 
     private IEnumerator RunAction(AbstractAction action) {
-        yield return StartCoroutine(action.Run());
+        yield return action.Run();
         acting = false;
         if (actions.Count > 0)
             NextAction();
