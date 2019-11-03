@@ -195,5 +195,12 @@ public class DeckController : MonoBehaviour
     private bool FindDropZoneControllers(GameObject obj) {
         return obj.GetComponentInChildren<DropZoneController>() != null;
     }
+
+    public CardController GetCardController(int index) {
+        if (index >= cardsInHand.Count)
+            return null;
+
+        return cardsInHand[index];
+    }
 #endif
 }

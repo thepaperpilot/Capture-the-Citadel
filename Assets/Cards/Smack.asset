@@ -21,10 +21,15 @@ MonoBehaviour:
   - type: 0
     status: {fileID: 0}
     amount: 0
-    targets: []
+    targets:
+    - {fileID: 0}
+    actor: {fileID: 0}
     target: 1
   - type: 1
     status: {fileID: 0}
     amount: 0
-    targets: []
+    targets:
+    - {fileID: 0}
+    actor: {fileID: 0}
     target: 0
+  toy: {fileID: 838485361750478193, guid: 0e95fca652182f148b7602146ca7855d, type: 3}

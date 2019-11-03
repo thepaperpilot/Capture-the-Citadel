@@ -86,4 +86,15 @@ public class PlayerManager : MonoBehaviour
     public void RemoveCard(CardController card) {
         deckController.PickupCard(card);
     }
+
+#if UNITY_EDITOR
+    // These are used by DebugManager
+    public DeckController GetDeckController() {
+        return deckController;
+    }
+
+    public void Grab(GameObject gameObject) {
+        rightHand.GetComponentInChildren<Hand>().Grab(gameObject);
+    }
+#endif
 }

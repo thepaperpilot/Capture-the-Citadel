@@ -248,4 +248,22 @@ public class Hand : MonoBehaviour
             inPointArea = false;
         }
     }
+
+#if UNITY_EDITOR
+    // Used by debug manager
+    public void Grab(GameObject gameObject) {
+        Release();
+        heldObject = gameObject;
+        heldObjectParent = heldObject.transform.parent;
+        gameObject.transform.SetParent(transform);
+        heldObject.transform.localPosition = grabTarget.localPosition;
+        heldObject.transform.localRotation = Quaternion.identity;
+        Rigidbody childRB = heldObject.GetComponent<Rigidbody>();
+        if(childRB != null)
+        {
+            childRB.isKinematic = true;
+        }
+        ChangeToState(HandAnimPose.HOLDING);
+    }
+#endif
 }
