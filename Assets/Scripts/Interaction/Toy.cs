@@ -18,15 +18,15 @@ public class Toy : MonoBehaviour
     [HideInInspector]
     public AbstractCard card;
 
-    protected void Trigger(GameObject gameObject = null) {
+    protected void Trigger(GameObject gameObject = null, bool overrideDelay = false) {
         if (triggered) return;
 
         triggered = true;
         card.Play(gameObject);
-        Destroy(delayDespawn);
+        Destroy(overrideDelay ? 0 : delayDespawn);
     }
 
-    public void Destroy(int delay) {
+    public virtual void Destroy(int delay) {
         StartCoroutine(DelayParticles(delay));
     }
 
