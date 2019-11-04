@@ -137,10 +137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e0f565d243c904795bb220d97dc1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHex: {fileID: 0}
   groundPlane: {fileID: 7198630724096056140}
-  floorHex: {fileID: 8827581735888100931, guid: 513e22172d3f07343a437d7d01daa412,
+  floorHexFab: {fileID: 8827581735888100931, guid: 513e22172d3f07343a437d7d01daa412,
     type: 3}
-  wallHex: {fileID: 2513313508809905007, guid: 5e900d1ecad5b2a45aef360b852f1e0e, type: 3}
+  wallHexFab: {fileID: 2513313508809905007, guid: 5e900d1ecad5b2a45aef360b852f1e0e,
+    type: 3}
 --- !u!1 &7198630724096056140
 GameObject:
   m_ObjectHideFlags: 0

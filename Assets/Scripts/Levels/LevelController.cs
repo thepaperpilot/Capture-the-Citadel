@@ -17,22 +17,24 @@ public class LevelController : MonoBehaviour
 
     static float gridSize = 1.75f;
     public Hex playerHex;
+    List<Hex> allHexes;
 
     [SerializeField]
     private GameObject groundPlane;
 
     [FoldoutGroup("Prefabs", true)]
-    [BoxGroup("Prefabs/Hexes")]
+    [BoxGroup("Prefabs/Layout")]
     [SerializeField, AssetsOnly]
-    private GameObject floorHex;
-    [BoxGroup("Prefabs/Hexes")]
+    private GameObject floorHexFab;
+    [BoxGroup("Prefabs/Layout")]
     [SerializeField, AssetsOnly]
-    private GameObject wallHex;
+    private GameObject wallHexFab;
 
     public void Setup(AbstractLevel level)
     {
         groundPlane.transform.localScale = new Vector3(level.layout.GetLength(0)+1, 1, level.layout.GetLength(1)+1);
         Hex[,] hexes = new Hex[level.layout.GetLength(0), level.layout.GetLength(1)];
+        allHexes = new List<Hex>();
         for(int row = 0; row < level.layout.GetLength(1); row++)
         {
             for(int col = 0; col < level.layout.GetLength(0); col++)
@@ -40,19 +42,26 @@ public class LevelController : MonoBehaviour
                 if(level.layout[col, row] != AbstractLevel.LevelHex.EMPTY)
                 {
                     Vector3 location = transform.position + col * GetDirVector(HexDirection.EAST) + (row / 2) * GetDirVector(HexDirection.SOUTH_EAST) + Mathf.Ceil(row / 2f) * GetDirVector(HexDirection.SOUTH_WEST);
-                    GameObject temp = Instantiate(floorHex, location, Quaternion.identity, transform);
-                    hexes[col, row] = temp.GetComponent<Hex>();
+                    GameObject temp = Instantiate(floorHexFab, location, Quaternion.identity, transform);
+                    Hex tempHex = temp.GetComponent<Hex>();
+                    tempHex.Init();
+                    hexes[col, row] = tempHex;
+                    allHexes.Add(hexes[col, row]);
                     if(level.layout[col,row] == AbstractLevel.LevelHex.WALL)
                     {
-                        hexes[col, row].occupant = Instantiate(wallHex, temp.transform.position, Quaternion.identity, temp.transform);
+                        tempHex.occupant = Instantiate(wallHexFab, temp.transform.position, Quaternion.identity, temp.transform);
                     }
                     if (level.content[col, row] != null)
                     {
                         GameObject occupant = Instantiate(level.content[col, row], temp.transform.position, Quaternion.identity, temp.transform);
-                        hexes[col, row].occupant = occupant;
+                        tempHex.occupant = occupant;
                         if (occupant.CompareTag("PlayerSpawn"))
                         {
-                            playerHex = hexes[col,row];
+                            playerHex = tempHex;
+                        }
+                        else if (occupant.CompareTag("Enemy"))
+                        {
+                            occupant.GetComponent<CombatantController>().tile = tempHex;
                         }
                         
                     }
@@ -63,42 +72,192 @@ public class LevelController : MonoBehaviour
         //Link Neighbors
         for (int row = 0; row < hexes.GetLength(1); row++)
         {
+            int offset = row % 2 == 0 ? 1 : 0;
             for (int col = 0; col < hexes.GetLength(0); col++)
             {
                 if(hexes[col,row] != null)
                 {
-                    int offset = row % 2 == 0 ? 1 : 0;
+                    
                     try
                     {
-                        hexes[col, row].neighbors.Add(hexes[col + 1, row]);
+                        if(hexes[col + 1, row] != null)
+                        {
+                            hexes[col, row].neighbors.Add(hexes[col + 1, row]);
+                        }
                     }
                     catch { }
                     try
                     {
-                        hexes[col, row].neighbors.Add(hexes[col+offset, row-1]);
+                        if (hexes[col + offset, row - 1] != null)
+                        {
+                            hexes[col, row].neighbors.Add(hexes[col + offset, row - 1]);
+                        }
                     }
                     catch { }
                     try
                     {
-                        hexes[col, row].neighbors.Add(hexes[col - 1 + offset, row-1]);
+                        if (hexes[col - 1 + offset, row - 1] != null)
+                        {
+                            hexes[col, row].neighbors.Add(hexes[col - 1 + offset, row - 1]);
+                        }
                     }
                     catch { }
                     try
                     {
-                        hexes[col, row].neighbors.Add(hexes[col - 1, row]);
+                        if (hexes[col - 1, row] != null)
+                        {
+                            hexes[col, row].neighbors.Add(hexes[col - 1, row]);
+                        }
                     }
                     catch { }
                     try
                     {
-                        hexes[col, row].neighbors.Add(hexes[col - 1+ offset, row+1]);
+                        if (hexes[col - 1 + offset, row + 1] != null)
+                        {
+                            hexes[col, row].neighbors.Add(hexes[col - 1 + offset, row + 1]);
+                        }
                     }
                     catch { }
                     try
                     {
-                        hexes[col, row].neighbors.Add(hexes[col+offset, row+1]);
+                        if (hexes[col + offset, row + 1] != null)
+                        {
+                            hexes[col, row].neighbors.Add(hexes[col + offset, row + 1]);
+                        }
                     }
                     catch { }
                 }
+            }
+        }
+
+        BakeLevelFromPlayerMovement();
+    }
+
+    //Use this if the player moves or is moved
+    public void BakeLevelFromPlayerMovement()
+    {
+        UpdatePlayerDistances();
+        UpdatePathDistances();
+        UpdateLOSRaycasts();
+        UpdateLOSDistances();
+    }
+
+    //Use this if an enemy moves/is moved or is created/destroyed mid round
+    public void BakeLevelFromEnemyMovement()
+    {
+        UpdatePathDistances();
+        UpdateLOSDistances();
+    }
+
+    //Use this if an obstacle is created, destroyed, or moved
+    public void BakeLevelFromObstacleChange()
+    {
+        UpdateLOSRaycasts();
+        UpdatePathDistances();
+        UpdateLOSDistances();
+    }
+
+    private void UpdatePlayerDistances()
+    {
+        List<Hex> queue = new List<Hex>();
+        foreach(Hex hex in allHexes)
+        {
+            hex.visited = false;
+            hex.playerDistance = int.MaxValue;
+        }
+        playerHex.playerDistance = 0;
+        queue.Add(playerHex);
+        playerHex.visited = true;
+        while (queue.Count > 0)
+        {
+            queue.Sort(new Hex.PlayerDistanceAscending());
+            Hex hex = queue[0];
+            queue.RemoveAt(0);
+            foreach(Hex other in hex.neighbors)
+            {
+                other.playerDistance = Mathf.Min(other.playerDistance, hex.playerDistance + 1);
+                if (!other.visited)
+                {
+                    queue.Add(other);
+                    other.visited = true;
+                }
+            }
+        }
+    }
+
+    private void UpdatePathDistances()
+    {
+        List<Hex> queue = new List<Hex>();
+        foreach (Hex hex in allHexes)
+        {
+            hex.visited = false;
+            hex.pathDistance = int.MaxValue;
+        }
+        playerHex.pathDistance = 0;
+        queue.Add(playerHex);
+        playerHex.visited = true;
+        while(queue.Count > 0)
+        {
+            queue.Sort(new Hex.PathDistanceAscending());
+            Hex hex = queue[0];
+            queue.RemoveAt(0);
+            foreach (Hex other in hex.neighbors)
+            {
+                other.pathDistance = Mathf.Min(other.pathDistance, hex.pathDistance + 1);
+                if (!other.visited && other.occupant == null)
+                {
+                    queue.Add(other);
+                    other.visited = true;
+                }
+            }
+        }
+    }
+
+    private void UpdateLOSDistances()
+    {
+        List<Hex> queue = new List<Hex>();
+        foreach (Hex hex in allHexes)
+        {
+            if (hex.inSight)
+            {
+                hex.sightDistance = 0;
+                queue.Add(hex);
+                hex.visited = true;
+            }
+            else
+            {
+                hex.sightDistance = int.MaxValue;
+            }
+
+        }
+        while (queue.Count > 0)
+        {
+            queue.Sort(new Hex.SightDistanceAscending());
+            Hex hex = queue[0];
+            queue.RemoveAt(0);
+            foreach (Hex other in hex.neighbors)
+            {
+                other.sightDistance = Mathf.Min(other.sightDistance, hex.sightDistance + 1);
+                if (!other.visited && other.occupant == null)
+                {
+                    queue.Add(other);
+                    other.visited = true;
+                }
+            }
+        }
+    }
+
+    private void UpdateLOSRaycasts()
+    {
+        foreach (Hex hex in allHexes)
+        {
+            if (playerHex.canSeeHexCorner(hex))
+            {
+                hex.inSight = true;
+            }
+            else
+            {
+                hex.inSight = false;
             }
         }
     }

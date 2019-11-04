@@ -57,8 +57,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613e6c0b4037a264eb77e25103e28f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 10
+  health: 0
   normalStrategy:
     type: 0
     moves:
@@ -69,9 +69,9 @@ MonoBehaviour:
         targets: []
         actor: {fileID: 0}
         target: 0
-      moveDirection: 0
+      pathType: 0
   conditionalStrategyChanges:
-  - condition: 2
+  - condition: 0
     amount: 2
     newStrategy:
       type: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
           targets: []
           actor: {fileID: 0}
           target: 0
-        moveDirection: 0
+        pathType: 0
     returnAfter: 1
   turn: 0
   currentStrategy:
@@ -98,7 +98,7 @@ MonoBehaviour:
     returnAfter: 0
   nextMove:
     actions: []
-    moveDirection: 0
+    pathType: 0
 --- !u!1001 &6456628236433831498
 PrefabInstance:
   m_ObjectHideFlags: 0
