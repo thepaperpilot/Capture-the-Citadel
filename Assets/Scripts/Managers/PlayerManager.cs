@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private DeckController deckController;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
+    private Hand right;
+    private Hand left;
     private Transform leftSource;
     private Transform rightSource;
     Rigidbody leftRB;
@@ -26,6 +28,9 @@ public class PlayerManager : MonoBehaviour
         } else {
             Destroy(this);
         }
+
+        right = rightHand.GetComponentInChildren<Hand>();
+        left = leftHand.GetComponentInChildren<Hand>();
     }
 
     void Start()
@@ -42,6 +47,11 @@ public class PlayerManager : MonoBehaviour
         leftHand.transform.rotation = leftSource.rotation;
         rightHand.transform.position = rightSource.position;
         rightHand.transform.rotation = rightSource.rotation;
+
+        if (right.state == Hand.HandAnimPose.CLOSED &&
+            left.state == Hand.HandAnimPose.CLOSED &&
+            CombatManager.Instance.IsPlayerTurn())
+            ActionsManager.Instance.AddToBottom(new EndTurnAction());
     }
 
     private void FixedUpdate()
@@ -91,7 +101,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void Grab(GameObject gameObject) {
-        rightHand.GetComponentInChildren<Hand>().Grab(gameObject);
+        right.Grab(gameObject);
     }
 #endif
 }

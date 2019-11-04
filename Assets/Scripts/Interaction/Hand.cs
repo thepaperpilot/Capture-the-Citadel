@@ -20,7 +20,7 @@ public class Hand : MonoBehaviour
         RIGHT
     }
 
-    HandAnimPose state = HandAnimPose.OPEN;
+    public HandAnimPose state = HandAnimPose.OPEN;
     Animator anim;
     [SerializeField] private HandID id;
     string triggerAxis;
