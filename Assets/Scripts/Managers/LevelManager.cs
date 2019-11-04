@@ -31,9 +31,10 @@ public class LevelManager : SerializedMonoBehaviour
         controller = levelGObject.GetComponent<LevelController>();
         controller.Setup(level);
 
-        Transform playerTransform = levelGObject.GetComponentInChildren<PlayerController>().transform;
+        PlayerController playerController = levelGObject.GetComponentInChildren<PlayerController>();
+        Transform playerTransform = playerController.transform;
         PlayerManager.Instance.MovePlayer(playerTransform.position, playerTransform.rotation);
-        Destroy(playerTransform.gameObject);
+        Destroy(playerController.model);
     }
 
     public void ClearLevel()

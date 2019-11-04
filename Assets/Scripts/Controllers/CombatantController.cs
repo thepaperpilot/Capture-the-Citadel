@@ -14,4 +14,8 @@ public class CombatantController : MonoBehaviour
     public int health = 0;
     [HideInInspector]
     public Hex tile;
+
+    void Awake() {
+        health = maxHealth;
+    }
 }

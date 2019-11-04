@@ -77,6 +77,10 @@ public class PlayerManager : MonoBehaviour
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
         yield return deckController.SlideOut();
     }
+
+    public IEnumerator EndTurn() {
+        yield return deckController.SlideIn();
+    }
     
     public IEnumerator Draw(AbstractCard[] cardsToDraw) {
         for (int i = 0; i < cardsToDraw.Count(); i++) {

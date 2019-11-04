@@ -71,6 +71,11 @@ public class EnemyController : CombatantController
 
     void Start() {
         currentStrategy = normalStrategy;
+        if (currentStrategy.type == StrategyTypes.LOOP) {
+            nextMove = currentStrategy.moves[0];
+        } else {
+            nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
+        }
     }
 
     public void PlayTurn() {
@@ -152,6 +157,7 @@ public class EnemyController : CombatantController
                         moveAction.amount = 1;
                         moveAction.type = CombatAction.TYPE.MOVE;
                         moveAction.destination = bestHex;
+                        moveAction.targets = new CombatantController[] { this };
                         modifiedActions.Add(moveAction);
 
                         //If the entered hex contains a trap, spring it

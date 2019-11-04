@@ -11,7 +11,10 @@ public class PlayerController : CombatantController
     // TODO way to see energy amount in-game
     public int energy;
 
-    [Button(ButtonSizes.Medium)]
+    [HideInPlayMode]
+    public GameObject model;
+
+    [Button(ButtonSizes.Medium), HideInEditorMode]
     public void FillEnergy() {
         energy = maxEnergy;
     }

@@ -19,6 +19,7 @@ public class CombatManager : MonoBehaviour
 
     private AbstractCombat combat;
 
+    [HideInEditorMode, ShowInInspector]
     private List<CombatantController> combatants = new List<CombatantController>();
 
     private void Awake() {
@@ -49,6 +50,9 @@ public class CombatManager : MonoBehaviour
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void EndTurn() {
+        if (currentTurn == player) {
+            StartCoroutine(PlayerManager.Instance.EndTurn());
+        }
         int index = (combatants.IndexOf(currentTurn) + 1) % combatants.Count;
         currentTurn = combatants[index];
         turn++;
