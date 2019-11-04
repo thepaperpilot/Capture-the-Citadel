@@ -60,31 +60,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   health: 0
+  tile: {fileID: 0}
   normalStrategy:
-    type: 0
+    type: 1
     moves:
     - actions:
+      - type: 2
+        status: {fileID: 0}
+        amount: 2
+        ranged: 0
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
       - type: 0
         status: {fileID: 0}
         amount: 3
+        ranged: 0
         targets: []
         actor: {fileID: 0}
+        destination: {fileID: 0}
         target: 0
-      moveDirection: 0
+      pathType: 0
+    - actions:
+      - type: 2
+        status: {fileID: 0}
+        amount: 3
+        ranged: 0
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
+      - type: 0
+        status: {fileID: 0}
+        amount: 2
+        ranged: 0
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
+      pathType: 0
   conditionalStrategyChanges:
-  - condition: 2
+  - condition: 0
     amount: 2
     newStrategy:
       type: 0
       moves:
       - actions:
-        - type: 2
-          status: {fileID: 0}
+        - type: 3
+          status: {fileID: 11400000, guid: 524275595e50b88409d0d0b786cfebb8, type: 2}
           amount: 2
+          ranged: 0
           targets: []
           actor: {fileID: 0}
-          target: 0
-        moveDirection: 0
+          destination: {fileID: 0}
+          target: 1
+        pathType: 0
     returnAfter: 1
   turn: 0
   currentStrategy:
@@ -99,7 +130,7 @@ MonoBehaviour:
     returnAfter: 0
   nextMove:
     actions: []
-    moveDirection: 0
+    pathType: 0
 --- !u!65 &7921933045981941053
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -120,16 +151,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6456628237583677071}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c7c1c7de7b244eb4b83244c8592e4e01,
-        type: 3}
-      propertyPath: m_Name
-      value: wolfEdit
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: c7c1c7de7b244eb4b83244c8592e4e01,
-        type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c7c1c7de7b244eb4b83244c8592e4e01,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -199,6 +220,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.25000018
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c7c1c7de7b244eb4b83244c8592e4e01,
+        type: 3}
+      propertyPath: m_Name
+      value: wolfEdit
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c7c1c7de7b244eb4b83244c8592e4e01,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: -8241705642480610516, guid: c7c1c7de7b244eb4b83244c8592e4e01,
         type: 3}

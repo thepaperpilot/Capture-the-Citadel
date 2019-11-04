@@ -44,6 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd71ead63bd3b224bbbf647193ac38ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  neighbors: []
+  occupant: {fileID: 0}
+  sightTargets: []
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  visited: 0
+  playerDistance: 0
+  pathDistance: 0
+  sightDistance: 0
 --- !u!1001 &8827581735362130471
 PrefabInstance:
   m_ObjectHideFlags: 0

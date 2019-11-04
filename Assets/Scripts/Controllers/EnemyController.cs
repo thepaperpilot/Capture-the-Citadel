@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,22 +13,20 @@ public class EnemyController : CombatantController
 
     public enum Conditions {
         HALF_HEALTH,
-        NUM_TURNS,
-        TOO_FAR,
-        TOO_CLOSE
+        NUM_TURNS
     }
 
-    public enum MoveDirections {
-        CLOSER,
-        FARTHER
+    public enum PathType {
+        INTO_MELEE,
+        INTO_RANGE
     }
 
     [Serializable]
-    public struct Attack {
+    public struct TurnActions {
         [ListDrawerSettings(Expanded=true)]
         public CardAction[] actions;
         [EnumToggleButtons, ShowIf("ShowDirection")]
-        public MoveDirections moveDirection;
+        public PathType pathType;
 
 #if UNITY_EDITOR
         private bool ShowDirection() {
@@ -40,7 +39,7 @@ public class EnemyController : CombatantController
     public struct Strategy {
         [HideLabel, EnumToggleButtons]
         public StrategyTypes type;
-        public Attack[] moves;
+        public TurnActions[] moves;
     }
 
     [Serializable]
@@ -68,7 +67,7 @@ public class EnemyController : CombatantController
     [SerializeField, HideInEditorMode]
     private StrategyChange currentStrategyChange;
     [SerializeField, HideInEditorMode]
-    private Attack nextMove;
+    private TurnActions nextMove;
 
     void Start() {
         currentStrategy = normalStrategy;
@@ -89,17 +88,13 @@ public class EnemyController : CombatantController
                     if (turn == change.amount)
                         ChangeStrategy(change);
                     break;
-                case Conditions.TOO_CLOSE:
-                    // TODO positioning system
-                    break;
-                case Conditions.TOO_FAR:
-                    // TODO positioning system
-                    break;
             }
         }
 
         // Perform our actions
+        List<AbstractAction> modifiedActions = new List<AbstractAction>();
         foreach (CardAction action in nextMove.actions) {
+            action.actor = this;
             switch (action.target) {
                 case CardAction.Targets.ALL_ENEMIES:
                     action.targets = CombatManager.Instance.enemies;
@@ -111,9 +106,72 @@ public class EnemyController : CombatantController
                     action.targets = new CombatantController[] { CombatManager.Instance.player };
                     break;
             }
-            action.actor = this;
+            if(action.type == CombatAction.TYPE.MOVE)
+            {
+                bool moved = false;
+                int remainingMovement = action.amount;
+                Hex currentHex = tile;
+                while(remainingMovement > 0)
+                {
+                    Hex bestHex = currentHex;
+                    int bestScore;
+                    if(nextMove.pathType == PathType.INTO_MELEE)
+                    {
+                        bestScore = bestHex.pathDistance;
+                        foreach(Hex other in currentHex.neighbors)
+                        {
+                            if(other.pathDistance < currentHex.pathDistance)
+                            {
+                                bestHex = other;
+                                bestScore = other.pathDistance;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        bestScore = bestHex.sightDistance;
+                        foreach (Hex other in currentHex.neighbors)
+                        {
+                            if (other.sightDistance < currentHex.sightDistance)
+                            {
+                                bestHex = other;
+                                bestScore = other.sightDistance;
+                            }
+                        }
+                    }
+
+                    if(bestHex == currentHex)
+                    {
+                        remainingMovement = 0;
+                    }
+                    else
+                    {
+                        moved = true;
+                        CardAction moveAction = new CardAction();
+                        moveAction.actor = this;
+                        moveAction.amount = 1;
+                        moveAction.type = CombatAction.TYPE.MOVE;
+                        moveAction.destination = bestHex;
+                        modifiedActions.Add(moveAction);
+
+                        //If the entered hex contains a trap, spring it
+
+                        currentHex = bestHex;
+                        remainingMovement--;
+                    }
+                }
+                if (moved)
+                {
+                    modifiedActions.Add(new BakeNavigationAction(BakeNavigationAction.BakeType.ENEMY_CHANGED));
+                }
+            }
+            else
+            {
+                modifiedActions.Add(action);
+            }
+            
         }
-        ActionsManager.Instance.AddToTop(nextMove.actions);
+        ActionsManager.Instance.AddToTop(modifiedActions.ToArray());
 
         // Change back to normal strategy if applicable
         // and update next move

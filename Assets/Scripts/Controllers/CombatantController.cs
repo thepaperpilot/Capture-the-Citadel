@@ -12,4 +12,6 @@ public class CombatantController : MonoBehaviour
 
     [HideInEditorMode]
     public int health = 0;
+    [HideInInspector]
+    public Hex tile;
 }

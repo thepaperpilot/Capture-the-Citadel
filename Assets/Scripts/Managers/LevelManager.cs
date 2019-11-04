@@ -13,6 +13,7 @@ public class LevelManager : SerializedMonoBehaviour
     [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
     [HideInPlayMode]
     public GameObject levelPrefab;
+    public LevelController controller;
 
     private void Awake() {
         if (Instance == null) {
@@ -24,14 +25,21 @@ public class LevelManager : SerializedMonoBehaviour
     }
 
     public void SetLevel(AbstractLevel level) {
-        while (transform.childCount > 0)
-            Destroy(transform.GetChild(0));
+        ClearLevel();
 
         GameObject levelGObject = Instantiate(levelPrefab, transform);
-        levelGObject.GetComponent<LevelController>().Setup(level);
+        controller = levelGObject.GetComponent<LevelController>();
+        controller.Setup(level);
 
         Transform playerTransform = levelGObject.GetComponentInChildren<PlayerController>().transform;
         PlayerManager.Instance.MovePlayer(playerTransform.position, playerTransform.rotation);
+        Destroy(playerTransform.gameObject);
+    }
+
+    public void ClearLevel()
+    {
+        while (transform.childCount > 0)
+            Destroy(transform.GetChild(0));
     }
 
 #if UNITY_EDITOR

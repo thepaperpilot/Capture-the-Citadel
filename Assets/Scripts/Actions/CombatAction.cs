@@ -19,12 +19,15 @@ public class CombatAction : AbstractAction
     [ShowIf("type", TYPE.STATUS), InlineEditor(InlineEditorObjectFieldModes.Foldout), AssetList]
     public AbstractStatus status;
     public int amount;
+    public bool ranged;
 
     [HideInInspector]
     // Targets must be set before adding this action to the ActionsManager
     public CombatantController[] targets;
     [HideInInspector]
     public CombatantController actor;
+    [HideInInspector]
+    public Hex destination;
 
     protected virtual int GetAmount() {
         return amount;
@@ -45,7 +48,13 @@ public class CombatAction : AbstractAction
                     ActionsManager.Instance.AddToTop(new DrawAction(amount));
                     break;
                 case TYPE.MOVE:
-                    // TODO move actions
+                    actor.transform.LookAt(destination.transform);
+                    yield return new WaitForSeconds(1);
+                    actor.transform.SetParent(destination.transform);
+                    actor.transform.localPosition = Vector3.zero;
+                    actor.tile.occupant = null;
+                    destination.occupant = actor.gameObject;
+                    actor.tile = destination;
                     break;
                 case TYPE.STATUS:
                     controller.GetComponent<StatusController>().AddStatus(status, amount);
