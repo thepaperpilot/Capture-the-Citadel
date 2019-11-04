@@ -35,6 +35,8 @@ public class LevelManager : SerializedMonoBehaviour
         Transform playerTransform = playerController.transform;
         PlayerManager.Instance.MovePlayer(playerTransform.position, playerTransform.rotation);
         Destroy(playerController.model);
+        foreach (EnemyController enemy in levelGObject.GetComponentsInChildren<EnemyController>())
+            enemy.transform.LookAt(playerTransform);
     }
 
     public void ClearLevel()
