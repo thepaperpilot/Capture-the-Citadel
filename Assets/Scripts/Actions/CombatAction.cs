@@ -48,13 +48,22 @@ public class CombatAction : AbstractAction
                     ActionsManager.Instance.AddToTop(new DrawAction(amount));
                     break;
                 case TYPE.MOVE:
-                    actor.transform.LookAt(destination.transform);
-                    yield return new WaitForSeconds(1);
-                    actor.transform.SetParent(destination.transform);
-                    actor.transform.localPosition = Vector3.zero;
-                    actor.tile.occupant = null;
-                    destination.occupant = actor.gameObject;
-                    actor.tile = destination;
+                    if (controller == CombatManager.Instance.player) {
+                        controller.transform.SetParent(destination.transform);
+                        controller.transform.localPosition = Vector3.zero;
+                        controller.tile.occupant = null;
+                        destination.occupant = controller.gameObject;
+                        controller.tile = destination;
+                        PlayerManager.Instance.MovePlayer(controller.transform.position, controller.transform.rotation);
+                    } else {
+                        actor.transform.LookAt(destination.transform);
+                        yield return new WaitForSeconds(1);
+                        actor.transform.SetParent(destination.transform);
+                        actor.transform.localPosition = Vector3.zero;
+                        actor.tile.occupant = null;
+                        destination.occupant = actor.gameObject;
+                        actor.tile = destination;
+                    }
                     break;
                 case TYPE.STATUS:
                     controller.GetComponent<StatusController>().AddStatus(status, amount);

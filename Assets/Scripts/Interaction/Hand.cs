@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zinnia.Action;
 
 public class Hand : MonoBehaviour
 {
@@ -40,7 +41,9 @@ public class Hand : MonoBehaviour
     [SerializeField] float grabRadius = 0.05f;
     [SerializeField] float pinchRadius = 0.02f;
 
-    // Start is called before the first frame update
+    public BooleanAction trigger;
+    public BooleanAction grip;
+
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -154,11 +157,13 @@ public class Hand : MonoBehaviour
     public void TriggerButtonChanged(bool pressed)
     {
         triggerPressed = pressed;
+        trigger.Receive(pressed);
     }
 
     public void GripButtonChanged(bool pressed)
     {
         gripPressed = pressed;
+        grip.Receive(pressed);
     }
 
     void ChangeToState(HandAnimPose toState)

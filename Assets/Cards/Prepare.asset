@@ -15,14 +15,16 @@ MonoBehaviour:
   image: {fileID: -8456637713165075861, guid: 89608e16cbdd9af4aa472c2a89b2082e, type: 3}
   name: Prepare
   description: Gain 1 Strength
-  energyCost: 1
-  rarity: 2
+  energyCost: 2
+  rarity: 0
   actions:
   - type: 3
     status: {fileID: 11400000, guid: 524275595e50b88409d0d0b786cfebb8, type: 2}
     amount: 1
+    ranged: 0
     targets:
     - {fileID: 0}
     actor: {fileID: 0}
+    destination: {fileID: 0}
     target: 0
   toy: {fileID: 838485361750478193, guid: 0e95fca652182f148b7602146ca7855d, type: 3}

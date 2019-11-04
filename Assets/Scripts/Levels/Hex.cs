@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Hex : MonoBehaviour
@@ -10,12 +11,16 @@ public class Hex : MonoBehaviour
 
     [SerializeField]
     private LayerMask obstacleMask;
+    [SerializeField, AssetsOnly]
+    private GameObject highlightPrefab;
 
     public bool visited;
     public bool inSight;
     public int playerDistance; //Distance to player in hexes, disregarding everything (used for deciding valid push directions)
     public int pathDistance; //Distance to the player based on available paths
     public int sightDistance; //Distance to the nearest hex with sight to the player
+
+    private GameObject highlight;
 
     public void Init()
     {
@@ -93,6 +98,24 @@ public class Hex : MonoBehaviour
             else
                 return 0;
         }
+    }
+
+    public void Highlight() {
+        highlight = Instantiate(highlightPrefab, transform);
+    }
+
+    public void Unhighlight() {
+        Destroy(highlight);
+    }
+
+    public void Activate() {
+        if (highlight)
+            highlight.transform.localScale = Vector3.one * 2;
+    }
+
+    public void Deactivate() {
+        if (highlight)
+            highlight.transform.localScale = Vector3.one;
     }
 }
 

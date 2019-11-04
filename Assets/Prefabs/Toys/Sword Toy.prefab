@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8786350659801512213}
   - component: {fileID: 5570136673176148113}
-  - component: {fileID: 6484388740982887247}
+  - component: {fileID: 4977643978450951342}
   m_Layer: 0
   m_Name: Blade
   m_TagString: Untagged
@@ -92,7 +92,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.26976022, y: 0.59792554, z: 0.09934783}
   m_Center: {x: -0.0025147945, y: 0.1879619, z: -0.006520331}
---- !u!114 &6484388740982887247
+--- !u!114 &4977643978450951342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,15 +101,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4355436170102886907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2d215a12812a64e91e06249af6ac16, type: 3}
+  m_Script: {fileID: 11500000, guid: f703680a730218e43997af3468e851f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: 0
   toyRoot: {fileID: 838485361750478193}
   particles: {fileID: 5420735545103126750}
   renderer: {fileID: 9157940127418837690}
   delayDespawn: 2
   card: {fileID: 0}
+  target: 0
 --- !u!1 &4510489129673534873
 GameObject:
   m_ObjectHideFlags: 0
