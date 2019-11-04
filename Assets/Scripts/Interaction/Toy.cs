@@ -5,12 +5,6 @@ using UnityEngine;
 
 public class Toy : MonoBehaviour
 {
-    public enum CollisionTargets {
-        ENEMY
-    }
-
-    [SerializeField]
-    private CollisionTargets target;
     [SerializeField, SceneObjectsOnly]
     private GameObject toyRoot;
     [SerializeField, SceneObjectsOnly]
@@ -24,18 +18,12 @@ public class Toy : MonoBehaviour
     [HideInInspector]
     public AbstractCard card;
 
-    private void OnTriggerEnter(Collider other) {
+    protected void Trigger(GameObject gameObject = null) {
         if (triggered) return;
 
-        switch (target) {
-            case CollisionTargets.ENEMY:
-                if (other.GetComponentInParent<EnemyController>()) {
-                    triggered = true;
-                    card.Play(other.gameObject);
-                    Destroy(delayDespawn);
-                }
-                break;
-        }
+        triggered = true;
+        card.Play(gameObject);
+        Destroy(delayDespawn);
     }
 
     public void Destroy(int delay) {

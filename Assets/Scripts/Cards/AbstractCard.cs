@@ -32,7 +32,7 @@ public class AbstractCard : ScriptableObject
     [HideInInlineEditors, Space]
     public CardAction[] actions;
     [SerializeField, AssetList(Path="Prefabs/Toys", CustomFilterMethod="FindToy")]
-    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Foldout)]
     public GameObject toy;
 #if UNITY_EDITOR
     [PropertySpace(20), HideLabel, OnInspectorGUI("CheckPreview")]
@@ -54,7 +54,7 @@ public class AbstractCard : ScriptableObject
         GameObject temp = UnityEditor.PrefabUtility.LoadPrefabContents("Assets/Prefabs/Card.prefab");
         temp.GetComponent<CardController>().Setup(this);
         preview = null;
-        nextPreview = UnityEditor.PrefabUtility.SaveAsPrefabAsset(temp, "Assets/Editor/Previews/" + name + " Card (Preview).prefab");
+        nextPreview = UnityEditor.PrefabUtility.SaveAsPrefabAsset(temp, "Assets/Editor/Previews/Card Preview (" + name + ").prefab");
         UnityEditor.PrefabUtility.UnloadPrefabContents(temp);
     }
 
@@ -75,6 +75,9 @@ public class AbstractCard : ScriptableObject
                 case CardAction.Targets.PLAYER:
                     action.targets = new CombatantController[] { CombatManager.Instance.player };
                     break;
+            }
+            if (action.type == CardAction.TYPE.MOVE) {
+                action.destination = hit.GetComponent<Hex>();
             }
             action.actor = CombatManager.Instance.player;
         }

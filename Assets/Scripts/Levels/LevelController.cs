@@ -58,6 +58,7 @@ public class LevelController : MonoBehaviour
                         if (occupant.CompareTag("PlayerSpawn"))
                         {
                             playerHex = tempHex;
+                            occupant.GetComponent<CombatantController>().tile = tempHex;
                         }
                         else if (occupant.CompareTag("Enemy"))
                         {

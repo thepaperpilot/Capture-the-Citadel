@@ -35,8 +35,13 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+#if UNITY_EDITOR
         leftSource = leftControllerSources[0];
         rightSource = rightControllerSources[0];
+#else
+        leftSource = leftControllerSources[1];
+        rightSource = rightControllerSources[1];
+#endif
         leftRB = leftHand.GetComponent<Rigidbody>();
         rightRB = rightHand.GetComponent<Rigidbody>();
     }

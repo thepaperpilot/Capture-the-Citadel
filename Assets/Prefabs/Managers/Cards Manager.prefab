@@ -57,20 +57,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 3f2e67bdf16df4547a185f73b29cf96d, type: 2}
+  - {fileID: 11400000, guid: 3f2e67bdf16df4547a185f73b29cf96d, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
   - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
   - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
-  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
-  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   deck: []
   handSize: 5
   hand: []
   drawPile: []
   discards: []
-  controller: {fileID: 0}
