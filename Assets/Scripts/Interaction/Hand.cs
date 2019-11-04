@@ -20,7 +20,7 @@ public class Hand : MonoBehaviour
         RIGHT
     }
 
-    HandAnimPose state = HandAnimPose.OPEN;
+    public HandAnimPose state = HandAnimPose.OPEN;
     Animator anim;
     [SerializeField] private HandID id;
     string triggerAxis;
@@ -108,6 +108,7 @@ public class Hand : MonoBehaviour
             case HandAnimPose.HOLDING:
                 if (gripPressed || heldObject == null || heldObject.transform.parent != transform)
                 {
+                    Untransform();
                     Release();
                     if (inPointArea)
                     {
@@ -142,6 +143,10 @@ public class Hand : MonoBehaviour
                     {
                         ChangeToState(HandAnimPose.OPEN);
                     }
+                }
+                else if (gripPressed) {
+                    Transform();
+                    ChangeToState(HandAnimPose.OPEN);
                 }
                 break;
         }
@@ -206,6 +211,28 @@ public class Hand : MonoBehaviour
         }
     }
 
+    void Transform() {
+        CardController card = heldObject.GetComponent<CardController>();
+        if (CombatManager.Instance.player.energy < card.card.energyCost) {
+            // TODO "Failed" sound effect or something
+            return;
+        }
+        CombatManager.Instance.player.energy -= card.card.energyCost;
+        GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
+        toy.GetComponentInChildren<Toy>().card = card.card;
+        Destroy(heldObject);
+    }
+
+    void Untransform() {
+        if (heldObject == null) return;
+        Toy toy = heldObject.GetComponentInChildren<Toy>();
+        if (toy == null) return;
+        Destroy(heldObject);
+        heldObject = null;
+        CombatManager.Instance.player.energy += toy.card.energyCost;
+        StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+    }
+
     void Release()
     {
         if(heldObject != null)
@@ -237,4 +264,22 @@ public class Hand : MonoBehaviour
             inPointArea = false;
         }
     }
+
+#if UNITY_EDITOR
+    // Used by debug manager
+    public void Grab(GameObject gameObject) {
+        Release();
+        heldObject = gameObject;
+        heldObjectParent = heldObject.transform.parent;
+        gameObject.transform.SetParent(transform);
+        heldObject.transform.localPosition = grabTarget.localPosition;
+        heldObject.transform.localRotation = Quaternion.identity;
+        Rigidbody childRB = heldObject.GetComponent<Rigidbody>();
+        if(childRB != null)
+        {
+            childRB.isKinematic = true;
+        }
+        ChangeToState(HandAnimPose.HOLDING);
+    }
+#endif
 }

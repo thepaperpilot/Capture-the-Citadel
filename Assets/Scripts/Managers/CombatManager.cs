@@ -57,6 +57,7 @@ public class CombatManager : MonoBehaviour
             // Add this so that the enemy turn action can add more actions to top, and their turn will end once those finish
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
         } else {
+            player.FillEnergy();
             RelicsManager.Instance.OnTurnStart(turn);
             ActionsManager.Instance.AddToBottom(new PlayerTurnAction());
         }

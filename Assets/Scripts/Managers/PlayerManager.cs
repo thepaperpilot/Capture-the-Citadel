@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private DeckController deckController;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
+    private Hand right;
+    private Hand left;
     private Transform leftSource;
     private Transform rightSource;
     Rigidbody leftRB;
@@ -26,6 +28,9 @@ public class PlayerManager : MonoBehaviour
         } else {
             Destroy(this);
         }
+
+        right = rightHand.GetComponentInChildren<Hand>();
+        left = leftHand.GetComponentInChildren<Hand>();
     }
 
     void Start()
@@ -42,6 +47,11 @@ public class PlayerManager : MonoBehaviour
         leftHand.transform.rotation = leftSource.rotation;
         rightHand.transform.position = rightSource.position;
         rightHand.transform.rotation = rightSource.rotation;
+
+        if (right.state == Hand.HandAnimPose.CLOSED &&
+            left.state == Hand.HandAnimPose.CLOSED &&
+            CombatManager.Instance.IsPlayerTurn())
+            ActionsManager.Instance.AddToBottom(new EndTurnAction());
     }
 
     private void FixedUpdate()
@@ -69,14 +79,11 @@ public class PlayerManager : MonoBehaviour
     }
     
     public IEnumerator Draw(AbstractCard[] cardsToDraw) {
-        IEnumerator[] coroutines = new IEnumerator[cardsToDraw.Count()];
         for (int i = 0; i < cardsToDraw.Count(); i++) {
-            coroutines[i] = deckController.Draw(cardsToDraw[i]);
-            StartCoroutine(coroutines[i]);
+            StartCoroutine(deckController.Draw(cardsToDraw[i]));
             yield return new WaitForSeconds(deckController.timeBetweenDraws);
         }
-        while (!coroutines.Any(e => e == null))
-            yield return null;
+        yield return new WaitForSeconds(deckController.timeToRearrange);
     }
 
     public void AddCard(CardController card) {
@@ -86,4 +93,15 @@ public class PlayerManager : MonoBehaviour
     public void RemoveCard(CardController card) {
         deckController.PickupCard(card);
     }
+
+#if UNITY_EDITOR
+    // These are used by DebugManager
+    public DeckController GetDeckController() {
+        return deckController;
+    }
+
+    public void Grab(GameObject gameObject) {
+        right.Grab(gameObject);
+    }
+#endif
 }

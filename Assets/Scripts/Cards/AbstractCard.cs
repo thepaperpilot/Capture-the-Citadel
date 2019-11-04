@@ -31,8 +31,12 @@ public class AbstractCard : ScriptableObject
     public Rarities rarity;
     [HideInInlineEditors, Space]
     public CardAction[] actions;
+    [SerializeField, AssetList(Path="Prefabs/Toys", CustomFilterMethod="FindToy")]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
+    public GameObject toy;
 #if UNITY_EDITOR
-    [OnInspectorGUI("CheckPreview"), ShowInInspector, HideLabel, InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden), Space]
+    [PropertySpace(20), HideLabel, OnInspectorGUI("CheckPreview")]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
     private GameObject preview;
     private GameObject nextPreview;
 
@@ -53,19 +57,27 @@ public class AbstractCard : ScriptableObject
         nextPreview = UnityEditor.PrefabUtility.SaveAsPrefabAsset(temp, "Assets/Editor/Previews/" + name + " Card (Preview).prefab");
         UnityEditor.PrefabUtility.UnloadPrefabContents(temp);
     }
+
+    private bool FindToy(GameObject obj) {
+        return obj.GetComponentInChildren<Toy>() != null;
+    }
 #endif
 
-    public void Play() {
-        if (actions.Any(action => action.target == CardAction.Targets.ENEMY)) {
-            // TODO enemy selection system
-        } else {
-            foreach (CardAction action in actions) {
-                action.targets = action.target == CardAction.Targets.PLAYER ?
-                    new CombatantController[] { CombatManager.Instance.player } :
-                    CombatManager.Instance.enemies;
-                action.actor = CombatManager.Instance.player;
+    public void Play(GameObject hit) {
+        foreach (CardAction action in actions) {
+            switch (action.target) {
+                case CardAction.Targets.ALL_ENEMIES:
+                    action.targets = CombatManager.Instance.enemies;
+                    break;
+                case CardAction.Targets.ENEMY:
+                    action.targets = new CombatantController[] { hit.GetComponent<EnemyController>() };
+                    break;
+                case CardAction.Targets.PLAYER:
+                    action.targets = new CombatantController[] { CombatManager.Instance.player };
+                    break;
             }
-            ActionsManager.Instance.AddToTop(actions);
+            action.actor = CombatManager.Instance.player;
         }
+        ActionsManager.Instance.AddToTop(actions);
     }
 }

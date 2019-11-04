@@ -37,7 +37,7 @@ public class DeckController : MonoBehaviour
     public float timeBetweenDraws = .25f;
     [InfoBox("This is how long it takes the cards to move whenever adding or removing a card to the hand")]
     [FoldoutGroup("Advanced"), SerializeField]
-    private float timeToRearrange = .25f;
+    public float timeToRearrange = .25f;
     [InfoBox("This is how far away each card in the hand is from the deck")]
     [FoldoutGroup("Advanced"), SerializeField, OnValueChanged("RearrangeHand")]
     private float arcRadius = 4;
@@ -194,6 +194,13 @@ public class DeckController : MonoBehaviour
 
     private bool FindDropZoneControllers(GameObject obj) {
         return obj.GetComponentInChildren<DropZoneController>() != null;
+    }
+
+    public CardController GetCardController(int index) {
+        if (index >= cardsInHand.Count)
+            return null;
+
+        return cardsInHand[index];
     }
 #endif
 }

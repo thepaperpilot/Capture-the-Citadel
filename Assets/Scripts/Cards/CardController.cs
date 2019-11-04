@@ -39,8 +39,12 @@ public class CardController : MonoBehaviour
     [BoxGroup("Card Borders/h/Rare")]
     [SerializeField, AssetsOnly, HideLabel, PreviewField(ObjectFieldAlignment.Center)]
     private Material rare;
+
+    [HideInInspector]
+    public AbstractCard card;
     
     public void Setup(AbstractCard card) {
+        this.card = card;
         switch (card.rarity) {
             case AbstractCard.Rarities.COMMON:
                 border.material = common;

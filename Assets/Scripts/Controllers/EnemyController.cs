@@ -69,6 +69,10 @@ public class EnemyController : CombatantController
     [SerializeField, HideInEditorMode]
     private TurnActions nextMove;
 
+    void Start() {
+        currentStrategy = normalStrategy;
+    }
+
     public void PlayTurn() {
         turn++;
         
@@ -176,8 +180,8 @@ public class EnemyController : CombatantController
             nextMove = currentStrategy.type == StrategyTypes.LOOP ? currentStrategy.moves[0] : currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         } else {
             if (currentStrategy.type == StrategyTypes.LOOP) {
-                int index = System.Array.IndexOf(currentStrategy.moves, nextMove) % currentStrategy.moves.Length;
-                nextMove = currentStrategy.moves[index + 1];
+                int index = (System.Array.IndexOf(currentStrategy.moves, nextMove) + 1) % currentStrategy.moves.Length;
+                nextMove = currentStrategy.moves[index];
             } else {
                 nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
             }
