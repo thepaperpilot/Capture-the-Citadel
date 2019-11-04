@@ -108,7 +108,6 @@ public class Hand : MonoBehaviour
             case HandAnimPose.HOLDING:
                 if (gripPressed || heldObject == null || heldObject.transform.parent != transform)
                 {
-                    Untransform();
                     Release();
                     if (inPointArea)
                     {
@@ -223,16 +222,6 @@ public class Hand : MonoBehaviour
         Destroy(heldObject);
     }
 
-    void Untransform() {
-        if (heldObject == null) return;
-        Toy toy = heldObject.GetComponentInChildren<Toy>();
-        if (toy == null) return;
-        Destroy(heldObject);
-        heldObject = null;
-        CombatManager.Instance.player.energy += toy.card.energyCost;
-        StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
-    }
-
     void Release()
     {
         if(heldObject != null)
@@ -245,6 +234,13 @@ public class Hand : MonoBehaviour
             heldObject.transform.SetParent(heldObjectParent);
             if (heldObject.CompareTag("Card"))
                 PlayerManager.Instance.AddCard(heldObject.GetComponent<CardController>());
+            Toy toy = heldObject.GetComponentInChildren<Toy>();
+            if (toy != null) {
+                toy.Destroy(0);
+                heldObject = null;
+                CombatManager.Instance.player.energy += toy.card.energyCost;
+                StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+            }
             heldObject = null;
         }
     }

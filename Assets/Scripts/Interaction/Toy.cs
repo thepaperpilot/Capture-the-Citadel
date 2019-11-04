@@ -13,6 +13,10 @@ public class Toy : MonoBehaviour
     private CollisionTargets target;
     [SerializeField, SceneObjectsOnly]
     private GameObject toyRoot;
+    [SerializeField, SceneObjectsOnly]
+    private ParticleSystem particles;
+    [SerializeField, SceneObjectsOnly]
+    new private MeshRenderer renderer;
     [SerializeField]
     private int delayDespawn = 2;
     private bool triggered = false;
@@ -28,9 +32,21 @@ public class Toy : MonoBehaviour
                 if (other.GetComponentInParent<EnemyController>()) {
                     triggered = true;
                     card.Play(other.gameObject);
-                    Destroy(toyRoot, delayDespawn);
+                    Destroy(delayDespawn);
                 }
                 break;
         }
+    }
+
+    public void Destroy(int delay) {
+        StartCoroutine(DelayParticles(delay));
+    }
+
+    IEnumerator DelayParticles(int delay) {
+        yield return new WaitForSeconds(delay);
+        particles.gameObject.SetActive(false);
+        particles.gameObject.SetActive(true);
+        renderer.gameObject.SetActive(false);
+        Destroy(toyRoot, 1.5f);
     }
 }
