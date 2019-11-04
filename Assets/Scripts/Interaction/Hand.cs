@@ -244,7 +244,7 @@ public class Hand : MonoBehaviour
                 toy.Destroy(0);
                 heldObject = null;
                 CombatManager.Instance.player.energy += toy.card.energyCost;
-                StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+                StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }, false));
             }
             heldObject = null;
         }
