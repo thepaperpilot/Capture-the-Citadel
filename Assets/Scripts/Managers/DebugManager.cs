@@ -19,6 +19,7 @@ public class DebugManager : MonoBehaviour
         KeyCode.F12
     };
 
+#if UNITY_EDITOR
     void Update() {
         DeckController deck = PlayerManager.Instance.GetDeckController();
         for (int i = 0; i < nums.Length; i++) {
@@ -43,4 +44,5 @@ public class DebugManager : MonoBehaviour
             CombatManager.Instance.player.FillEnergy();
         }
     }
+#endif
 }
