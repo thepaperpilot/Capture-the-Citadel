@@ -135,8 +135,10 @@ public class LevelController : MonoBehaviour
     }
 
     //Use this if the player moves or is moved
-    public void BakeLevelFromPlayerMovement()
+    public void BakeLevelFromPlayerMovement(Hex playerHex = null)
     {
+        if (playerHex != null)
+            this.playerHex = playerHex;
         UpdatePlayerDistances();
         UpdatePathDistances();
         UpdateLOSRaycasts();

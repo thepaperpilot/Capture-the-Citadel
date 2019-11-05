@@ -13,6 +13,7 @@ public class LevelManager : SerializedMonoBehaviour
     [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Hidden)]
     [HideInPlayMode]
     public GameObject levelPrefab;
+    [HideInEditorMode]
     public LevelController controller;
 
     private void Awake() {
