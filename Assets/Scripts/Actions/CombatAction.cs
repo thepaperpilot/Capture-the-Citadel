@@ -16,7 +16,7 @@ public class CombatAction : AbstractAction
 
     [EnumToggleButtons]
     public TYPE type;
-    [ShowIf("type", TYPE.STATUS), InlineEditor(InlineEditorObjectFieldModes.Foldout), AssetList]
+    [ShowIf("type", TYPE.STATUS), ValueDropdown("GetStatusEffects")]
     public AbstractStatus status;
     public int amount;
     public bool ranged;
@@ -73,4 +73,17 @@ public class CombatAction : AbstractAction
         }
         yield return null;
     }
+
+#if UNITY_EDITOR
+    private static IEnumerable GetStatusEffects() {
+        string root = "Assets/Statuses/";
+        return UnityEditor.AssetDatabase.FindAssets("t:AbstractStatus")
+            .Select(x => UnityEditor.AssetDatabase.GUIDToAssetPath(x))
+            .Where(x => x.StartsWith(root))
+            .Select(x => new ValueDropdownItem<AbstractStatus>(
+                x.Substring(root.Length, x.Length - root.Length - 6),
+                UnityEditor.AssetDatabase.LoadAssetAtPath<AbstractStatus>(x)
+            ));
+    }
+#endif
 }

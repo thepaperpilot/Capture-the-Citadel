@@ -93,7 +93,7 @@ public class AbstractRelic : ScriptableObject
         [HideIf("@trigger == Triggers.DAMAGE_GIVEN || trigger == Triggers.DAMAGE_TAKEN")]
         public Targets target;
         [BoxGroup("Effect")]
-        [ShowIf("effect", Effects.ADD_STATUS), InlineEditor(InlineEditorObjectFieldModes.Foldout), AssetList]
+        [ShowIf("effect", Effects.ADD_STATUS), ValueDropdown("GetStatusEffects")]
         public AbstractStatus status;
         [BoxGroup("Effect")]
         [HideIf("effect", Effects.AFFECT_CARD)]
@@ -143,5 +143,18 @@ public class AbstractRelic : ScriptableObject
 
             yield return null;
         }
+    
+#if UNITY_EDITOR
+        private static IEnumerable GetStatusEffects() {
+            string root = "Assets/Statuses/";
+            return UnityEditor.AssetDatabase.FindAssets("t:AbstractStatus")
+                .Select(x => UnityEditor.AssetDatabase.GUIDToAssetPath(x))
+                .Where(x => x.StartsWith(root))
+                .Select(x => new ValueDropdownItem<AbstractStatus>(
+                    x.Substring(root.Length, x.Length - root.Length - 6),
+                    UnityEditor.AssetDatabase.LoadAssetAtPath<AbstractStatus>(x)
+                ));
+        }
+#endif
     }
 }
