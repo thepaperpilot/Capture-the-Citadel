@@ -39,8 +39,10 @@ public class PlayerManager : MonoBehaviour
         leftSource = leftControllerSources[0];
         rightSource = rightControllerSources[0];
 #else
-        leftSource = leftControllerSources[1];
-        rightSource = rightControllerSources[1];
+        leftSource = leftControllerSources[0];
+        rightSource = rightControllerSources[0];
+        //leftSource = leftControllerSources[1];
+        //rightSource = rightControllerSources[1];
 #endif
         leftRB = leftHand.GetComponent<Rigidbody>();
         rightRB = rightHand.GetComponent<Rigidbody>();
