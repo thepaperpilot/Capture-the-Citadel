@@ -38,12 +38,6 @@ public class PointToy : Toy, IRule
                 hex.Highlight();
             }
         }
-
-    /* 
-        PointerFacade facade = GetComponentInChildren<PointerFacade>();
-        facade.SelectionAction = GetComponentInParent<Hand>().trigger;
-        facade.Configuration.ConfigureSelectionAction();
-        */
     }
 
     void Update() {
@@ -55,20 +49,23 @@ public class PointToy : Toy, IRule
         }
     }
 
-    void OnDestroy() {
+    public override void Destroy(int delay) {
         if (target == PointTargets.HEX) {
             foreach (Hex hex in availableHexes) {
                 hex.Unhighlight();
             }
         }
+        base.Destroy(delay);
     }
 
     public void OnEnter(EventData data) {
-        GameObject gObject = data.CollisionData.collider.gameObject;
-        if (gObject != null && gObject.CompareTag("Hex") && availableHexes.Contains(gObject.GetComponentInParent<Hex>())) {
-            active = gObject.GetComponentInParent<Hex>();
-            active.Activate();
-        } else active = null;
+        if (target == PointTargets.HEX) {
+            GameObject gObject = data.CollisionData.collider.gameObject;
+            if (gObject != null && gObject.CompareTag("Hex") && availableHexes.Contains(gObject.GetComponentInParent<Hex>())) {
+                active = gObject.GetComponentInParent<Hex>();
+                active.Activate();
+            } else active = null;
+        }
     }
 
     public void OnExit() {
@@ -80,8 +77,7 @@ public class PointToy : Toy, IRule
 
     public void Select() {
         if (active != null) {
-            Debug.Log("Worked!");
-            Trigger(active.gameObject);
+            Trigger(active.gameObject, true);
         }
     }
 

@@ -89,9 +89,9 @@ public class PlayerManager : MonoBehaviour
         yield return deckController.SlideIn();
     }
     
-    public IEnumerator Draw(AbstractCard[] cardsToDraw) {
+    public IEnumerator Draw(AbstractCard[] cardsToDraw, bool setDeckSize = true) {
         for (int i = 0; i < cardsToDraw.Count(); i++) {
-            StartCoroutine(deckController.Draw(cardsToDraw[i]));
+            StartCoroutine(deckController.Draw(cardsToDraw[i], setDeckSize));
             yield return new WaitForSeconds(deckController.timeBetweenDraws);
         }
         yield return new WaitForSeconds(deckController.timeToRearrange);

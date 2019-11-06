@@ -105,14 +105,15 @@ public class DeckController : MonoBehaviour
         cardPosition = new Vector3(0, 0, .02f * numCards);
     }
 
-    public IEnumerator Draw(AbstractCard card) {
+    public IEnumerator Draw(AbstractCard card, bool setDeckSize = true) {
         GameObject cardObject = Instantiate(cardPrefab, transform);
         cardObject.transform.localPosition = cardPosition;
         cardObject.transform.SetParent(hand);
         CardController controller = cardObject.GetComponent<CardController>();
         cardsInHand.Add(controller);
         controller.Setup(card);
-        SetDeckSize(deckSize - 1);
+        if (setDeckSize)
+            SetDeckSize(deckSize - 1);
         yield return RearrangeCards();
     }
 
