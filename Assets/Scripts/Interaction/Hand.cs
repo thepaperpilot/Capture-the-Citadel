@@ -147,8 +147,8 @@ public class Hand : MonoBehaviour
                     }
                 }
                 else if (gripPressed) {
-                    Transform();
-                    ChangeToState(HandAnimPose.OPEN);
+                    PlayCard(heldObject);
+                    //ChangeToState(HandAnimPose.OPEN);
                 }
                 break;
         }
@@ -215,16 +215,18 @@ public class Hand : MonoBehaviour
         }
     }
 
-    void Transform() {
-        CardController card = heldObject.GetComponent<CardController>();
+    void PlayCard(GameObject cardObj) {
+        CardController card = cardObj.GetComponent<CardController>();
         if (CombatManager.Instance.player.energy < card.card.energyCost) {
             // TODO "Failed" sound effect or something
+            PlayerManager.Instance.AddCard(card);
             return;
         }
         CombatManager.Instance.player.energy -= card.card.energyCost;
         GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
         toy.GetComponentInChildren<Toy>().card = card.card;
-        Destroy(heldObject);
+        Destroy(cardObj);
+        heldObject = null;
     }
 
     void Release()
@@ -238,13 +240,26 @@ public class Hand : MonoBehaviour
             }
             heldObject.transform.SetParent(heldObjectParent);
             if (heldObject.CompareTag("Card"))
-                PlayerManager.Instance.AddCard(heldObject.GetComponent<CardController>());
-            Toy toy = heldObject.GetComponentInChildren<Toy>();
-            if (toy != null) {
-                toy.Destroy(0);
-                heldObject = null;
-                CombatManager.Instance.player.energy += toy.card.energyCost;
-                StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }, false));
+            {
+                if (inPointArea)
+                {
+                    PlayerManager.Instance.AddCard(heldObject.GetComponent<CardController>());
+                }
+                else
+                {
+                    PlayCard(heldObject);
+                }
+            }
+            else
+            {
+                Toy toy = heldObject.GetComponentInChildren<Toy>();
+                if (toy != null)
+                {
+                    toy.Destroy(0);
+                    heldObject = null;
+                    CombatManager.Instance.player.energy += toy.card.energyCost;
+                    StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+                }
             }
             heldObject = null;
         }
@@ -266,9 +281,9 @@ public class Hand : MonoBehaviour
         }
     }
 
-#if UNITY_EDITOR
+
     // Used by debug manager
-    public void Grab(GameObject gameObject) {
+    public void DebugGrab(GameObject gameObject) {
         Release();
         heldObject = gameObject;
         heldObjectParent = heldObject.transform.parent;
@@ -282,5 +297,5 @@ public class Hand : MonoBehaviour
         }
         ChangeToState(HandAnimPose.HOLDING);
     }
-#endif
+
 }

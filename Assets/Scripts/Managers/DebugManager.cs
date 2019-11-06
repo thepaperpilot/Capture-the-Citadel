@@ -5,8 +5,6 @@ using UnityEngine;
 public class DebugManager : MonoBehaviour
 {
     private readonly KeyCode[] nums = new KeyCode[] {
-        KeyCode.F1,
-        KeyCode.F2,
         KeyCode.F3,
         KeyCode.F4,
         KeyCode.F5,
@@ -19,7 +17,6 @@ public class DebugManager : MonoBehaviour
         KeyCode.F12
     };
 
-#if UNITY_EDITOR
     void Update() {
         DeckController deck = PlayerManager.Instance.GetDeckController();
         for (int i = 0; i < nums.Length; i++) {
@@ -44,5 +41,4 @@ public class DebugManager : MonoBehaviour
             CombatManager.Instance.player.FillEnergy();
         }
     }
-#endif
 }
