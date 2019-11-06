@@ -174,7 +174,6 @@ public class DeckController : MonoBehaviour
         transform.localRotation = newRotation.Value;
     }
 
-#if UNITY_EDITOR
     [PropertySpace, Button(ButtonSizes.Medium), HideInEditorMode]
     private void SlideDeckOut() {
         StartCoroutine(SlideOut());
@@ -203,5 +202,4 @@ public class DeckController : MonoBehaviour
 
         return cardsInHand[index];
     }
-#endif
 }

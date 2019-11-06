@@ -89,9 +89,9 @@ public class PlayerManager : MonoBehaviour
         yield return deckController.SlideIn();
     }
     
-    public IEnumerator Draw(AbstractCard[] cardsToDraw, bool setDeckSize = true) {
+    public IEnumerator Draw(AbstractCard[] cardsToDraw) {
         for (int i = 0; i < cardsToDraw.Count(); i++) {
-            StartCoroutine(deckController.Draw(cardsToDraw[i], setDeckSize));
+            StartCoroutine(deckController.Draw(cardsToDraw[i]));
             yield return new WaitForSeconds(deckController.timeBetweenDraws);
         }
         yield return new WaitForSeconds(deckController.timeToRearrange);
@@ -105,14 +105,13 @@ public class PlayerManager : MonoBehaviour
         deckController.PickupCard(card);
     }
 
-#if UNITY_EDITOR
+
     // These are used by DebugManager
     public DeckController GetDeckController() {
         return deckController;
     }
 
     public void Grab(GameObject gameObject) {
-        right.Grab(gameObject);
+        right.DebugGrab(gameObject);
     }
-#endif
 }
