@@ -55,7 +55,8 @@ public class CombatAction : AbstractAction
                         destination.occupant = controller.gameObject;
                         controller.tile = destination;
                         PlayerManager.Instance.MovePlayer(controller.transform.position, controller.transform.rotation);
-                        LevelManager.Instance.controller.BakeLevelFromPlayerMovement(destination);
+                        LevelManager.Instance.controller.playerHex = destination;
+                        ActionsManager.Instance.AddToTop(new BakeNavigationAction(BakeNavigationAction.BakeType.PLAYER_CHANGED));
                     } else {
                         actor.transform.LookAt(destination.transform);
                         yield return new WaitForSeconds(1);
