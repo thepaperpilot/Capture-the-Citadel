@@ -82,6 +82,7 @@ public class PlayerManager : MonoBehaviour
 
     public IEnumerator StartTurn() {
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
+        CombatManager.Instance.player.FillEnergy();
         yield return deckController.SlideOut();
     }
 
