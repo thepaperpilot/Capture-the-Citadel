@@ -105,6 +105,11 @@ public class PlayerManager : MonoBehaviour
         deckController.PickupCard(card);
     }
 
+    public Vector3 GetHeadsetPos()
+    {
+        return headsetAlias.transform.position;
+    }
+
 
     // These are used by DebugManager
     public DeckController GetDeckController() {
