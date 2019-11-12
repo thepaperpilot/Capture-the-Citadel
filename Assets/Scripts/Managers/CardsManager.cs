@@ -9,13 +9,11 @@ public class CardsManager : SerializedMonoBehaviour
 {
     public static CardsManager Instance;
 
-    [Space, HideInPlayMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
-    [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
-    public List<AbstractCard> starterDeck;
     [Space, HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public  List<AbstractCard> deck;
-    public int handSize = 5;
+    public int startingHandSize = 5;
+    public int cardDrawPerTurn = 3;
 
     [Title("Combat")]
     [Space, HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
@@ -33,13 +31,8 @@ public class CardsManager : SerializedMonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
-            Destroy(this);
+            Destroy(gameObject);
         }
-    }
-
-    private void Start() {
-        SceneManager.sceneLoaded += (scene, mode) => ResetDeck();
-        deck = new List<AbstractCard>(starterDeck);
     }
 
     public void ResetDeck() {
@@ -47,7 +40,7 @@ public class CardsManager : SerializedMonoBehaviour
         drawPile = new List<AbstractCard>(deck);
         Shuffle(drawPile);
         discards = new List<AbstractCard>();
-        ActionsManager.Instance.AddToTop(new DrawAction(handSize));
+        ActionsManager.Instance.AddToTop(new DrawAction(startingHandSize - cardDrawPerTurn));
     }
 
     public IEnumerator Draw(int amount) {
@@ -57,8 +50,8 @@ public class CardsManager : SerializedMonoBehaviour
         }
         int count = Mathf.Min(amount, drawPile.Count());
         IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(count);
-        drawPile.RemoveRange(0, count);
         hand.AddRange(cardsToDraw);
+        drawPile.RemoveRange(0, count);
         yield return PlayerManager.Instance.Draw(cardsToDraw.ToArray());
     }
 

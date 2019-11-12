@@ -7,7 +7,7 @@ public class DrawAction : AbstractAction
 {
     public int amount;
 
-    public DrawAction(int amount, AbstractAction[] chainedEvents = null) {
+    public DrawAction(int amount) {
         this.amount = amount;
     }
 

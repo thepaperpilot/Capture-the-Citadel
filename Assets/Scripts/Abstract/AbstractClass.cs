@@ -10,7 +10,8 @@ public class AbstractClass : ScriptableObject
     [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public List<AbstractCard> startingDeck;
-    [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
-    [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false)]
-    public List<AbstractRelic> startingRelics;
+    [Space, AssetList, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+    public AbstractRelic startingRelic;
+    [Space, AssetList, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+    public AbstractCard card;
 }

@@ -21,7 +21,7 @@ public class LevelManager : SerializedMonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
@@ -43,7 +43,7 @@ public class LevelManager : SerializedMonoBehaviour
     public void ClearLevel()
     {
         while (transform.childCount > 0)
-            Destroy(transform.GetChild(0));
+            DestroyImmediate(transform.GetChild(0).gameObject);
     }
 
 #if UNITY_EDITOR

@@ -56,6 +56,11 @@ public class DeckController : MonoBehaviour
     private List<DropZoneController> dropzones = new List<DropZoneController>();
 
     public void SetupDropzones() {
+        foreach (DropZoneController controller in dropzones) {
+            Debug.Log(controller.gameObject);
+            Destroy(controller.gameObject);
+        }
+        dropzones.Clear();
         foreach (RelicsManager.RelicData rData in RelicsManager.Instance.relics) {
             foreach (AbstractRelic.RelicAction action in rData.relic.triggers.Where(t => t.trigger == AbstractRelic.Triggers.DROP_ZONE)) {
                 GameObject dropzone = Instantiate(dropzonePrefab, hand);
@@ -163,7 +168,7 @@ public class DeckController : MonoBehaviour
         Quaternion startRotation = transform.localRotation;
         if (newRotation == null)
             newRotation = startRotation;
-        while (time < duration) {
+        while (time < duration && transform != null) {
             transform.localPosition = Vector3.Lerp(startPosition, newPosition, (time / duration));
             transform.localRotation = Quaternion.Lerp(startRotation, newRotation.Value, (time / duration));
             time += Time.deltaTime;

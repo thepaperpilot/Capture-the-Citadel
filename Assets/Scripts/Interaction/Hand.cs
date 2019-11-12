@@ -40,13 +40,17 @@ public class Hand : MonoBehaviour
     [SerializeField] Transform cardHolder;
     [SerializeField] float grabRadius = 0.05f;
     [SerializeField] float pinchRadius = 0.02f;
-
+    
+    public bool canChangeState = true;
     public BooleanAction trigger;
     public BooleanAction grip;
 
+    void Awake() {
+        anim = GetComponentInChildren<Animator>();
+    }
+
     void Start()
     {
-        anim = GetComponentInChildren<Animator>();
         if (id == HandID.RIGHT)
         {
             triggerAxis = "VRTK_Axis10_RightTrigger";
@@ -76,6 +80,7 @@ public class Hand : MonoBehaviour
 
     private void UpdateState()
     {
+        if (!canChangeState) return;
         switch (state)
         {
             case HandAnimPose.OPEN:
@@ -227,6 +232,7 @@ public class Hand : MonoBehaviour
         toy.GetComponentInChildren<Toy>().card = card.card;
         Destroy(cardObj);
         heldObject = null;
+        Grab(toy);
     }
 
     void Release()
@@ -281,9 +287,7 @@ public class Hand : MonoBehaviour
         }
     }
 
-
-    // Used by debug manager
-    public void DebugGrab(GameObject gameObject) {
+    public void Grab(GameObject gameObject) {
         Release();
         heldObject = gameObject;
         heldObjectParent = heldObject.transform.parent;

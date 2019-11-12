@@ -11,15 +11,15 @@ using static Zinnia.Pointer.ObjectPointer;
 public class PointToy : Toy, IRule
 {
     public enum PointTargets {
-        HEX
+        HEX,
+        CLASS
     }
 
     [SerializeField]
     private PointTargets target;
 
     private List<Hex> availableHexes;
-    private Hex active = null;
-    private bool firstUpdate = true;
+    private GameObject active = null;
 
     void Start()
     {
@@ -38,15 +38,15 @@ public class PointToy : Toy, IRule
                 hex.Highlight();
             }
         }
+
+        StartCoroutine(DelaySetup());
     }
 
-    void Update() {
-        if (firstUpdate) {
-            PointerFacade facade = GetComponentInChildren<PointerFacade>();
-            facade.SelectionAction = GetComponentInParent<Hand>().trigger;
-            facade.Configuration.ConfigureSelectionAction();
-            firstUpdate = false;
-        }
+    private IEnumerator DelaySetup() {
+        yield return new WaitForEndOfFrame();
+        PointerFacade facade = GetComponentInChildren<PointerFacade>();
+        facade.SelectionAction = GetComponentInParent<Hand>().trigger;
+        facade.Configuration.ConfigureSelectionAction();
     }
 
     public override void Destroy(int delay) {
@@ -59,25 +59,40 @@ public class PointToy : Toy, IRule
     }
 
     public void OnEnter(EventData data) {
+        GameObject gObject = data.CollisionData.collider.gameObject;
         if (target == PointTargets.HEX) {
-            GameObject gObject = data.CollisionData.collider.gameObject;
             if (gObject != null && gObject.CompareTag("Hex") && availableHexes.Contains(gObject.GetComponentInParent<Hex>())) {
-                active = gObject.GetComponentInParent<Hex>();
-                active.Activate();
+                Hex hex = gObject.GetComponentInParent<Hex>();
+                hex.Activate();
+                active = hex.gameObject;
             } else active = null;
-        }
+        } else if (target == PointTargets.CLASS) {
+            if (gObject != null && gObject.CompareTag("Card")) {
+                ClassSelectorController controller = gObject.GetComponentInParent<ClassSelectorController>();
+                active = controller.gameObject;
+                active.transform.localScale = Vector3.one * 1.3f;
+            } else active = null;
+        } else active = null;
     }
 
     public void OnExit() {
         if (active != null) {
-            active.Deactivate();
+            if (target == PointTargets.HEX)
+                active.GetComponent<Hex>().Deactivate();
+            else if (target == PointTargets.CLASS)
+                active.transform.localScale = Vector3.one;
             active = null;
         }
     }
 
     public void Select() {
         if (active != null) {
-            Trigger(active.gameObject, true);
+            if (target == PointTargets.CLASS) {
+                active.GetComponent<ClassSelectorController>().Select();
+                Destroy(0);
+            } else {
+                Trigger(active, true);
+            }
         }
     }
 

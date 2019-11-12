@@ -162,6 +162,7 @@ public class LevelController : MonoBehaviour
 
     private void UpdatePlayerDistances()
     {
+        if (playerHex == null) return;
         List<Hex> queue = new List<Hex>();
         foreach(Hex hex in allHexes)
         {
@@ -190,6 +191,7 @@ public class LevelController : MonoBehaviour
 
     private void UpdatePathDistances()
     {
+        if (playerHex == null) return;
         List<Hex> queue = new List<Hex>();
         foreach (Hex hex in allHexes)
         {
@@ -252,6 +254,7 @@ public class LevelController : MonoBehaviour
 
     private void UpdateLOSRaycasts()
     {
+        if (playerHex == null) return;
         foreach (Hex hex in allHexes)
         {
             if (playerHex.canSeeHexCorner(hex))

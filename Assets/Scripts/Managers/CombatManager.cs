@@ -12,6 +12,8 @@ public class CombatManager : MonoBehaviour
     public PlayerController player;
     [HideInInspector]
     public CombatantController[] enemies;
+    [HideInInspector]
+    public int maxHealth;
 
     [HideInEditorMode]
     [SerializeField] private CombatantController currentTurn;
@@ -27,7 +29,7 @@ public class CombatManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
@@ -35,6 +37,7 @@ public class CombatManager : MonoBehaviour
         combatants.Clear();
         player = LevelManager.Instance.GetComponentInChildren<PlayerController>();
         combatants.Add(player);
+        player.health = player.maxHealth = maxHealth;
         enemies = LevelManager.Instance.GetComponentsInChildren<EnemyController>();
         combatants.AddRange(enemies);
 
