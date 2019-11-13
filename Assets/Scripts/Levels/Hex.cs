@@ -20,10 +20,19 @@ public class Hex : MonoBehaviour
     public int pathDistance; //Distance to the player based on available paths
     public int sightDistance; //Distance to the nearest hex with sight to the player
 
+    public int row;
+    public int col;
+    [ChildGameObjectsOnly]
+    public GameObject leftTorch;
+    [ChildGameObjectsOnly]
+    public GameObject rightTorch;
+
     private GameObject highlight;
 
-    public void Init()
+    public void Init(int col, int row)
     {
+        this.row = row;
+        this.col = col;
         sightTargets = new List<Transform>();
         for(int i = 0; i < 6; i++)
         {
@@ -117,6 +126,12 @@ public class Hex : MonoBehaviour
         if (highlight)
             highlight.transform.localScale = Vector3.one;
     }
+
+    public void SpawnLeftTorch() {
+        leftTorch.SetActive(true);
+    }
+
+    public void SpawnRightTorch() {
+        rightTorch.SetActive(true);
+    }
 }
-
-

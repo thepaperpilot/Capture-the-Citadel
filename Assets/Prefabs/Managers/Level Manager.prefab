@@ -54,5 +54,6 @@ MonoBehaviour:
     SerializationNodes: []
   levelPrefab: {fileID: 435020585338547215, guid: d7f139e8f5bf7124eabeb08e9de9aabf,
     type: 3}
-  playArea: {fileID: 0}
-  deckController: {fileID: 0}
+  torchesPrefab: {fileID: 4097051974666583770, guid: d13b7e0fed28f9c4b9982a8343c37a75,
+    type: 3}
+  controller: {fileID: 0}

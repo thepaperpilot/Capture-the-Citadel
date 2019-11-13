@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: -3948453097499792371, guid: 22a0dc881b63b9d44a3b6eef198056a6, type: 3}
   name: Warrior
-  description: A strong defender with a shield
+  description: Warriors can use a card as a shield that can reduce damage on an incoming
+    attack.
   energyCost: 0
   rarity: 2
   actions: []
