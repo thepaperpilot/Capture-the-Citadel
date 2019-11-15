@@ -18,4 +18,26 @@ public class PlayerController : CombatantController
     public void FillEnergy() {
         energy = maxEnergy;
     }
+
+    public override void Heal(int amount)
+    {
+        health += amount;
+        health = Mathf.Min(health, maxHealth);
+        //update health bar
+    }
+
+    public override void LoseHp(int amount)
+    {
+        health -= amount;
+        //powers
+        //update health bar
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        health -= amount;
+        //block/shield
+        //powers
+        //update health bar
+    }
 }

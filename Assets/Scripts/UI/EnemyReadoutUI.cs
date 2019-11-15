@@ -24,11 +24,6 @@ public class EnemyReadoutUI : MonoBehaviour
     [SerializeField, ShowInInspector]
     private float barWidth = 0.32f;
 
-    private void Start()
-    {
-        Init(4, "test");
-    }
-
     public void Init(int maxHealth, string name)
     {
         //transform.localScale = Vector3.back;
@@ -52,7 +47,7 @@ public class EnemyReadoutUI : MonoBehaviour
 
     void Update()
     {
-        Vector3 target = PlayerManager.Instance.GetHeadsetPos();
+        Vector3 target = transform.position + (transform.position - PlayerManager.Instance.GetHeadsetPos());
         transform.LookAt(new Vector3(target.x, transform.position.y, target.z));
     }
 }

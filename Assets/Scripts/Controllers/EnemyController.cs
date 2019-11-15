@@ -12,7 +12,7 @@ public class EnemyController : CombatantController
     }
 
     public enum Conditions {
-        HALF_HEALTH,
+        HEALTH_BELOW_PERCENT,
         NUM_TURNS
     }
 
@@ -45,15 +45,25 @@ public class EnemyController : CombatantController
     [Serializable]
     public struct StrategyChange {
         public Conditions condition;
-        [HideIf("condition", Conditions.HALF_HEALTH)]
-        public int amount;
+        [HideIf("condition", Conditions.HEALTH_BELOW_PERCENT)]
+        [LabelText("Round Number")]
+        public int number;
+        [HideIf("condition", Conditions.NUM_TURNS)]
+        [LabelText("0.0-1.0 Remaining health")]
+        public float value;
 
         public Strategy newStrategy;
 
         [ShowIf("@newStrategy.type", StrategyTypes.LOOP)]
         [LabelText("Return to normal after first loop")]
         public bool returnAfter;
+
+        public bool repeatable;
+        [HideInEditorMode]
+        public bool used;
     }
+
+    public string displayName;
 
     public Strategy normalStrategy;
 
@@ -69,6 +79,13 @@ public class EnemyController : CombatantController
     [SerializeField, HideInEditorMode]
     private TurnActions nextMove;
 
+    //Audio Visual Properties
+    [SerializeField]
+    Transform healthBarPos;
+    private EnemyReadoutUI healthBar;
+    public GameObject healthBarFab;
+    
+
     void Start() {
         currentStrategy = normalStrategy;
         if (currentStrategy.type == StrategyTypes.LOOP) {
@@ -76,25 +93,75 @@ public class EnemyController : CombatantController
         } else {
             nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         }
+        UpdateIntent();
+
+        healthBar = Instantiate(healthBarFab, healthBarPos).GetComponent<EnemyReadoutUI>();
+        healthBar.transform.localPosition = Vector3.zero;
+        healthBar.Init(maxHealth, displayName);
+    }
+
+    void UpdateIntent()
+    {
+        //todo
+    }
+
+    void UpdateHealthBar()
+    {
+
+    }
+
+    public void PlanTurn()
+    {
+        // Change back to normal strategy if applicable
+        // and update next move
+        if (currentStrategy.Equals(currentStrategyChange.newStrategy) && currentStrategyChange.returnAfter && nextMove.Equals(currentStrategy.moves.Last()))
+        {
+            currentStrategy = normalStrategy;
+        }
+
+        // Check if our current strategy must change
+        foreach (StrategyChange change in conditionalStrategyChanges)
+        {
+            if (currentStrategy.Equals(change.newStrategy))
+                continue;
+
+            if (change.condition == Conditions.NUM_TURNS && turn == change.number && !change.used)
+            {
+                ChangeStrategy(change);
+            }
+        }
+
+        if (currentStrategy.type == StrategyTypes.LOOP)
+        {
+            int index = (System.Array.IndexOf(currentStrategy.moves, nextMove) + 1) % currentStrategy.moves.Length;
+            nextMove = currentStrategy.moves[index];
+        }
+        else
+        {
+            nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
+        }
+        Debug.Log("Intent");
+        UpdateIntent();
+    }
+
+    void CheckStrategyChangeFromDamage()
+    {
+        foreach (StrategyChange change in conditionalStrategyChanges)
+        {
+            if (currentStrategy.Equals(change.newStrategy))
+                continue;
+
+            if (change.condition == Conditions.HEALTH_BELOW_PERCENT && health <= change.value * maxHealth && !change.used)
+            {
+                ChangeStrategy(change);
+            }
+        }
     }
 
     public void PlayTurn() {
         turn++;
         
-        // Check if our current strategy must change
-        foreach (StrategyChange change in conditionalStrategyChanges) {
-            if (currentStrategy.Equals(change.newStrategy)) continue;
-            switch (change.condition) {
-                case Conditions.HALF_HEALTH:
-                    if (health < maxHealth * .5f)
-                        ChangeStrategy(change);
-                    break;
-                case Conditions.NUM_TURNS:
-                    if (turn == change.amount)
-                        ChangeStrategy(change);
-                    break;
-            }
-        }
+        
 
         // Perform our actions
         List<AbstractAction> modifiedActions = new List<AbstractAction>();
@@ -178,25 +245,50 @@ public class EnemyController : CombatantController
             
         }
         ActionsManager.Instance.AddToTop(modifiedActions.ToArray());
-
-        // Change back to normal strategy if applicable
-        // and update next move
-        if (currentStrategy.Equals(currentStrategyChange.newStrategy) && currentStrategyChange.returnAfter && nextMove.Equals(currentStrategy.moves.Last())) {
-            currentStrategy = normalStrategy;
-            nextMove = currentStrategy.type == StrategyTypes.LOOP ? currentStrategy.moves[0] : currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
-        } else {
-            if (currentStrategy.type == StrategyTypes.LOOP) {
-                int index = (System.Array.IndexOf(currentStrategy.moves, nextMove) + 1) % currentStrategy.moves.Length;
-                nextMove = currentStrategy.moves[index];
-            } else {
-                nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
-            }
-        }
     }
 
     private void ChangeStrategy(StrategyChange change) {
+        if (!change.repeatable)
+        {
+            change.used = true;
+        }
         currentStrategyChange = change;
         currentStrategy = change.newStrategy;
-        nextMove = currentStrategy.moves[0];
+        if (CombatManager.Instance.IsPlayerTurn())
+        {
+            /*
+            if (currentStrategy.type == StrategyTypes.LOOP)
+            {
+                nextMove = currentStrategy.moves[0];
+            }
+            else
+            {
+                nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
+            }
+            */
+            PlanTurn();
+        }
+    }
+
+    public override void Heal(int amount)
+    {
+        health += amount;
+        health = Mathf.Min(health, maxHealth);
+        UpdateHealthBar();
+    }
+
+    public override void LoseHp(int amount)
+    {
+        health -= amount;
+        //powers
+        UpdateHealthBar();
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        health -= amount;
+        //block/shield
+        //powers
+        UpdateHealthBar();
     }
 }
