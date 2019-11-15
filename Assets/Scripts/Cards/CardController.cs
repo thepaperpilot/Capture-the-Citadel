@@ -43,7 +43,7 @@ public class CardController : MonoBehaviour
     [HideInInspector]
     public AbstractCard card;
     
-    public void Setup(AbstractCard card) {
+    public void Setup(AbstractCard card, bool showEnergyCost = true) {
         this.card = card;
         switch (card.rarity) {
             case AbstractCard.Rarities.COMMON:
@@ -83,6 +83,7 @@ public class CardController : MonoBehaviour
         name.text = card.name;
         image.sprite = card.image;
         description.text = card.description;
-        cost.text = card.energyCost.ToString();
+        if (showEnergyCost)
+            cost.text = card.energyCost.ToString();
     }
 }

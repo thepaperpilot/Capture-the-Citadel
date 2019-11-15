@@ -26,7 +26,7 @@ public abstract class CombatantController : MonoBehaviour
 
     public abstract void TakeDamage(int amount);
 
-    public void ChangeMaxHp(int amount)
+    public void ChangeMaxHealth(int amount)
     {
         if(amount > 0)
         {
@@ -40,12 +40,12 @@ public abstract class CombatantController : MonoBehaviour
         }
     }
 
-    public void SetMaxHp(int newMax)
+    public void SetMaxHealth(int newMax)
     {
-        ChangeMaxHp(newMax - maxHealth);
+        ChangeMaxHealth(newMax - maxHealth);
     }
 
-    public int GetHp()
+    public int GetHealth()
     {
         return health;
     }

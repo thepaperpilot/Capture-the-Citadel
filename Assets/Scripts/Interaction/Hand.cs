@@ -40,13 +40,17 @@ public class Hand : MonoBehaviour
     [SerializeField] Transform cardHolder;
     [SerializeField] float grabRadius = 0.05f;
     [SerializeField] float pinchRadius = 0.02f;
-
+    
+    public bool canChangeState = true;
     public BooleanAction trigger;
     public BooleanAction grip;
 
+    void Awake() {
+        anim = GetComponentInChildren<Animator>();
+    }
+
     void Start()
     {
-        anim = GetComponentInChildren<Animator>();
         if (id == HandID.RIGHT)
         {
             triggerAxis = "VRTK_Axis10_RightTrigger";
@@ -76,6 +80,7 @@ public class Hand : MonoBehaviour
 
     private void UpdateState()
     {
+        if (!canChangeState) return;
         switch (state)
         {
             case HandAnimPose.OPEN:
@@ -217,16 +222,17 @@ public class Hand : MonoBehaviour
 
     void PlayCard(GameObject cardObj) {
         CardController card = cardObj.GetComponent<CardController>();
-        if (CombatManager.Instance.player.energy < card.card.energyCost) {
+        if (CombatManager.Instance.player.Energy < card.card.energyCost) {
             // TODO "Failed" sound effect or something
             PlayerManager.Instance.AddCard(card);
             return;
         }
-        CombatManager.Instance.player.energy -= card.card.energyCost;
+        CombatManager.Instance.player.SpendEnergy(card.card.energyCost);
         GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
         toy.GetComponentInChildren<Toy>().card = card.card;
         Destroy(cardObj);
         heldObject = null;
+        Grab(toy);
     }
 
     void Release()
@@ -257,7 +263,7 @@ public class Hand : MonoBehaviour
                 {
                     toy.Destroy(0);
                     heldObject = null;
-                    CombatManager.Instance.player.energy += toy.card.energyCost;
+                    CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
                     StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
                 }
             }
@@ -281,9 +287,7 @@ public class Hand : MonoBehaviour
         }
     }
 
-
-    // Used by debug manager
-    public void DebugGrab(GameObject gameObject) {
+    public void Grab(GameObject gameObject) {
         Release();
         heldObject = gameObject;
         heldObjectParent = heldObject.transform.parent;

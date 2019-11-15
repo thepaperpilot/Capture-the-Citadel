@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using Zinnia.Tracking.Follow;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -12,12 +14,17 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject playAreaAlias;
     [SerializeField] private GameObject headsetAlias;
     [SerializeField] private DeckController deckController;
+    public int maxEnergy;
+    [HideInPlayMode, ChildGameObjectsOnly]
+    public EnemyReadoutUI energyBar;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
+    [SerializeField] private List<Transform> headsetSources;
     private Hand right;
     private Hand left;
     private Transform leftSource;
     private Transform rightSource;
+    private Transform headsetSource;
     Rigidbody leftRB;
     Rigidbody rightRB;
 
@@ -26,7 +33,7 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         right = rightHand.GetComponentInChildren<Hand>();
@@ -38,14 +45,19 @@ public class PlayerManager : MonoBehaviour
 #if UNITY_EDITOR
         leftSource = leftControllerSources[0];
         rightSource = rightControllerSources[0];
+        headsetSource = headsetSources[0];
 #else
         leftSource = leftControllerSources[0];
         rightSource = rightControllerSources[0];
+        headsetSource = headsetSources[0];
         //leftSource = leftControllerSources[1];
         //rightSource = rightControllerSources[1];
+        //headsetSource = headsetSources[1];
 #endif
         leftRB = leftHand.GetComponent<Rigidbody>();
         rightRB = rightHand.GetComponent<Rigidbody>();
+
+        energyBar.Init(maxEnergy, "");
     }
 
     void Update()
@@ -83,6 +95,7 @@ public class PlayerManager : MonoBehaviour
     public IEnumerator StartTurn() {
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
         CombatManager.Instance.player.FillEnergy();
+        ActionsManager.Instance.AddToTop(new DrawAction(CardsManager.Instance.cardDrawPerTurn));
         yield return deckController.SlideOut();
     }
 
@@ -108,16 +121,15 @@ public class PlayerManager : MonoBehaviour
 
     public Vector3 GetHeadsetPos()
     {
-        return headsetAlias.transform.position;
-    }
-
-
-    // These are used by DebugManager
-    public DeckController GetDeckController() {
-        return deckController;
+        return headsetSource.position;
     }
 
     public void Grab(GameObject gameObject) {
-        right.DebugGrab(gameObject);
+        right.Grab(gameObject);
+    }
+
+    // This is used by DebugManager
+    public DeckController GetDeckController() {
+        return deckController;
     }
 }

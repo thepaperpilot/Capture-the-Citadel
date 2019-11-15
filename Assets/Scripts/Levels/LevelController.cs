@@ -44,7 +44,7 @@ public class LevelController : MonoBehaviour
                     Vector3 location = transform.position + col * GetDirVector(HexDirection.EAST) + (row / 2) * GetDirVector(HexDirection.SOUTH_EAST) + Mathf.Ceil(row / 2f) * GetDirVector(HexDirection.SOUTH_WEST);
                     GameObject temp = Instantiate(floorHexFab, location, Quaternion.identity, transform);
                     Hex tempHex = temp.GetComponent<Hex>();
-                    tempHex.Init();
+                    tempHex.Init(col, row);
                     hexes[col, row] = tempHex;
                     allHexes.Add(hexes[col, row]);
                     if(level.layout[col,row] == AbstractLevel.LevelHex.WALL)
@@ -131,6 +131,26 @@ public class LevelController : MonoBehaviour
             }
         }
 
+        // Determine which hexes need torches        
+        for(int row = 0; row < level.layout.GetLength(1); row++)
+        {
+            for(int col = 0; col < level.layout.GetLength(0); col++)
+            {
+                if(level.layout[col,row] == AbstractLevel.LevelHex.WALL)
+                {
+                    if (hexes.GetLength(0) > col + 1 && level.layout[col+1,row] == AbstractLevel.LevelHex.FLOOR &&
+                        !hexes[col+1,row].neighbors.Exists(h => level.layout[h.col,h.row] == AbstractLevel.LevelHex.WALL && h != hexes[col,row])) {
+                        hexes[col,row].SpawnRightTorch();
+                    }
+
+                    if (col > 0 && level.layout[col-1,row] == AbstractLevel.LevelHex.FLOOR &&
+                        !hexes[col-1,row].neighbors.Exists(h => level.layout[h.col,h.row] == AbstractLevel.LevelHex.WALL && h != hexes[col,row])) {
+                        hexes[col,row].SpawnLeftTorch();
+                    }
+                }
+            }
+        }
+
         BakeLevelFromPlayerMovement();
     }
 
@@ -162,6 +182,7 @@ public class LevelController : MonoBehaviour
 
     private void UpdatePlayerDistances()
     {
+        if (playerHex == null) return;
         List<Hex> queue = new List<Hex>();
         foreach(Hex hex in allHexes)
         {
@@ -190,6 +211,7 @@ public class LevelController : MonoBehaviour
 
     private void UpdatePathDistances()
     {
+        if (playerHex == null) return;
         List<Hex> queue = new List<Hex>();
         foreach (Hex hex in allHexes)
         {
@@ -252,6 +274,7 @@ public class LevelController : MonoBehaviour
 
     private void UpdateLOSRaycasts()
     {
+        if (playerHex == null) return;
         foreach (Hex hex in allHexes)
         {
             if (playerHex.canSeeHexCorner(hex))

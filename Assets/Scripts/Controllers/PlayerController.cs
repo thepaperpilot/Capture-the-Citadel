@@ -6,17 +6,23 @@ using UnityEngine;
 
 public class PlayerController : CombatantController
 {
-    [SerializeField] private int maxEnergy;
     [HideInInspector]
-    // TODO way to see energy amount in-game
-    public int energy;
+    private int energy;
 
     [HideInPlayMode]
     public GameObject model;
 
+    public int Energy { get => energy; private set => energy = value; }
+
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void FillEnergy() {
-        energy = maxEnergy;
+        Energy = PlayerManager.Instance.maxEnergy;
+        PlayerManager.Instance.energyBar.ChangeHealth(energy);
+    }
+
+    public void SpendEnergy(int amount) {
+        Energy -= amount;
+        PlayerManager.Instance.energyBar.ChangeHealth(energy);
     }
 
     public override void Heal(int amount)

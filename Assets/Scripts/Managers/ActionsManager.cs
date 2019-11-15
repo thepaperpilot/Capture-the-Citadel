@@ -23,7 +23,7 @@ public class ActionsManager : SerializedMonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 

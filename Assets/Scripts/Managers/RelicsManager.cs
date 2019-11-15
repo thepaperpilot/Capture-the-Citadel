@@ -17,6 +17,7 @@ public class RelicsManager : MonoBehaviour
         public AbstractCard card;
     }
 
+    [HideInEditorMode]
     public List<RelicData> relics = new List<RelicData>();
 
     [AssetList(AutoPopulate=true)]
@@ -34,7 +35,7 @@ public class RelicsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
