@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zinnia.Tracking.Follow;
 
@@ -13,6 +14,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject playAreaAlias;
     [SerializeField] private GameObject headsetAlias;
     [SerializeField] private DeckController deckController;
+    public int maxEnergy;
+    [HideInPlayMode, ChildGameObjectsOnly]
+    public EnemyReadoutUI energyBar;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
     [SerializeField] private List<Transform> headsetSources;
@@ -52,6 +56,8 @@ public class PlayerManager : MonoBehaviour
 #endif
         leftRB = leftHand.GetComponent<Rigidbody>();
         rightRB = rightHand.GetComponent<Rigidbody>();
+
+        energyBar.Init(maxEnergy, "");
     }
 
     void Update()

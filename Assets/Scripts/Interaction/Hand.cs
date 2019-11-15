@@ -222,12 +222,12 @@ public class Hand : MonoBehaviour
 
     void PlayCard(GameObject cardObj) {
         CardController card = cardObj.GetComponent<CardController>();
-        if (CombatManager.Instance.player.energy < card.card.energyCost) {
+        if (CombatManager.Instance.player.Energy < card.card.energyCost) {
             // TODO "Failed" sound effect or something
             PlayerManager.Instance.AddCard(card);
             return;
         }
-        CombatManager.Instance.player.energy -= card.card.energyCost;
+        CombatManager.Instance.player.SpendEnergy(card.card.energyCost);
         GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
         toy.GetComponentInChildren<Toy>().card = card.card;
         Destroy(cardObj);
@@ -263,7 +263,7 @@ public class Hand : MonoBehaviour
                 {
                     toy.Destroy(0);
                     heldObject = null;
-                    CombatManager.Instance.player.energy += toy.card.energyCost;
+                    CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
                     StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
                 }
             }

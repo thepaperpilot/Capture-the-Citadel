@@ -17,6 +17,8 @@ public class EnemyReadoutUI : MonoBehaviour
     TextMeshPro healthText;
     [SerializeField, ShowInInspector]
     TextMeshPro nameText;
+    [SerializeField]
+    bool billboard = true;
 
     int maxHealth;
     float unitHealth;
@@ -35,6 +37,8 @@ public class EnemyReadoutUI : MonoBehaviour
         this.maxHealth = maxHealth;
         nameText.text = name;
         unitHealth = 1.0f / ((float)maxHealth);
+        while (tickParent.childCount > 0)
+            DestroyImmediate(tickParent.GetChild(0).gameObject);
         for(int i = 1; i < maxHealth; i++)
         {
             Transform temp = Instantiate(tickFab, tickParent).transform;
@@ -52,6 +56,7 @@ public class EnemyReadoutUI : MonoBehaviour
 
     void Update()
     {
+        if (!billboard) return;
         Vector3 target = PlayerManager.Instance.GetHeadsetPos();
         transform.LookAt(new Vector3(target.x, transform.position.y, target.z));
     }
