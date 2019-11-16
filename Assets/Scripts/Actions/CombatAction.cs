@@ -42,7 +42,22 @@ public class CombatAction : AbstractAction
                     else if (CombatManager.Instance.enemies.Contains(actor) && controller == CombatManager.Instance.player)
                         RelicsManager.Instance.OnDamageTaken(amount, controller);
 
-                    ActionsManager.Instance.AddToTop(new HealAction(controller, -amount));
+                    if (actor == CombatManager.Instance.player)
+                    {
+                        if ((ranged && controller.tile.inSight) || (!ranged && controller.tile.playerDistance == 1))
+                        {
+                            ActionsManager.Instance.AddToTop(new TakeDamageAction(controller, amount));
+                        }
+                    }
+                    else
+                    {
+                        actor.transform.LookAt(controller.tile.transform);
+                        if ((ranged && actor.tile.inSight) || (!ranged && actor.tile.playerDistance == 1))
+                        {
+                            ActionsManager.Instance.AddToTop(new TakeDamageAction(controller, amount));
+                        }
+                    }
+                        
                     break;
                 case TYPE.DRAW:
                     ActionsManager.Instance.AddToTop(new DrawAction(amount));

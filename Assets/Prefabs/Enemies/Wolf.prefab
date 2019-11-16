@@ -89,17 +89,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613e6c0b4037a264eb77e25103e28f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  health: 0
+  maxHealth: 8
   tile: {fileID: 0}
-  displayName: Dire Wox
+  displayName: Feral Wox
   normalStrategy:
     type: 1
     moves:
     - actions:
       - type: 2
         status: {fileID: 0}
-        amount: 2
+        amount: 3
         ranged: 0
         targets: []
         actor: {fileID: 0}
@@ -114,10 +113,11 @@ MonoBehaviour:
         destination: {fileID: 0}
         target: 0
       pathType: 0
+      debuffIsMajor: 0
     - actions:
       - type: 2
         status: {fileID: 0}
-        amount: 3
+        amount: 4
         ranged: 0
         targets: []
         actor: {fileID: 0}
@@ -132,9 +132,30 @@ MonoBehaviour:
         destination: {fileID: 0}
         target: 0
       pathType: 0
+      debuffIsMajor: 0
+    - actions:
+      - type: 0
+        status: {fileID: 0}
+        amount: 2
+        ranged: 0
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
+      - type: 0
+        status: {fileID: 0}
+        amount: 2
+        ranged: 0
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
+      pathType: 0
+      debuffIsMajor: 0
   conditionalStrategyChanges:
   - condition: 0
-    amount: 2
+    number: 0
+    value: 0.5
     newStrategy:
       type: 0
       moves:
@@ -148,21 +169,28 @@ MonoBehaviour:
           destination: {fileID: 0}
           target: 2
         pathType: 0
+        debuffIsMajor: 0
     returnAfter: 1
+    repeatable: 0
+    used: 0
   turn: 0
   currentStrategy:
     type: 0
     moves: []
   currentStrategyChange:
     condition: 0
-    amount: 0
+    number: 0
+    value: 0
     newStrategy:
       type: 0
       moves: []
     returnAfter: 0
+    repeatable: 0
+    used: 0
   nextMove:
     actions: []
     pathType: 0
+    debuffIsMajor: 0
   healthBarPos: {fileID: 4299772546400097130}
   healthBarFab: {fileID: 1918329831333815210, guid: 5a310b4e5443b234980e636fdf4f9bbb,
     type: 3}

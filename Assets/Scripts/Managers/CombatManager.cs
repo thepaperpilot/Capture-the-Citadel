@@ -37,7 +37,7 @@ public class CombatManager : MonoBehaviour
         combatants.Clear();
         player = LevelManager.Instance.GetComponentInChildren<PlayerController>();
         combatants.Add(player);
-        //player.set = player.maxHealth = maxHealth;
+        //init player health bar based on current health
         enemies = LevelManager.Instance.GetComponentsInChildren<EnemyController>();
         combatants.AddRange(enemies);
 
@@ -55,6 +55,10 @@ public class CombatManager : MonoBehaviour
     public void EndTurn() {
         if (currentTurn == player) {
             StartCoroutine(PlayerManager.Instance.EndTurn());
+        }
+        else
+        {
+            ((EnemyController)currentTurn).EndTurn();
         }
         int index = (combatants.IndexOf(currentTurn) + 1) % combatants.Count;
         currentTurn = combatants[index];

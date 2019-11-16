@@ -27,10 +27,17 @@ public class EnemyController : CombatantController
         public CardAction[] actions;
         [EnumToggleButtons, ShowIf("ShowDirection")]
         public PathType pathType;
+        [EnumToggleButtons, ShowIf("ShowMajorDebuff")]
+        public bool debuffIsMajor;
 
 #if UNITY_EDITOR
         private bool ShowDirection() {
             return actions.Where(effect => effect.type == CombatAction.TYPE.MOVE).Count() > 0;
+        }
+
+        private bool ShowMajorDebuff()
+        {
+            return actions.Where(effect => effect.type == CombatAction.TYPE.STATUS && effect.target == CardAction.Targets.PLAYER).Count() > 0;
         }
 #endif
     }
@@ -43,7 +50,7 @@ public class EnemyController : CombatantController
     }
 
     [Serializable]
-    public struct StrategyChange {
+    public class StrategyChange {
         public Conditions condition;
         [HideIf("condition", Conditions.HEALTH_BELOW_PERCENT)]
         [LabelText("Round Number")]
@@ -93,21 +100,73 @@ public class EnemyController : CombatantController
         } else {
             nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         }
-        UpdateIntent();
 
         healthBar = Instantiate(healthBarFab, healthBarPos).GetComponent<EnemyReadoutUI>();
         healthBar.transform.localPosition = Vector3.zero;
         healthBar.Init(maxHealth, displayName);
+
+        UpdateIntent();
     }
 
     void UpdateIntent()
     {
-        //todo
-    }
+        bool debuffIncluded = false;
+        bool majorDebuffIncluded = false;
+        bool allBuffIncluded = false;
+        bool selfBuffIncluded = false;
+        List<EnemyReadoutUI.Intent> intents = new List<EnemyReadoutUI.Intent>();
 
-    void UpdateHealthBar()
-    {
+        foreach(CardAction action in nextMove.actions)
+        {
+            if(action.type == CombatAction.TYPE.DAMAGE)
+            {
+                if (action.ranged)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, action.amount));
+                }
+                else if(action.amount < IntentIcon.MajorDamageThreshold)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, action.amount));
+                }
+                else
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, action.amount));
+                }
+            }
+            else if (action.type == CombatAction.TYPE.MOVE)
+            {
+                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.MOVE, action.amount));
+            }
+            else if(action.type == CombatAction.TYPE.STATUS)
+            {
+                if(nextMove.debuffIsMajor && !majorDebuffIncluded && action.target == CardAction.Targets.PLAYER)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.DEBUFF_MAJOR));
+                    majorDebuffIncluded = true;
+                }
+                else if(!nextMove.debuffIsMajor && !debuffIncluded && action.target == CardAction.Targets.PLAYER)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.DEBUFF));
+                    debuffIncluded = true;
+                }
+                else if(!selfBuffIncluded && action.target == CardAction.Targets.ENEMY)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.BUFF));
+                    selfBuffIncluded = true;
+                }
+                else if (!allBuffIncluded && action.target == CardAction.Targets.ALL_ENEMIES)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.BUFF_MAJOR));
+                    allBuffIncluded = true;
+                }
+            }
+            else
+            {
+                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.OTHER));
+            }
+        }
 
+        healthBar.SetIntents(intents);
     }
 
     public void PlanTurn()
@@ -116,6 +175,7 @@ public class EnemyController : CombatantController
         // and update next move
         if (currentStrategy.Equals(currentStrategyChange.newStrategy) && currentStrategyChange.returnAfter && nextMove.Equals(currentStrategy.moves.Last()))
         {
+            Debug.Log("Returning to normal strategy");
             currentStrategy = normalStrategy;
         }
 
@@ -134,13 +194,14 @@ public class EnemyController : CombatantController
         if (currentStrategy.type == StrategyTypes.LOOP)
         {
             int index = (System.Array.IndexOf(currentStrategy.moves, nextMove) + 1) % currentStrategy.moves.Length;
+            Debug.Log("output" + System.Array.IndexOf(currentStrategy.moves, nextMove));
+            Debug.Log(index);
             nextMove = currentStrategy.moves[index];
         }
         else
         {
             nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         }
-        Debug.Log("Intent");
         UpdateIntent();
     }
 
@@ -161,8 +222,6 @@ public class EnemyController : CombatantController
     public void PlayTurn() {
         turn++;
         
-        
-
         // Perform our actions
         List<AbstractAction> modifiedActions = new List<AbstractAction>();
         foreach (CardAction action in nextMove.actions) {
@@ -192,7 +251,7 @@ public class EnemyController : CombatantController
                         bestScore = bestHex.pathDistance;
                         foreach(Hex other in currentHex.neighbors)
                         {
-                            if(other.pathDistance < currentHex.pathDistance)
+                            if(other.pathDistance < currentHex.pathDistance && other.occupant == null)
                             {
                                 bestHex = other;
                                 bestScore = other.pathDistance;
@@ -204,7 +263,7 @@ public class EnemyController : CombatantController
                         bestScore = bestHex.sightDistance;
                         foreach (Hex other in currentHex.neighbors)
                         {
-                            if (other.sightDistance < currentHex.sightDistance)
+                            if (other.sightDistance < currentHex.sightDistance && other.occupant == null)
                             {
                                 bestHex = other;
                                 bestScore = other.sightDistance;
@@ -247,6 +306,11 @@ public class EnemyController : CombatantController
         ActionsManager.Instance.AddToTop(modifiedActions.ToArray());
     }
 
+    public void EndTurn()
+    {
+        healthBar.ClearIntents();
+    }
+
     private void ChangeStrategy(StrategyChange change) {
         if (!change.repeatable)
         {
@@ -266,6 +330,7 @@ public class EnemyController : CombatantController
                 nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
             }
             */
+            Debug.Log("got changed");
             PlanTurn();
         }
     }
@@ -274,14 +339,15 @@ public class EnemyController : CombatantController
     {
         health += amount;
         health = Mathf.Min(health, maxHealth);
-        UpdateHealthBar();
+        healthBar.ChangeHealth(health);
     }
 
     public override void LoseHp(int amount)
     {
         health -= amount;
         //powers
-        UpdateHealthBar();
+        healthBar.ChangeHealth(health);
+        CheckStrategyChangeFromDamage();
     }
 
     public override void TakeDamage(int amount)
@@ -289,6 +355,7 @@ public class EnemyController : CombatantController
         health -= amount;
         //block/shield
         //powers
-        UpdateHealthBar();
+        healthBar.ChangeHealth(health);
+        CheckStrategyChangeFromDamage();
     }
 }

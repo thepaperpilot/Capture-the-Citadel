@@ -14,6 +14,12 @@ public class PlayerController : CombatantController
 
     public int Energy { get => energy; private set => energy = value; }
 
+    protected override void Awake()
+    {
+        health = maxHealth;
+        PlayerManager.Instance.healthBar.Init(maxHealth, "");
+    }
+
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void FillEnergy() {
         Energy = PlayerManager.Instance.maxEnergy;
@@ -29,14 +35,14 @@ public class PlayerController : CombatantController
     {
         health += amount;
         health = Mathf.Min(health, maxHealth);
-        //update health bar
+        UpdateHealthBar();
     }
 
     public override void LoseHp(int amount)
     {
         health -= amount;
         //powers
-        //update health bar
+        UpdateHealthBar();
     }
 
     public override void TakeDamage(int amount)
@@ -44,6 +50,11 @@ public class PlayerController : CombatantController
         health -= amount;
         //block/shield
         //powers
-        //update health bar
+        UpdateHealthBar();
+    }
+
+    public void UpdateHealthBar()
+    {
+        PlayerManager.Instance.healthBar.ChangeHealth(health);
     }
 }

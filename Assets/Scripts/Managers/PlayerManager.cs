@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     public int maxEnergy;
     [HideInPlayMode, ChildGameObjectsOnly]
     public EnemyReadoutUI energyBar;
+    [HideInPlayMode, ChildGameObjectsOnly]
+    public EnemyReadoutUI healthBar;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
     [SerializeField] private List<Transform> headsetSources;
