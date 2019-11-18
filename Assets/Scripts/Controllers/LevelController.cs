@@ -277,7 +277,7 @@ public class LevelController : MonoBehaviour
         if (playerHex == null) return;
         foreach (Hex hex in allHexes)
         {
-            if (playerHex.canSeeHexCorner(hex))
+            if (playerHex.canSeeHexCenter(hex))
             {
                 hex.inSight = true;
             }
