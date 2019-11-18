@@ -6,16 +6,47 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(StatusController))]
-public class CombatantController : MonoBehaviour
+public abstract class CombatantController : MonoBehaviour
 {
-    public int maxHealth;
+    [SerializeField, ShowInInspector]
+    protected int maxHealth;
 
-    [HideInEditorMode]
-    public int health = 0;
+    [HideInEditorMode, ShowInInspector]
+    protected int health = 0;
     [HideInInspector]
     public Hex tile;
 
-    void Awake() {
+    protected virtual void Awake() {
         health = maxHealth;
+    }
+
+    public abstract void Heal(int amount);
+
+    public abstract void LoseHp(int amount);
+
+    public abstract void TakeDamage(int amount);
+
+    public void ChangeMaxHealth(int amount)
+    {
+        if(amount > 0)
+        {
+            maxHealth += amount;
+            health += amount;
+        }
+        else
+        {
+            maxHealth -= amount;
+            health = Mathf.Min(health, maxHealth);
+        }
+    }
+
+    public void SetMaxHealth(int newMax)
+    {
+        ChangeMaxHealth(newMax - maxHealth);
+    }
+
+    public int GetHealth()
+    {
+        return health;
     }
 }

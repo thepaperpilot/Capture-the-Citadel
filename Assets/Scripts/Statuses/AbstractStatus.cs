@@ -18,6 +18,11 @@ public class AbstractStatus : ScriptableObject
         DAMAGE_TAKEN
     }
 
+    public enum Effect{
+        BUFF,
+        DEBUFF
+    }
+
     [HideInInlineEditors, Required, PropertySpace(0, 5)]
     new public string name;
 

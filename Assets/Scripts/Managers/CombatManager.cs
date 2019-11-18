@@ -37,7 +37,7 @@ public class CombatManager : MonoBehaviour
         combatants.Clear();
         player = LevelManager.Instance.GetComponentInChildren<PlayerController>();
         combatants.Add(player);
-        player.health = player.maxHealth = maxHealth;
+        //init player health bar based on current health
         enemies = LevelManager.Instance.GetComponentsInChildren<EnemyController>();
         combatants.AddRange(enemies);
 
@@ -56,6 +56,10 @@ public class CombatManager : MonoBehaviour
         if (currentTurn == player) {
             StartCoroutine(PlayerManager.Instance.EndTurn());
         }
+        else
+        {
+            ((EnemyController)currentTurn).EndTurn();
+        }
         int index = (combatants.IndexOf(currentTurn) + 1) % combatants.Count;
         currentTurn = combatants[index];
         turn++;
@@ -64,6 +68,13 @@ public class CombatManager : MonoBehaviour
             // Add this so that the enemy turn action can add more actions to top, and their turn will end once those finish
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
         } else {
+            foreach(CombatantController combatant in combatants)
+            {
+                if(combatant != player)
+                {
+                    ((EnemyController)combatant).PlanTurn();
+                }
+            }
             player.FillEnergy();
             RelicsManager.Instance.OnTurnStart(turn);
             ActionsManager.Instance.AddToBottom(new PlayerTurnAction());

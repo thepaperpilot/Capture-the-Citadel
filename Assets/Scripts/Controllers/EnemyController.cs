@@ -12,7 +12,7 @@ public class EnemyController : CombatantController
     }
 
     public enum Conditions {
-        HALF_HEALTH,
+        HEALTH_BELOW_PERCENT,
         NUM_TURNS
     }
 
@@ -27,10 +27,17 @@ public class EnemyController : CombatantController
         public CardAction[] actions;
         [EnumToggleButtons, ShowIf("ShowDirection")]
         public PathType pathType;
+        [EnumToggleButtons, ShowIf("ShowMajorDebuff")]
+        public bool debuffIsMajor;
 
 #if UNITY_EDITOR
         private bool ShowDirection() {
             return actions.Where(effect => effect.type == CombatAction.TYPE.MOVE).Count() > 0;
+        }
+
+        private bool ShowMajorDebuff()
+        {
+            return actions.Where(effect => effect.type == CombatAction.TYPE.STATUS && effect.target == CardAction.Targets.PLAYER).Count() > 0;
         }
 #endif
     }
@@ -43,17 +50,27 @@ public class EnemyController : CombatantController
     }
 
     [Serializable]
-    public struct StrategyChange {
+    public class StrategyChange {
         public Conditions condition;
-        [HideIf("condition", Conditions.HALF_HEALTH)]
-        public int amount;
+        [HideIf("condition", Conditions.HEALTH_BELOW_PERCENT)]
+        [LabelText("Round Number")]
+        public int number;
+        [HideIf("condition", Conditions.NUM_TURNS)]
+        [LabelText("0.0-1.0 Remaining health")]
+        public float value;
 
         public Strategy newStrategy;
 
         [ShowIf("@newStrategy.type", StrategyTypes.LOOP)]
         [LabelText("Return to normal after first loop")]
         public bool returnAfter;
+
+        public bool repeatable;
+        [HideInEditorMode]
+        public bool used;
     }
+
+    public string displayName;
 
     public Strategy normalStrategy;
 
@@ -69,6 +86,13 @@ public class EnemyController : CombatantController
     [SerializeField, HideInEditorMode]
     private TurnActions nextMove;
 
+    //Audio Visual Properties
+    [SerializeField]
+    Transform healthBarPos;
+    private EnemyReadoutUI healthBar;
+    public GameObject healthBarFab;
+    
+
     void Start() {
         currentStrategy = normalStrategy;
         if (currentStrategy.type == StrategyTypes.LOOP) {
@@ -76,26 +100,128 @@ public class EnemyController : CombatantController
         } else {
             nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         }
+
+        healthBar = Instantiate(healthBarFab, healthBarPos).GetComponent<EnemyReadoutUI>();
+        healthBar.transform.localPosition = Vector3.zero;
+        healthBar.Init(maxHealth, displayName);
+
+        UpdateIntent();
+    }
+
+    void UpdateIntent()
+    {
+        bool debuffIncluded = false;
+        bool majorDebuffIncluded = false;
+        bool allBuffIncluded = false;
+        bool selfBuffIncluded = false;
+        List<EnemyReadoutUI.Intent> intents = new List<EnemyReadoutUI.Intent>();
+
+        foreach(CardAction action in nextMove.actions)
+        {
+            if(action.type == CombatAction.TYPE.DAMAGE)
+            {
+                if (action.ranged)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, action.amount));
+                }
+                else if(action.amount < IntentIcon.MajorDamageThreshold)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, action.amount));
+                }
+                else
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, action.amount));
+                }
+            }
+            else if (action.type == CombatAction.TYPE.MOVE)
+            {
+                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.MOVE, action.amount));
+            }
+            else if(action.type == CombatAction.TYPE.STATUS)
+            {
+                if(nextMove.debuffIsMajor && !majorDebuffIncluded && action.target == CardAction.Targets.PLAYER)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.DEBUFF_MAJOR));
+                    majorDebuffIncluded = true;
+                }
+                else if(!nextMove.debuffIsMajor && !debuffIncluded && action.target == CardAction.Targets.PLAYER)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.DEBUFF));
+                    debuffIncluded = true;
+                }
+                else if(!selfBuffIncluded && action.target == CardAction.Targets.ENEMY)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.BUFF));
+                    selfBuffIncluded = true;
+                }
+                else if (!allBuffIncluded && action.target == CardAction.Targets.ALL_ENEMIES)
+                {
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.BUFF_MAJOR));
+                    allBuffIncluded = true;
+                }
+            }
+            else
+            {
+                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.OTHER));
+            }
+        }
+
+        healthBar.SetIntents(intents);
+    }
+
+    public void PlanTurn()
+    {
+        // Change back to normal strategy if applicable
+        // and update next move
+        if (currentStrategy.Equals(currentStrategyChange.newStrategy) && currentStrategyChange.returnAfter && nextMove.Equals(currentStrategy.moves.Last()))
+        {
+            Debug.Log("Returning to normal strategy");
+            currentStrategy = normalStrategy;
+        }
+
+        // Check if our current strategy must change
+        foreach (StrategyChange change in conditionalStrategyChanges)
+        {
+            if (currentStrategy.Equals(change.newStrategy))
+                continue;
+
+            if (change.condition == Conditions.NUM_TURNS && turn == change.number && !change.used)
+            {
+                ChangeStrategy(change);
+            }
+        }
+
+        if (currentStrategy.type == StrategyTypes.LOOP)
+        {
+            int index = (System.Array.IndexOf(currentStrategy.moves, nextMove) + 1) % currentStrategy.moves.Length;
+            Debug.Log("output" + System.Array.IndexOf(currentStrategy.moves, nextMove));
+            Debug.Log(index);
+            nextMove = currentStrategy.moves[index];
+        }
+        else
+        {
+            nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
+        }
+        UpdateIntent();
+    }
+
+    void CheckStrategyChangeFromDamage()
+    {
+        foreach (StrategyChange change in conditionalStrategyChanges)
+        {
+            if (currentStrategy.Equals(change.newStrategy))
+                continue;
+
+            if (change.condition == Conditions.HEALTH_BELOW_PERCENT && health <= change.value * maxHealth && !change.used)
+            {
+                ChangeStrategy(change);
+            }
+        }
     }
 
     public void PlayTurn() {
         turn++;
         
-        // Check if our current strategy must change
-        foreach (StrategyChange change in conditionalStrategyChanges) {
-            if (currentStrategy.Equals(change.newStrategy)) continue;
-            switch (change.condition) {
-                case Conditions.HALF_HEALTH:
-                    if (health < maxHealth * .5f)
-                        ChangeStrategy(change);
-                    break;
-                case Conditions.NUM_TURNS:
-                    if (turn == change.amount)
-                        ChangeStrategy(change);
-                    break;
-            }
-        }
-
         // Perform our actions
         List<AbstractAction> modifiedActions = new List<AbstractAction>();
         foreach (CardAction action in nextMove.actions) {
@@ -125,7 +251,7 @@ public class EnemyController : CombatantController
                         bestScore = bestHex.pathDistance;
                         foreach(Hex other in currentHex.neighbors)
                         {
-                            if(other.pathDistance < currentHex.pathDistance)
+                            if(other.pathDistance < currentHex.pathDistance && other.occupant == null)
                             {
                                 bestHex = other;
                                 bestScore = other.pathDistance;
@@ -137,7 +263,7 @@ public class EnemyController : CombatantController
                         bestScore = bestHex.sightDistance;
                         foreach (Hex other in currentHex.neighbors)
                         {
-                            if (other.sightDistance < currentHex.sightDistance)
+                            if (other.sightDistance < currentHex.sightDistance && other.occupant == null)
                             {
                                 bestHex = other;
                                 bestScore = other.sightDistance;
@@ -178,25 +304,58 @@ public class EnemyController : CombatantController
             
         }
         ActionsManager.Instance.AddToTop(modifiedActions.ToArray());
+    }
 
-        // Change back to normal strategy if applicable
-        // and update next move
-        if (currentStrategy.Equals(currentStrategyChange.newStrategy) && currentStrategyChange.returnAfter && nextMove.Equals(currentStrategy.moves.Last())) {
-            currentStrategy = normalStrategy;
-            nextMove = currentStrategy.type == StrategyTypes.LOOP ? currentStrategy.moves[0] : currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
-        } else {
-            if (currentStrategy.type == StrategyTypes.LOOP) {
-                int index = (System.Array.IndexOf(currentStrategy.moves, nextMove) + 1) % currentStrategy.moves.Length;
-                nextMove = currentStrategy.moves[index];
-            } else {
-                nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
-            }
-        }
+    public void EndTurn()
+    {
+        healthBar.ClearIntents();
     }
 
     private void ChangeStrategy(StrategyChange change) {
+        if (!change.repeatable)
+        {
+            change.used = true;
+        }
         currentStrategyChange = change;
         currentStrategy = change.newStrategy;
-        nextMove = currentStrategy.moves[0];
+        if (CombatManager.Instance.IsPlayerTurn())
+        {
+            /*
+            if (currentStrategy.type == StrategyTypes.LOOP)
+            {
+                nextMove = currentStrategy.moves[0];
+            }
+            else
+            {
+                nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
+            }
+            */
+            Debug.Log("got changed");
+            PlanTurn();
+        }
+    }
+
+    public override void Heal(int amount)
+    {
+        health += amount;
+        health = Mathf.Min(health, maxHealth);
+        healthBar.ChangeHealth(health);
+    }
+
+    public override void LoseHp(int amount)
+    {
+        health -= amount;
+        //powers
+        healthBar.ChangeHealth(health);
+        CheckStrategyChangeFromDamage();
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        health -= amount;
+        //block/shield
+        //powers
+        healthBar.ChangeHealth(health);
+        CheckStrategyChangeFromDamage();
     }
 }

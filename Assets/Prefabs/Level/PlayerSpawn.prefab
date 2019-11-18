@@ -109,11 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df626578979a3342b0350914ae492a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  health: 0
+  maxHealth: 20
   tile: {fileID: 0}
-  maxEnergy: 3
-  energy: 0
   model: {fileID: 4849816801293593208}
 --- !u!1 &318739802948212841
 GameObject:
