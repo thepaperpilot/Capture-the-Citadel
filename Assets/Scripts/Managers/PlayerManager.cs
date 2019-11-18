@@ -69,7 +69,8 @@ public class PlayerManager : MonoBehaviour
 
         if (right.state == Hand.HandAnimPose.CLOSED &&
             left.state == Hand.HandAnimPose.CLOSED &&
-            CombatManager.Instance.IsPlayerTurn())
+            CombatManager.Instance.IsPlayerTurn() &&
+            !ActionsManager.Instance.HasAction(typeof(EndTurnAction)))
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
     }
 
