@@ -53,11 +53,7 @@ public class CombatManager : MonoBehaviour
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void EndTurn() {
-        if (currentTurn == player) {
-            StartCoroutine(PlayerManager.Instance.EndTurn());
-        }
-        else
-        {
+        if (currentTurn != player) {
             ((EnemyController)currentTurn).EndTurn();
         }
         int index = (combatants.IndexOf(currentTurn) + 1) % combatants.Count;

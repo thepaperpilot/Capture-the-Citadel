@@ -8,6 +8,9 @@ public class DeckController : MonoBehaviour
 {
     [BoxGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
+    private GameObject drawPileRoot;
+    [BoxGroup("Components")]
+    [SerializeField, ChildGameObjectsOnly]
     private Transform back;
     [BoxGroup("Components")]
     [SerializeField, ChildGameObjectsOnly]
@@ -103,7 +106,7 @@ public class DeckController : MonoBehaviour
     // TODO add variable to set card width (both here and in CardController)
     public void SetDeckSize(int numCards) {
         deckSize = numCards;
-        gameObject.SetActive(numCards != 0);
+        drawPileRoot.SetActive(numCards != 0);
         back.localPosition = new Vector3(0, 0, .02f * numCards - .01f);
         sides.localScale = new Vector3(.714f, 1, .02f * numCards - .002f);
         sides.localPosition = new Vector3(0, 0, .01f * (numCards - 1));
