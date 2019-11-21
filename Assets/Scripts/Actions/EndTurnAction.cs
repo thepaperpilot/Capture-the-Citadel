@@ -7,7 +7,8 @@ public class EndTurnAction : AbstractAction
 {
     public IEnumerator Run()
     {
-        // TODO Remove any other EndTurnActions from the queue
+        if (CombatManager.Instance.IsPlayerTurn())
+            yield return PlayerManager.Instance.EndTurn();
         CombatManager.Instance.EndTurn();
         yield return null;
     }
