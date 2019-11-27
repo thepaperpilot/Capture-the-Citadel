@@ -17,6 +17,6 @@ MonoBehaviour:
   description: Warriors can use a card as a shield that can reduce damage on an incoming
     attack.
   energyCost: 0
-  rarity: 2
+  rarity: 0
   actions: []
   toy: {fileID: 0}

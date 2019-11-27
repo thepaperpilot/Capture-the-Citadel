@@ -16,7 +16,7 @@ MonoBehaviour:
   name: Smack
   description: Deal 3 damage to an enemy.
   energyCost: 1
-  rarity: 0
+  rarity: 1
   actions:
   - type: 0
     status: {fileID: 0}

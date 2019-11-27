@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2889043469586348878}
   - component: {fileID: 6544313456345871151}
   - component: {fileID: 5134176957126774864}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightTorch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 9081556305721739870}
   - component: {fileID: 2196313969290132694}
   - component: {fileID: 2101352802574383868}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftTorch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,6 +302,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 199194481158781242, guid: 53ebac442b16db64f9177d0c749cbb06,
+        type: 3}
+      propertyPath: m_RenderAlignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 198203777143593298, guid: 53ebac442b16db64f9177d0c749cbb06,
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
@@ -316,11 +321,6 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199194481158781242, guid: 53ebac442b16db64f9177d0c749cbb06,
-        type: 3}
-      propertyPath: m_RenderAlignment
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53ebac442b16db64f9177d0c749cbb06, type: 3}
@@ -397,6 +397,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 199194481158781242, guid: 53ebac442b16db64f9177d0c749cbb06,
+        type: 3}
+      propertyPath: m_RenderAlignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 198203777143593298, guid: 53ebac442b16db64f9177d0c749cbb06,
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
@@ -411,11 +416,6 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199194481158781242, guid: 53ebac442b16db64f9177d0c749cbb06,
-        type: 3}
-      propertyPath: m_RenderAlignment
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53ebac442b16db64f9177d0c749cbb06, type: 3}

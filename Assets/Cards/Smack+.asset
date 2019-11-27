@@ -16,7 +16,7 @@ MonoBehaviour:
   name: Smack+
   description: Deal 4 damage to an enemy and draw a card.
   energyCost: 1
-  rarity: 1
+  rarity: 2
   actions:
   - type: 0
     status: {fileID: 0}

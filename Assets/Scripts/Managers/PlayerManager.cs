@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     public EnemyReadoutUI energyBar;
     [HideInPlayMode, ChildGameObjectsOnly]
     public EnemyReadoutUI healthBar;
+    [HideInEditorMode]
+    public float gold = 0;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
     [SerializeField] private List<Transform> headsetSources;
