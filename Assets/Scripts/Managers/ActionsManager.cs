@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -72,7 +73,11 @@ public class ActionsManager : SerializedMonoBehaviour
     }
 
     public AbstractAction GetRandomAction() {
-        return randomActions[Random.Range(0, randomActions.Length)];
+        return randomActions[UnityEngine.Random.Range(0, randomActions.Length)];
+    }
+
+    public bool HasAction(Type type) {
+        return actions.Exists(action => action.GetType() == type);
     }
 
     private IEnumerator RunAction(AbstractAction action) {

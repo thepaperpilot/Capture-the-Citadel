@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private List<Transform> headsetSources;
     private Hand right;
     private Hand left;
+    private bool isEndingTurn;
     private Transform leftSource;
     private Transform rightSource;
     private Transform headsetSource;
@@ -69,10 +70,13 @@ public class PlayerManager : MonoBehaviour
         rightHand.transform.position = rightSource.position;
         rightHand.transform.rotation = rightSource.rotation;
 
-        if (right.state == Hand.HandAnimPose.CLOSED &&
-            left.state == Hand.HandAnimPose.CLOSED &&
-            CombatManager.Instance.IsPlayerTurn())
+        if (right.state == Hand.HandAnimPose.CLOSED && left.state == Hand.HandAnimPose.CLOSED &&
+            CombatManager.Instance.IsPlayerTurn() && !ActionsManager.Instance.HasAction(typeof(EndTurnAction))) {
+            isEndingTurn = true;
+        } else if (isEndingTurn) {
+            isEndingTurn = false;
             ActionsManager.Instance.AddToBottom(new EndTurnAction());
+        }
     }
 
     private void FixedUpdate()
