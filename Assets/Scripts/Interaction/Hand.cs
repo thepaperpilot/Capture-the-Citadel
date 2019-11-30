@@ -221,7 +221,11 @@ public class Hand : MonoBehaviour
     }
 
     void PlayCard(GameObject cardObj) {
-        CardController card = cardObj.GetComponent<CardController>();
+        if (cardObj == null)
+            return;
+        CardController card = cardObj.GetComponentInChildren<CardController>();
+        if (card == null)
+            return;
         if (CombatManager.Instance.player.Energy < card.card.energyCost) {
             // TODO "Failed" sound effect or something
             PlayerManager.Instance.AddCard(card);
@@ -233,6 +237,7 @@ public class Hand : MonoBehaviour
         Destroy(cardObj);
         heldObject = null;
         Grab(toy);
+        GripButtonChanged(false);
     }
 
     void Release()
@@ -263,8 +268,10 @@ public class Hand : MonoBehaviour
                 {
                     toy.Destroy(0);
                     heldObject = null;
-                    CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
-                    StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+                    if (toy.card) {
+                        CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
+                        StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+                    }
                 }
             }
             heldObject = null;

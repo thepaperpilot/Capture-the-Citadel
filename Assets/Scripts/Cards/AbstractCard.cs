@@ -9,6 +9,7 @@ using UnityEngine;
 public class AbstractCard : ScriptableObject
 {
     public enum Rarities {
+        CLASS,
         STARTER,
         COMMON,
         UNCOMMON,

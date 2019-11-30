@@ -16,7 +16,7 @@ MonoBehaviour:
   name: Prepare
   description: Gain 1 Strength
   energyCost: 2
-  rarity: 0
+  rarity: 1
   actions:
   - type: 3
     status: {fileID: 11400000, guid: 524275595e50b88409d0d0b786cfebb8, type: 2}

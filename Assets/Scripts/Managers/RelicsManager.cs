@@ -73,7 +73,7 @@ public class RelicsManager : MonoBehaviour
                 r.rarity == AbstractRelic.Rarities.COMMON ? common :
                 r.rarity == AbstractRelic.Rarities.UNCOMMON ? uncommon :
                 r.rarity == AbstractRelic.Rarities.RARE ? rare : 0);
-            return next > target;
+            return target > next;
         }).FirstOrDefault();
         if (relic != null) {
             relics.Add(new RelicData() {

@@ -12,6 +12,8 @@ public class CardsManager : SerializedMonoBehaviour
     [Space, HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public  List<AbstractCard> deck;
+    [AssetList(AutoPopulate=true, CustomFilterMethod="FindCards")]
+    public AbstractCard[] allCards;
     public int startingHandSize = 5;
     public int cardDrawPerTurn = 3;
 
@@ -80,4 +82,10 @@ public class CardsManager : SerializedMonoBehaviour
             cards[n] = value;
         }
     }
+
+#if UNITY_EDITOR
+    public bool FindCards(AbstractCard card) {
+        return card.rarity != AbstractCard.Rarities.CLASS;
+    }
+#endif
 }

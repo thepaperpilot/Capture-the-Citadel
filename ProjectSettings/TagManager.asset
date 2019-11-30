@@ -15,6 +15,8 @@ TagManager:
   - Obstacle
   - Enemy
   - Hex
+  - Scene
+  - Shop
   layers:
   - Default
   - TransparentFX

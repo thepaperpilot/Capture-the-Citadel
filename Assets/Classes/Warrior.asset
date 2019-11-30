@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daf1b19c77322541af786d813596646, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  startingHealth: 10
+  startingHealth: 20
   startingDeck:
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
-  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
   - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
   - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
   - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}

@@ -16,7 +16,7 @@ MonoBehaviour:
   name: TP
   description: Instantly move up to 2 hexes away
   energyCost: 1
-  rarity: 0
+  rarity: 1
   actions:
   - type: 2
     status: {fileID: 0}
