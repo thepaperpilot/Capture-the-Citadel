@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ec7b4ae350126d40823b0ea46e97aad, type: 3}
-  m_Name: Defense
+  m_Name: Swiftness
   m_EditorClassIdentifier: 
-  name: Defense
+  name: Swiftness
   type: 0
   expression:
     modifier: 0
     amount: 1
-    effect: 1
+    effect: 2
   activeStatus:
     type: 0
     status: {fileID: 0}
@@ -35,5 +35,5 @@ MonoBehaviour:
       isDecaying: 0
       amount: 1
     stacks: 0
-  icon: {fileID: 21300000, guid: fbd69ec32616f7a48b4b36bc46830a73, type: 3}
+  icon: {fileID: 21300000, guid: 4188bba03d4ece04ca63a2256be46c47, type: 3}
   combatant: {fileID: 0}

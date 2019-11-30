@@ -20,6 +20,11 @@ public class PlayerController : CombatantController
         PlayerManager.Instance.healthBar.Init(maxHealth, "");
     }
 
+    public override void UpdateStatuses()
+    {
+        PlayerManager.Instance.healthBar.SetStatuses(statusController.GetStatuses());
+    }
+
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void FillEnergy() {
         Energy = PlayerManager.Instance.maxEnergy;

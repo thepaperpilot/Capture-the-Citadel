@@ -16,18 +16,26 @@ public class StatusController : MonoBehaviour
 
     private void ResetStatuses(Scene scene, LoadSceneMode mode) {
         statuses.Clear();
+        combatant.UpdateStatuses();
     }
 
     public void AddStatus(AbstractStatus status, int stacks = 1) {
         statuses[status] = (statuses.ContainsKey(status) ? statuses[status] : 0) + stacks;
+        combatant.UpdateStatuses();
     }
 
     public void RemoveStatus(AbstractStatus status) {
         statuses.Remove(status);
+        combatant.UpdateStatuses();
     }
 
     public int GetDamage(int baseDamage) {
         return GetEffectValue(baseDamage, Expression.Effects.DAMAGE);
+    }
+
+    public int GetMovement(int baseMovement)
+    {
+        return GetEffectValue(baseMovement, Expression.Effects.MOVEMENT);
     }
 
     public void OnTurnStart() {
@@ -51,7 +59,13 @@ public class StatusController : MonoBehaviour
                 statuses.Remove(pair.Key);
             else
                 statuses[pair.Key] = newAmount;
+            combatant.UpdateStatuses();
         }
+    }
+
+    public void OnMove()
+    {
+        OnTrigger(ActiveStatus.Triggers.MOVEMENT, new CombatantController[] { });
     }
 
     private int GetEffectValue(int baseValue, Expression.Effects effect) {
@@ -93,8 +107,14 @@ public class StatusController : MonoBehaviour
                 statuses.Remove(pair.Key);
             else
                 statuses[pair.Key] = newAmount;
+            combatant.UpdateStatuses();
         }
 
         ActionsManager.Instance.AddToTop(pairs.Select(p => p.Key.activeStatus).ToArray());
+    }
+
+    public IEnumerable<KeyValuePair<AbstractStatus,int>> GetStatuses()
+    {
+        return statuses.Where(status => status.Value != 0);
     }
 }

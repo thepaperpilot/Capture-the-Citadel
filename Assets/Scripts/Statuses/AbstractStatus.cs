@@ -36,6 +36,8 @@ public class AbstractStatus : ScriptableObject
     [ShowIfGroup("Status Type/active", MemberName="type", Value=Types.ACTIVE), InlineProperty, HideLabel]
     public ActiveStatus activeStatus;
 
+    public Sprite icon;
+
     [HideInInspector]
     public CombatantController combatant;
 }

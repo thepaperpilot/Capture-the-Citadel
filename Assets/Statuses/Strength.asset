@@ -22,10 +22,18 @@ MonoBehaviour:
     type: 0
     status: {fileID: 0}
     amount: 0
+    ranged: 0
     targets: []
+    actor: {fileID: 0}
+    destination: {fileID: 0}
     trigger: 0
     affectsSelf: 1
     decaysAfterUse:
       isDecaying: 0
       amount: 1
+    decaysWhenHit:
+      isDecaying: 0
+      amount: 1
+    stacks: 0
+  icon: {fileID: 21300000, guid: 18b8e95641aaebe499e4489429f9509f, type: 3}
   combatant: {fileID: 0}

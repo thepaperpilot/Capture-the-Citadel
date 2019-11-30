@@ -34,6 +34,7 @@ public class EnemyReadoutUI : MonoBehaviour
     [SerializeField, ShowInInspector]
     private float barWidth = 0.32f;
     private float statusWidth = 0.1f;
+    private int statusPerRow = 16;
     private float intentWidth = 0.2f;
 
     public struct Intent
@@ -80,8 +81,7 @@ public class EnemyReadoutUI : MonoBehaviour
 
     public void ChangeHealth(int newHealth)
     {
-        Debug.Log((maxHealth - newHealth) * unitHealth);
-        missingPortion.localScale = new Vector3((maxHealth - newHealth) * unitHealth, 1, 1);
+        missingPortion.localScale = new Vector3(Mathf.Clamp((maxHealth - newHealth) * unitHealth, 0, 1), 1, 1);
         healthText.text = newHealth + "/" + maxHealth;
     }
 
@@ -108,6 +108,27 @@ public class EnemyReadoutUI : MonoBehaviour
             temp.transform.localPosition = new Vector3(pos, 0, 0);
             temp.GetComponent<IntentIcon>().Init(intent.icon, intent.amount);
             pos += intentWidth;
+        }
+    }
+
+    public void ClearStatuses()
+    {
+        while (statusParent.childCount > 0)
+            DestroyImmediate(statusParent.GetChild(0).gameObject);
+    }
+
+    public void SetStatuses(IEnumerable<KeyValuePair<AbstractStatus, int>> statuses)
+    {
+        ClearStatuses();
+        int count = 0;
+
+        foreach(KeyValuePair<AbstractStatus, int> pair in statuses)
+        {
+            GameObject temp = Instantiate(statusFab, statusParent);
+            temp.transform.localRotation = Quaternion.identity;
+            temp.transform.localPosition = new Vector3(statusWidth * (count%statusPerRow), -statusWidth * (count/statusPerRow), 0);
+            temp.GetComponent<StatusIcon>().Init(pair.Key.icon, pair.Value);
+            count++;
         }
     }
 

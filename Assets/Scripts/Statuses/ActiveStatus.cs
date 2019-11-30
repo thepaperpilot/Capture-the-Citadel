@@ -11,7 +11,8 @@ public class ActiveStatus : CombatAction
     public enum Triggers {
         TURN_START,
         DAMAGE_DEALT,
-        DAMAGE_TAKEN
+        DAMAGE_TAKEN,
+        MOVEMENT
     }
 
     public Triggers trigger;

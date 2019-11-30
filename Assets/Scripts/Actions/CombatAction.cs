@@ -73,13 +73,13 @@ public class CombatAction : AbstractAction
                         LevelManager.Instance.controller.playerHex = destination;
                         ActionsManager.Instance.AddToTop(new BakeNavigationAction(BakeNavigationAction.BakeType.PLAYER_CHANGED));
                     } else {
-                        actor.transform.LookAt(destination.transform);
+                        controller.transform.LookAt(destination.transform);
                         yield return new WaitForSeconds(1);
-                        actor.transform.SetParent(destination.transform);
-                        actor.transform.localPosition = Vector3.zero;
-                        actor.tile.occupant = null;
-                        destination.occupant = actor.gameObject;
-                        actor.tile = destination;
+                        controller.transform.SetParent(destination.transform);
+                        controller.transform.localPosition = Vector3.zero;
+                        controller.tile.occupant = null;
+                        destination.occupant = controller.gameObject;
+                        controller.tile = destination;
                     }
                     break;
                 case TYPE.STATUS:

@@ -9,7 +9,8 @@ public class Expression
 {
     public enum Effects {
         DAMAGE,
-        DEFENSE
+        DEFENSE,
+        MOVEMENT
     }
     
     public enum Modifiers {

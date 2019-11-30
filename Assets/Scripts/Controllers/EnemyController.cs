@@ -122,20 +122,20 @@ public class EnemyController : CombatantController
             {
                 if (action.ranged)
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, action.amount));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, statusController.GetDamage(action.amount)));
                 }
                 else if(action.amount < IntentIcon.MajorDamageThreshold)
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, action.amount));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, statusController.GetDamage(action.amount)));
                 }
                 else
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, action.amount));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, statusController.GetDamage(action.amount)));
                 }
             }
             else if (action.type == CombatAction.TYPE.MOVE)
             {
-                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.MOVE, action.amount));
+                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.MOVE, statusController.GetMovement(action.amount)));
             }
             else if(action.type == CombatAction.TYPE.STATUS)
             {
@@ -167,6 +167,11 @@ public class EnemyController : CombatantController
         }
 
         healthBar.SetIntents(intents);
+    }
+
+    public override void UpdateStatuses()
+    {
+        healthBar.SetStatuses(statusController.GetStatuses());
     }
 
     public void PlanTurn()
@@ -240,7 +245,7 @@ public class EnemyController : CombatantController
             if(action.type == CombatAction.TYPE.MOVE)
             {
                 bool moved = false;
-                int remainingMovement = action.amount;
+                int remainingMovement = statusController.GetMovement(action.amount);
                 Hex currentHex = tile;
                 while(remainingMovement > 0)
                 {
@@ -290,12 +295,22 @@ public class EnemyController : CombatantController
 
                         currentHex = bestHex;
                         remainingMovement--;
+                        statusController.OnMove();
                     }
                 }
                 if (moved)
                 {
                     modifiedActions.Add(new BakeNavigationAction(BakeNavigationAction.BakeType.ENEMY_CHANGED));
                 }
+            }
+            else if (action.type == CardAction.TYPE.DAMAGE)
+            {
+                CardAction attackAction = new CardAction();
+                attackAction.actor = this;
+                attackAction.amount = statusController.GetDamage(action.amount);
+                attackAction.type = CombatAction.TYPE.DAMAGE;
+                attackAction.targets = action.targets;
+                modifiedActions.Add(attackAction);
             }
             else
             {
