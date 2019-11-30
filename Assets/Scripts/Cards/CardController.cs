@@ -46,6 +46,7 @@ public class CardController : MonoBehaviour
     public void Setup(AbstractCard card, bool showEnergyCost = true) {
         this.card = card;
         switch (card.rarity) {
+            case AbstractCard.Rarities.STARTER:
             case AbstractCard.Rarities.COMMON:
                 border.material = common;
                 break;
