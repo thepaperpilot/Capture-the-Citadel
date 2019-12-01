@@ -68,9 +68,9 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
     }
 
     public bool Buy(AbstractCard selectedCard, int cost) {
-        if (PlayerManager.Instance.gold < cost) return false;
+        if (PlayerManager.Instance.Gold < cost) return false;
         CardsManager.Instance.deck.Add(selectedCard);
-        PlayerManager.Instance.gold -= cost;
+        PlayerManager.Instance.Gold -= cost;
         return true;
     }
 

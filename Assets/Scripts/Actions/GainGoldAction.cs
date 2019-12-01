@@ -13,7 +13,7 @@ public class GainGoldAction : AbstractAction
 
     public IEnumerator Run()
     {
-        PlayerManager.Instance.gold += amount;
+        PlayerManager.Instance.Gold += amount;
         yield return null;
     }
 }
