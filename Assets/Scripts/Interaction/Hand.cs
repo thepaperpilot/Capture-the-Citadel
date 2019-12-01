@@ -259,10 +259,8 @@ public class Hand : MonoBehaviour
                 Toy toy = heldObject.GetComponentInChildren<Toy>();
                 if (toy != null)
                 {
-                    Debug.Log(toy);
-                    Debug.Log(!checkToy || toy.CanBeDropped());
                     if (!checkToy || toy.CanBeDropped()) {
-                        toy.Destroy(0);
+                        toy.Destroy();
                         if (toy.card) {
                             CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
                             StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));

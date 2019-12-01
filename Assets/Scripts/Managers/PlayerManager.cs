@@ -44,12 +44,12 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    [Button(ButtonSizes.Large)]
+    [Button(ButtonSizes.Large), HideInEditorMode]
     public void ResetGold() {
         Gold = 0;
     }
 
-    [Button(ButtonSizes.Large)]
+    [Button(ButtonSizes.Large), HideInEditorMode]
     public void MoreGold() {
         Gold += 100;
     }

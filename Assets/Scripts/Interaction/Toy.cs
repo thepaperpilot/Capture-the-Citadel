@@ -26,8 +26,15 @@ public class Toy : MonoBehaviour
         Destroy(overrideDelay ? 0 : delayDespawn);
     }
 
-    public virtual void Destroy(int delay) {
-        StartCoroutine(DelayParticles(delay));
+    public virtual void Destroy(int delay = 0, bool skipParticles = false) {
+        if (skipParticles) {
+            if (delay == 0)
+                DestroyImmediate(toyRoot);
+            else
+                Destroy(toyRoot, delay);
+        } else {
+            StartCoroutine(DelayParticles(delay));
+        }
     }
 
     IEnumerator DelayParticles(int delay) {

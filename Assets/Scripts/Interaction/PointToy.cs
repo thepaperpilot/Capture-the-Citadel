@@ -42,13 +42,13 @@ public class PointToy : Toy, IRule
         facade.Configuration.ConfigureSelectionAction();
     }
 
-    public override void Destroy(int delay) {
+    public override void Destroy(int delay = 0, bool skipParticles = false) {
         if ((target & PointTargets.Hex) != PointTargets.None) {
             foreach (Hex hex in availableHexes) {
                 hex.Unhighlight();
             }
         }
-        base.Destroy(delay);
+        base.Destroy(delay, skipParticles);
     }
 
     public void OnEnter(EventData data) {
@@ -109,7 +109,7 @@ public class PointToy : Toy, IRule
                 ClassSelectorController classSelectorController = active.GetComponent<ClassSelectorController>();
                 if (classSelectorController != null) {
                     classSelectorController.Select();
-                    Destroy(0);
+                    Destroy(0, true);
                     return;
                 }
                 Hex hex = active.GetComponent<Hex>();
@@ -128,7 +128,7 @@ public class PointToy : Toy, IRule
                 SceneSelectorController sceneSelectorController = active.GetComponent<SceneSelectorController>();
                 if (sceneSelectorController) {
                     sceneSelectorController.Select();
-                    Destroy(0);
+                    Destroy(0, true);
                     return;
                 }
                 CardBuyerController cardBuyerController = active.GetComponent<CardBuyerController>();
