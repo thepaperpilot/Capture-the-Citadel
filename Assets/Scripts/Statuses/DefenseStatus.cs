@@ -1,0 +1,25 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DefenseStatus : Status
+{
+    public DefenseStatus()
+    {
+        name = NAME.DEFENSE;
+        type = STATUS_TYPE.BUFF;
+        priority = 0;
+    }
+
+    public override int GetDamageTaken(int damage)
+    {
+        return damage - amount;
+    }
+
+    public override void OnTurnStart()
+    {
+        controller.RemoveStatus(this);
+    }
+
+    public override void OnTurnEnd() { /*Do Nothing*/ }
+}

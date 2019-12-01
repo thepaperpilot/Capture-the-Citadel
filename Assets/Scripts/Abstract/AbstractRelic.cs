@@ -94,7 +94,7 @@ public class AbstractRelic : ScriptableObject
         public Targets target;
         [BoxGroup("Effect")]
         [ShowIf("effect", Effects.ADD_STATUS), ValueDropdown("GetStatusEffects")]
-        public AbstractStatus status;
+        public Status.NAME status;
         [BoxGroup("Effect")]
         [HideIf("effect", Effects.AFFECT_CARD)]
         public int amount;
@@ -131,7 +131,7 @@ public class AbstractRelic : ScriptableObject
             foreach (CombatantController controller in targets) {
                 switch (effect) {
                     case Effects.ADD_STATUS:
-                        controller.GetComponent<StatusController>().AddStatus(status, amount);
+                        controller.GetComponent<StatusController>().AddStatus(Status.FromName(status), amount);
                         break;
                     case Effects.DAMAGE:
                         if (controller != CombatManager.Instance.player)

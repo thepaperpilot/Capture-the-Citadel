@@ -24,7 +24,7 @@ public abstract class CombatantController : MonoBehaviour
 
     public abstract void Heal(int amount);
 
-    public abstract void LoseHp(int amount);
+    public abstract void LoseHealth(int amount);
 
     public abstract void TakeDamage(int amount);
 

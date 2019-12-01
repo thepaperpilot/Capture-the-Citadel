@@ -16,8 +16,9 @@ public class CombatAction : AbstractAction
 
     [EnumToggleButtons]
     public TYPE type;
-    [ShowIf("type", TYPE.STATUS), ValueDropdown("GetStatusEffects")]
-    public AbstractStatus status;
+    //[ShowIf("type", TYPE.STATUS), ValueDropdown("GetStatusEffects")]
+    [ShowIf("type", TYPE.STATUS)]
+    public Status.NAME status;
     public int amount;
     public bool ranged;
 
@@ -83,7 +84,7 @@ public class CombatAction : AbstractAction
                     }
                     break;
                 case TYPE.STATUS:
-                    controller.GetComponent<StatusController>().AddStatus(status, amount);
+                    controller.GetComponent<StatusController>().AddStatus(Status.FromName(status), amount);
                     break;
             }
         }

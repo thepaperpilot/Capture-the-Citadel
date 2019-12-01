@@ -16,7 +16,7 @@ public class PlayerController : CombatantController
 
     protected override void Awake()
     {
-        health = maxHealth;
+        base.Awake();
         PlayerManager.Instance.healthBar.Init(maxHealth, "");
     }
 
@@ -43,19 +43,23 @@ public class PlayerController : CombatantController
         UpdateHealthBar();
     }
 
-    public override void LoseHp(int amount)
+    public override void LoseHealth(int amount)
     {
-        health -= amount;
-        //powers
-        UpdateHealthBar();
+        health -= Mathf.Max(0, statusController.GetHealthLost(amount));
+
+        if (health <= 0)
+        {
+
+        }
+        else
+        {
+            UpdateHealthBar();
+        }
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int damage)
     {
-        health -= amount;
-        //block/shield
-        //powers
-        UpdateHealthBar();
+        LoseHealth(Mathf.Max(0, statusController.GetDamageTaken(damage)));
     }
 
     public void UpdateHealthBar()

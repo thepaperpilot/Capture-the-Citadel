@@ -97,7 +97,7 @@ MonoBehaviour:
     moves:
     - actions:
       - type: 2
-        status: {fileID: 0}
+        status: 0
         amount: 3
         ranged: 0
         targets: []
@@ -105,7 +105,7 @@ MonoBehaviour:
         destination: {fileID: 0}
         target: 1
       - type: 0
-        status: {fileID: 0}
+        status: 0
         amount: 3
         ranged: 0
         targets: []
@@ -116,7 +116,7 @@ MonoBehaviour:
       debuffIsMajor: 0
     - actions:
       - type: 2
-        status: {fileID: 0}
+        status: 0
         amount: 4
         ranged: 0
         targets: []
@@ -124,7 +124,7 @@ MonoBehaviour:
         destination: {fileID: 0}
         target: 1
       - type: 0
-        status: {fileID: 0}
+        status: 0
         amount: 2
         ranged: 0
         targets: []
@@ -135,7 +135,7 @@ MonoBehaviour:
       debuffIsMajor: 0
     - actions:
       - type: 0
-        status: {fileID: 0}
+        status: 0
         amount: 2
         ranged: 0
         targets: []
@@ -143,7 +143,7 @@ MonoBehaviour:
         destination: {fileID: 0}
         target: 0
       - type: 0
-        status: {fileID: 0}
+        status: 0
         amount: 2
         ranged: 0
         targets: []
@@ -161,7 +161,7 @@ MonoBehaviour:
       moves:
       - actions:
         - type: 3
-          status: {fileID: 11400000, guid: 524275595e50b88409d0d0b786cfebb8, type: 2}
+          status: 0
           amount: 2
           ranged: 0
           targets: []

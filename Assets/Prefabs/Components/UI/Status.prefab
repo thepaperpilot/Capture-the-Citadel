@@ -127,6 +127,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 8474591870860683571}
   amountText: {fileID: 7802828309310406315}
+  strengthTex: {fileID: 21300000, guid: 18b8e95641aaebe499e4489429f9509f, type: 3}
+  defenseTex: {fileID: 21300000, guid: efcb748c91544014b8f415d1e34cfea3, type: 3}
+  swiftnessTex: {fileID: 21300000, guid: 4188bba03d4ece04ca63a2256be46c47, type: 3}
+  aegisTex: {fileID: 21300000, guid: 75daf035ef8c8ea4c9d78559ac01d74c, type: 3}
+  fortifyTex: {fileID: 21300000, guid: 1901a4dcc9db6104d8a159a3333fae93, type: 3}
+  hamstringTex: {fileID: 21300000, guid: 2b6d6e997d982d343b5b8ca544bf3a14, type: 3}
+  poisonTex: {fileID: 21300000, guid: 670686ab2be8eaf458d012a8bf3aa532, type: 3}
+  spikesTex: {fileID: 21300000, guid: d5b2fa3d2f0260e479c33de48de6eb89, type: 3}
+  prayerFatigueTex: {fileID: 21300000, guid: e57bc54933f75e44bba7ca727f6a894c, type: 3}
 --- !u!1 &7917862896880533357
 GameObject:
   m_ObjectHideFlags: 0

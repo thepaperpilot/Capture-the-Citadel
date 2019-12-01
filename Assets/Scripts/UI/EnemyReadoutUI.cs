@@ -117,17 +117,18 @@ public class EnemyReadoutUI : MonoBehaviour
             DestroyImmediate(statusParent.GetChild(0).gameObject);
     }
 
-    public void SetStatuses(IEnumerable<KeyValuePair<AbstractStatus, int>> statuses)
+    public void SetStatuses(List<Status> statuses)
     {
         ClearStatuses();
+        statuses.Sort(new StatusDisplaySort());
         int count = 0;
 
-        foreach(KeyValuePair<AbstractStatus, int> pair in statuses)
+        foreach(Status status in statuses)
         {
             GameObject temp = Instantiate(statusFab, statusParent);
             temp.transform.localRotation = Quaternion.identity;
             temp.transform.localPosition = new Vector3(statusWidth * (count%statusPerRow), -statusWidth * (count/statusPerRow), 0);
-            temp.GetComponent<StatusIcon>().Init(pair.Key.icon, pair.Value);
+            temp.GetComponent<StatusIcon>().Init(status);
             count++;
         }
     }

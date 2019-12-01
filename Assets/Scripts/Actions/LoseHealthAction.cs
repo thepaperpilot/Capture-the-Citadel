@@ -15,7 +15,7 @@ public class LoseHealthAction : AbstractAction
 
     public IEnumerator Run()
     {
-        target.LoseHp(amount);
+        target.LoseHealth(amount);
         yield return null;
     }
 }

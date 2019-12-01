@@ -10,3 +10,5 @@ HumanForScale - https://opengameart.org/content/cleaned-base-human-models
 Jagged Sword - https://opengameart.org/content/jagged-sword
 Icons - "Lorc" https://opengameart.org/content/700-rpg-icons
 Health Bar - https://opengameart.org/content/health-bar-64x8
+Staffs - https://opengameart.org/content/staff-pack-low-poly
+Battleaxe - https://opengameart.org/content/rpg-axes-low-poly-3d-and-2d-pixel-axes-icons

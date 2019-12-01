@@ -7,114 +7,168 @@ using UnityEngine.SceneManagement;
 public class StatusController : MonoBehaviour
 {
     private CombatantController combatant;
+    private int order = 0;
 
-    readonly private Dictionary<AbstractStatus, int> statuses = new Dictionary<AbstractStatus, int>();
+    private List<Status> statuses = new List<Status>();
+    private List<Status> toRemove = new List<Status>();
 
     private void Awake() {
         combatant = GetComponent<CombatantController>();
     }
 
+    private void CheckRemoval()
+    {
+        bool changed = toRemove.Count > 0;
+        while(toRemove.Count > 0)
+        {
+            statuses.Remove(toRemove[0]);
+            toRemove.RemoveAt(0);
+        }
+
+        if (changed)
+        {
+            combatant.UpdateStatuses();
+        }
+    }
+
     private void ResetStatuses(Scene scene, LoadSceneMode mode) {
         statuses.Clear();
+        toRemove.Clear();
+        order = 0;
         combatant.UpdateStatuses();
     }
 
-    public void AddStatus(AbstractStatus status, int stacks = 1) {
-        statuses[status] = (statuses.ContainsKey(status) ? statuses[status] : 0) + stacks;
+    public void AddStatus(Status newStatus, int stacks = 1) {
+        bool containsStatus = false;
+        foreach(Status status in statuses)
+        {
+            if(status.GetType() == newStatus.GetType())
+            {
+                containsStatus = true;
+                status.AddStacks(stacks);
+                break;
+            }
+        }
+        if (!containsStatus)
+        {
+            newStatus.amount = stacks;
+            newStatus.displayOrder = order;
+            order++;
+            statuses.Add(newStatus);
+            statuses.Sort(new StatusPrioritySort());
+        }
         combatant.UpdateStatuses();
     }
 
-    public void RemoveStatus(AbstractStatus status) {
-        statuses.Remove(status);
-        combatant.UpdateStatuses();
-    }
-
-    public int GetDamage(int baseDamage) {
-        return GetEffectValue(baseDamage, Expression.Effects.DAMAGE);
-    }
-
-    public int GetMovement(int baseMovement)
+    public void RemoveStatus(Status status)
     {
-        return GetEffectValue(baseMovement, Expression.Effects.MOVEMENT);
+        toRemove.Add(status);
     }
 
     public void OnTurnStart() {
-        OnTrigger(ActiveStatus.Triggers.TURN_START, new CombatantController[] { combatant });
-    }
-
-    public void OnAttack(CombatantController[] targets) {
-        OnTrigger(ActiveStatus.Triggers.DAMAGE_DEALT, targets);
-    }
-
-    public void OnAttacked(CombatantController attacker) {
-        OnTrigger(ActiveStatus.Triggers.DAMAGE_TAKEN, new CombatantController[] { attacker });
-
-        // Handle statuses that decay when damage taken
-        IEnumerable<KeyValuePair<AbstractStatus, int>> pairs = statuses.
-            Where(status => status.Key.type == AbstractStatus.Types.ACTIVE &&
-                  status.Key.activeStatus.trigger != ActiveStatus.Triggers.DAMAGE_TAKEN);
-        foreach (KeyValuePair<AbstractStatus, int> pair in pairs) {
-            int newAmount = pair.Key.activeStatus.GetPostHitAmount(pair.Value);
-            if (newAmount == 0)
-                statuses.Remove(pair.Key);
-            else
-                statuses[pair.Key] = newAmount;
-            combatant.UpdateStatuses();
+        foreach(Status status in statuses)
+        {
+            status.OnTurnStart();
         }
+        CheckRemoval();
+    }
+
+    public void OnTurnEnd()
+    {
+        foreach (Status status in statuses)
+        {
+            status.OnTurnEnd();
+        }
+        CheckRemoval();
+    }
+
+    public void OnTakeDamage(CombatantController attacker)
+    {
+        foreach (Status status in statuses)
+        {
+            status.OnTakeDamage(attacker);
+        }
+        CheckRemoval();
+    }
+
+    public void OnAttack(CombatantController target)
+    {
+        foreach (Status status in statuses)
+        {
+            status.OnAttack(target);
+        }
+        CheckRemoval();
     }
 
     public void OnMove()
     {
-        OnTrigger(ActiveStatus.Triggers.MOVEMENT, new CombatantController[] { });
+        foreach (Status status in statuses)
+        {
+            status.OnMove();
+        }
+        CheckRemoval();
     }
 
-    private int GetEffectValue(int baseValue, Expression.Effects effect) {
-        int value = baseValue;
-        IEnumerable<KeyValuePair<AbstractStatus, int>> pairs = statuses.
-            Where(status => status.Key.type == AbstractStatus.Types.PASSIVE &&
-                  status.Key.expression.effect == effect);
-    
-        foreach (KeyValuePair<AbstractStatus, int> pair in
-            pairs.Where(expression => expression.Key.expression.modifier == Expression.Modifiers.ADD)) {
-            value += pair.Key.expression.amount * pair.Value;
-        }
-        foreach (KeyValuePair<AbstractStatus, int> pair in
-            pairs.Where(expression => expression.Key.expression.modifier == Expression.Modifiers.MULTIPLY)) {
-            // Set up so that stacks add to the multiplier additively
-            // e.g. if the multiplier is 2, then 1 stack is 2x, 2 stacks is 3x, 5 stacks is 6x
-            // e.g. if the multiplier is 1.1, then 1 stack is 1.1x, 2 stacks is 1.2x, 5 stacks is 1.5x
-            // *Different* multiplying statuses will still apply multiplicatively, though
-            value *= 1 + (pair.Key.expression.amount - 1) * pair.Value;
-        }
-
-        return value;
-    }
-
-    private void OnTrigger(ActiveStatus.Triggers trigger, CombatantController[] others) {
-        IEnumerable<KeyValuePair<AbstractStatus, int>> pairs = statuses.
-            Where(status => status.Key.type == AbstractStatus.Types.ACTIVE &&
-                  status.Key.activeStatus.trigger == trigger);
-        
-        foreach (KeyValuePair<AbstractStatus, int> pair in pairs) {
-            if (pair.Key.activeStatus.affectsSelf)
-                pair.Key.activeStatus.targets = new CombatantController[] { combatant };
-            else
-                pair.Key.activeStatus.targets = others;
-            pair.Key.activeStatus.stacks = pair.Value;
-            
-            int newAmount = pair.Key.activeStatus.GetPostUseAmount(pair.Value);
-            if (newAmount == 0)
-                statuses.Remove(pair.Key);
-            else
-                statuses[pair.Key] = newAmount;
-            combatant.UpdateStatuses();
-        }
-
-        ActionsManager.Instance.AddToTop(pairs.Select(p => p.Key.activeStatus).ToArray());
-    }
-
-    public IEnumerable<KeyValuePair<AbstractStatus,int>> GetStatuses()
+    public void OnPlayCard(AbstractCard card)
     {
-        return statuses.Where(status => status.Value != 0);
+        foreach (Status status in statuses)
+        {
+            status.OnPlayCard(card);
+        }
+        CheckRemoval();
+    }
+
+    public int GetDamageDealt(int baseDamage)
+    {
+        int modifiedDamage = baseDamage;
+        foreach (Status status in statuses)
+        {
+            modifiedDamage = status.GetDamageDealt(modifiedDamage);
+        }
+        CheckRemoval();
+        return modifiedDamage;
+    }
+
+    public int GetDamageTaken(int baseDamage)
+    {
+        int modifiedDamage = baseDamage;
+        foreach (Status status in statuses)
+        {
+            modifiedDamage = status.GetDamageTaken(modifiedDamage);
+        }
+        CheckRemoval();
+        return modifiedDamage;
+    }
+
+    public int GetHealthLost(int baseAmount)
+    {
+        int modifiedAmount = baseAmount;
+        foreach (Status status in statuses)
+        {
+            modifiedAmount = status.GetHealthLost(modifiedAmount);
+        }
+        CheckRemoval();
+        return modifiedAmount;
+    }
+
+    public int GetMovement(int baseMovement)
+    {
+        int modifiedMovment = baseMovement;
+        foreach (Status status in statuses)
+        {
+            modifiedMovment = status.GetMovement(modifiedMovment);
+        }
+        CheckRemoval();
+        return modifiedMovment;
+    }
+
+    public List<Status> GetStatuses()
+    {
+        return new List<Status>(statuses);
+    }
+
+    public CombatantController GetCombatant()
+    {
+        return combatant;
     }
 }

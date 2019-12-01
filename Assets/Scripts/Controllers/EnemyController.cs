@@ -122,15 +122,15 @@ public class EnemyController : CombatantController
             {
                 if (action.ranged)
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, statusController.GetDamage(action.amount)));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, statusController.GetDamageDealt(action.amount)));
                 }
                 else if(action.amount < IntentIcon.MajorDamageThreshold)
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, statusController.GetDamage(action.amount)));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, statusController.GetDamageDealt(action.amount)));
                 }
                 else
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, statusController.GetDamage(action.amount)));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, statusController.GetDamageDealt(action.amount)));
                 }
             }
             else if (action.type == CombatAction.TYPE.MOVE)
@@ -307,7 +307,7 @@ public class EnemyController : CombatantController
             {
                 CardAction attackAction = new CardAction();
                 attackAction.actor = this;
-                attackAction.amount = statusController.GetDamage(action.amount);
+                attackAction.amount = statusController.GetDamageDealt(action.amount);
                 attackAction.type = CombatAction.TYPE.DAMAGE;
                 attackAction.targets = action.targets;
                 modifiedActions.Add(attackAction);
@@ -357,20 +357,23 @@ public class EnemyController : CombatantController
         healthBar.ChangeHealth(health);
     }
 
-    public override void LoseHp(int amount)
+    public override void LoseHealth(int amount)
     {
-        health -= amount;
-        //powers
+        health -= Mathf.Max(0, statusController.GetHealthLost(amount));
         healthBar.ChangeHealth(health);
-        CheckStrategyChangeFromDamage();
+
+        if (health <= 0)
+        {
+            //die
+        }
+        else
+        {
+            CheckStrategyChangeFromDamage();
+        }
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int damage)
     {
-        health -= amount;
-        //block/shield
-        //powers
-        healthBar.ChangeHealth(health);
-        CheckStrategyChangeFromDamage();
+        LoseHealth(Mathf.Max(0, statusController.GetDamageTaken(damage)));
     }
 }
