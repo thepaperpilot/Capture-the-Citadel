@@ -1661,7 +1661,6 @@ MonoBehaviour:
   cardHolder: {fileID: 896540187114608456}
   grabRadius: 0.1
   pinchRadius: 0.03
-  canChangeState: 1
   trigger: {fileID: 9218400287658487700}
   grip: {fileID: 2850115827233752078}
 --- !u!65 &2038800926974031791
@@ -2174,7 +2173,6 @@ MonoBehaviour:
   cardHolder: {fileID: 0}
   grabRadius: 0.04
   pinchRadius: 0.02
-  canChangeState: 1
   trigger: {fileID: 256060988423516461}
   grip: {fileID: 1888100191078492563}
 --- !u!65 &2038800928251704768
