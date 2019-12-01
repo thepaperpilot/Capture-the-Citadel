@@ -41,7 +41,6 @@ public class Hand : MonoBehaviour
     [SerializeField] float grabRadius = 0.05f;
     [SerializeField] float pinchRadius = 0.02f;
     
-    public bool canChangeState = true;
     public BooleanAction trigger;
     public BooleanAction grip;
 
@@ -80,7 +79,6 @@ public class Hand : MonoBehaviour
 
     private void UpdateState()
     {
-        if (!canChangeState) return;
         switch (state)
         {
             case HandAnimPose.OPEN:
@@ -116,14 +114,15 @@ public class Hand : MonoBehaviour
             case HandAnimPose.HOLDING:
                 if (gripPressed || heldObject == null || heldObject.transform.parent != transform)
                 {
-                    Release();
-                    if (inPointArea)
-                    {
-                        ChangeToState(HandAnimPose.POINT);
-                    }
-                    else
-                    {
-                        ChangeToState(HandAnimPose.OPEN);
+                    if (Release(true)) {
+                        if (inPointArea)
+                        {
+                            ChangeToState(HandAnimPose.POINT);
+                        }
+                        else
+                        {
+                            ChangeToState(HandAnimPose.OPEN);
+                        }
                     }
                 }
                 break;
@@ -240,16 +239,10 @@ public class Hand : MonoBehaviour
         GripButtonChanged(false);
     }
 
-    void Release()
+    bool Release(bool checkToy = false)
     {
         if(heldObject != null)
         {
-            Rigidbody childRB = heldObject.GetComponent<Rigidbody>();
-            if (childRB != null)
-            {
-                childRB.isKinematic = true;
-            }
-            heldObject.transform.SetParent(heldObjectParent);
             if (heldObject.CompareTag("Card"))
             {
                 if (inPointArea)
@@ -266,16 +259,26 @@ public class Hand : MonoBehaviour
                 Toy toy = heldObject.GetComponentInChildren<Toy>();
                 if (toy != null)
                 {
-                    toy.Destroy(0);
-                    heldObject = null;
-                    if (toy.card) {
-                        CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
-                        StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
-                    }
+                    Debug.Log(toy);
+                    Debug.Log(!checkToy || toy.CanBeDropped());
+                    if (!checkToy || toy.CanBeDropped()) {
+                        toy.Destroy(0);
+                        if (toy.card) {
+                            CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
+                            StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
+                        }
+                    } else return false;
                 }
             }
+            Rigidbody childRB = heldObject.GetComponent<Rigidbody>();
+            if (childRB != null)
+            {
+                childRB.isKinematic = true;
+            }
+            heldObject.transform.SetParent(heldObjectParent);
             heldObject = null;
         }
+        return true;
     }
 
     private void OnTriggerEnter(Collider other)

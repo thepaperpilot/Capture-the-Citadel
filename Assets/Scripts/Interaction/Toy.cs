@@ -37,4 +37,8 @@ public class Toy : MonoBehaviour
         renderer.gameObject.SetActive(false);
         Destroy(toyRoot, 1.5f);
     }
+
+    public virtual bool CanBeDropped() {
+        return true;
+    }
 }
