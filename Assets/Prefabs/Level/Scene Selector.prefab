@@ -218,7 +218,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 2.2
+  m_fontSize: 2
   m_fontSizeBase: 4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 7
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0.053049505, y: 0.032955408, z: 0.04675293, w: 0.036352158}
   m_textInfo:
     textComponent: {fileID: 8964013590833041582}
     characterCount: 11
