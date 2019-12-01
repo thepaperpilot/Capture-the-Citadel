@@ -118,7 +118,7 @@ public class EnemyController : CombatantController
 
         foreach(CardAction action in nextMove.actions)
         {
-            if(action.type == CombatAction.TYPE.DAMAGE)
+            if(action.type == CombatAction.TYPE.ATTACK)
             {
                 if (action.ranged)
                 {
@@ -303,12 +303,12 @@ public class EnemyController : CombatantController
                     modifiedActions.Add(new BakeNavigationAction(BakeNavigationAction.BakeType.ENEMY_CHANGED));
                 }
             }
-            else if (action.type == CardAction.TYPE.DAMAGE)
+            else if (action.type == CardAction.TYPE.ATTACK)
             {
                 CardAction attackAction = new CardAction();
                 attackAction.actor = this;
                 attackAction.amount = statusController.GetDamageDealt(action.amount);
-                attackAction.type = CombatAction.TYPE.DAMAGE;
+                attackAction.type = CombatAction.TYPE.ATTACK;
                 attackAction.targets = action.targets;
                 modifiedActions.Add(attackAction);
             }

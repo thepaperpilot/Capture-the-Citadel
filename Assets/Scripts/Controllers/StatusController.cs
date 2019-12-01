@@ -82,11 +82,11 @@ public class StatusController : MonoBehaviour
         CheckRemoval();
     }
 
-    public void OnTakeDamage(CombatantController attacker)
+    public void OnAttacked(CombatantController attacker)
     {
         foreach (Status status in statuses)
         {
-            status.OnTakeDamage(attacker);
+            status.OnAttacked(attacker);
         }
         CheckRemoval();
     }

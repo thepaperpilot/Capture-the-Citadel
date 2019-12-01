@@ -9,17 +9,20 @@ public class SpikesStatus : Status
         name = NAME.SPIKES;
         type = STATUS_TYPE.BUFF;
         priority = 0;
+        decreasing = false;
     }
 
-    public override int GetDamageTaken(int damage)
+    public override void OnAttacked(CombatantController attacker)
     {
-        return damage - amount;
+        int damage = attacker.statusController.GetHealthLost(amount);
+        if(damage > 0)
+        {
+            ActionsManager.Instance.AddToTop(new LoseHealthAction(attacker, damage));
+        }
     }
 
     public override void OnTurnStart()
     {
         controller.RemoveStatus(this);
     }
-
-    public override void OnTurnEnd() { /*Do Nothing*/ }
 }

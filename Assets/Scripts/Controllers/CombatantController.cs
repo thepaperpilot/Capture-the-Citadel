@@ -15,7 +15,7 @@ public abstract class CombatantController : MonoBehaviour
     protected int health = 0;
     [HideInInspector]
     public Hex tile;
-    protected StatusController statusController;
+    public StatusController statusController;
 
     protected virtual void Awake() {
         health = maxHealth;

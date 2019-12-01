@@ -43,9 +43,9 @@ public class Status
         }
     }
 
-    public virtual void OnTakeDamage(CombatantController attacker) { } //Not yet hooked up
+    public virtual void OnAttacked(CombatantController attacker) { }
 
-    public virtual void OnAttack(CombatantController target) { } //Not yet hooked up - future note: maybe change this to OnAttacked? Player attacks can be tracked via OnPlayCard and enemy attacks probably don't need to be tracked
+    public virtual void OnAttack(CombatantController target) { }
 
     public virtual void OnPlayCard(AbstractCard card) { } //Not yet hooked up
 

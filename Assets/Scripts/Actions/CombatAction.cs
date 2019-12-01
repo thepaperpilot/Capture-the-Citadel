@@ -8,10 +8,11 @@ using UnityEngine;
 public class CombatAction : AbstractAction
 {
     public enum TYPE {
-        DAMAGE,
+        ATTACK,
         DRAW,
         MOVE,
-        STATUS
+        STATUS,
+        LOSE_HP
     }
 
     [EnumToggleButtons]
@@ -37,7 +38,7 @@ public class CombatAction : AbstractAction
     public IEnumerator Run() {
         foreach (CombatantController controller in targets) {
             switch (type) {
-                case TYPE.DAMAGE:
+                case TYPE.ATTACK:
                     if (actor == CombatManager.Instance.player && CombatManager.Instance.enemies.Contains(controller))
                         RelicsManager.Instance.OnDamageGiven(amount, controller);
                     else if (CombatManager.Instance.enemies.Contains(actor) && controller == CombatManager.Instance.player)
@@ -47,7 +48,8 @@ public class CombatAction : AbstractAction
                     {
                         if ((ranged && controller.tile.inSight) || (!ranged && controller.tile.playerDistance == 1))
                         {
-                            ActionsManager.Instance.AddToTop(new TakeDamageAction(controller, amount));
+                            ActionsManager.Instance.AddToTop(new TakeDamageAction(actor, controller, amount));
+
                         }
                     }
                     else
@@ -55,7 +57,7 @@ public class CombatAction : AbstractAction
                         actor.transform.LookAt(controller.tile.transform);
                         if ((ranged && actor.tile.inSight) || (!ranged && actor.tile.playerDistance == 1))
                         {
-                            ActionsManager.Instance.AddToTop(new TakeDamageAction(controller, amount));
+                            ActionsManager.Instance.AddToTop(new TakeDamageAction(actor, controller, amount));
                         }
                     }
                         
