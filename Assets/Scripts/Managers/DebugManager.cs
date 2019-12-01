@@ -24,11 +24,20 @@ public class DebugManager : MonoBehaviour
                 CardController card = deck.GetCardController(i);
                 if (card != null) {
                     deck.PickupCard(card);
-                    Destroy(card.gameObject);
                     
-                    GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
-                    toy.GetComponentInChildren<Toy>().card = card.card;
-                    PlayerManager.Instance.Grab(toy);
+                    if (CombatManager.Instance.player.Energy < card.card.energyCost)
+                    {
+                        // TODO "Failed" sound effect or something
+                        PlayerManager.Instance.AddCard(card);
+                    }
+                    else
+                    {
+                        CombatManager.Instance.player.SpendEnergy(card.card.energyCost);
+                        Destroy(card.gameObject);
+                        GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
+                        toy.GetComponentInChildren<Toy>().card = card.card;
+                        PlayerManager.Instance.Grab(toy);
+                    }
                 }
             }
         }

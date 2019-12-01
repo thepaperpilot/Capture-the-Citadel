@@ -48,4 +48,6 @@ public class Toy : MonoBehaviour
     public virtual bool CanBeDropped() {
         return true;
     }
+
+    public virtual void Init() { }
 }

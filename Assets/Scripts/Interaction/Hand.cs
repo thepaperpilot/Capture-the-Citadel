@@ -147,7 +147,7 @@ public class Hand : MonoBehaviour
                     }
                     else
                     {
-                        ChangeToState(HandAnimPose.OPEN);
+                        ChangeToState(HandAnimPose.HOLDING);
                     }
                 }
                 else if (gripPressed) {
@@ -208,13 +208,17 @@ public class Hand : MonoBehaviour
         {
             if (collider.CompareTag("Card"))
             {
-                Release();
+                if(heldObject != null)
+                {
+                    Release();
+                }
                 heldObject = collider.gameObject;
-                heldObjectParent = collider.transform.parent;
+                //heldObjectParent = collider.transform.parent;
                 collider.transform.SetParent(cardHolder);
                 collider.transform.localPosition = Vector3.zero;
                 collider.transform.localRotation = Quaternion.identity;
-                PlayerManager.Instance.RemoveCard(heldObject.GetComponent<CardController>());
+                PlayerManager.Instance.GetDeckController().PickupCard(heldObject.GetComponent<CardController>());
+                return;
             }
         }
     }
@@ -224,19 +228,26 @@ public class Hand : MonoBehaviour
             return;
         CardController card = cardObj.GetComponentInChildren<CardController>();
         if (card == null)
+        {
+            Destroy(cardObj);
+            heldObject = null;
             return;
+        } 
         if (CombatManager.Instance.player.Energy < card.card.energyCost) {
             // TODO "Failed" sound effect or something
             PlayerManager.Instance.AddCard(card);
-            return;
+            heldObject = null;
         }
-        CombatManager.Instance.player.SpendEnergy(card.card.energyCost);
-        GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
-        toy.GetComponentInChildren<Toy>().card = card.card;
-        Destroy(cardObj);
-        heldObject = null;
-        Grab(toy);
-        GripButtonChanged(false);
+        else
+        {
+            CombatManager.Instance.player.SpendEnergy(card.card.energyCost);
+            Destroy(cardObj);
+            GameObject toy = Instantiate(card.card.toy, card.transform.position, Quaternion.identity);
+            toy.GetComponentInChildren<Toy>().card = card.card;
+            heldObject = null;
+            PlayerManager.Instance.Grab(toy);
+        }
+        
     }
 
     bool Release(bool checkToy = false)
@@ -247,12 +258,15 @@ public class Hand : MonoBehaviour
             {
                 if (inPointArea)
                 {
+                    Debug.Log("released in point");
                     PlayerManager.Instance.AddCard(heldObject.GetComponent<CardController>());
+                    heldObject = null;
                 }
                 else
                 {
                     PlayCard(heldObject);
                 }
+                return true;
             }
             else
             {
@@ -261,6 +275,7 @@ public class Hand : MonoBehaviour
                 {
                     if (!checkToy || toy.CanBeDropped()) {
                         toy.Destroy();
+                        heldObject = null;
                         if (toy.card) {
                             CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
                             StartCoroutine(PlayerManager.Instance.Draw(new AbstractCard[] { toy.card }));
@@ -268,6 +283,7 @@ public class Hand : MonoBehaviour
                     } else return false;
                 }
             }
+            /*
             Rigidbody childRB = heldObject.GetComponent<Rigidbody>();
             if (childRB != null)
             {
@@ -275,6 +291,7 @@ public class Hand : MonoBehaviour
             }
             heldObject.transform.SetParent(heldObjectParent);
             heldObject = null;
+            */
         }
         return true;
     }
@@ -291,12 +308,16 @@ public class Hand : MonoBehaviour
     {
         if (other.CompareTag("PointingZone"))
         {
+            Debug.Log("Exit");
             inPointArea = false;
         }
     }
 
     public void Grab(GameObject gameObject) {
-        Release();
+        if(heldObject != null)
+        {
+            Release();
+        }
         heldObject = gameObject;
         heldObjectParent = heldObject.transform.parent;
         gameObject.transform.SetParent(transform);

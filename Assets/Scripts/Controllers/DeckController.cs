@@ -51,6 +51,8 @@ public class DeckController : MonoBehaviour
     [FoldoutGroup("Advanced"), SerializeField, OnValueChanged("RearrangeHand")]
     private float maxArcDistance = 60;
 
+    private float yOffset = 0.8f;
+
     [HideInEditorMode, ReadOnly]
     public int deckSize = 0;
 
@@ -131,6 +133,7 @@ public class DeckController : MonoBehaviour
     }
 
     public void DropCardInHand(CardController card) {
+        card.transform.SetParent(hand);
         cardsInHand.Add(card);
         StartCoroutine(RearrangeCards());
     }
@@ -150,7 +153,9 @@ public class DeckController : MonoBehaviour
             Vector3 newPosition = new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0) * arcRadius;
             newPosition.z += .02f * i;
             Quaternion newRotation = Quaternion.LookRotation(Vector3.forward, newPosition);
-            coroutines[i] = MoveTo(cardsInHand[i].transform, timeToRearrange, newPosition, newRotation);
+            Vector3 adjustedTarget = newPosition;
+            adjustedTarget.x -= yOffset * Mathf.Sign(adjustedTarget.x);
+            coroutines[i] = MoveTo(cardsInHand[i].transform, timeToRearrange, adjustedTarget, newRotation);
             StartCoroutine(coroutines[i]);
         }
         angle = Mathf.PI / 2 - dropzoneArcDistance * (numDropzones - 1) / 2;
@@ -158,7 +163,9 @@ public class DeckController : MonoBehaviour
             Vector3 newPosition = new Vector3(-Mathf.Sin(angle), Mathf.Cos(angle), 0) * arcRadius;
             newPosition.z += .02f * i;
             Quaternion newRotation = Quaternion.LookRotation(Vector3.forward, -newPosition);
-            coroutines[numCards + i] = MoveTo(dropzones[i].transform, timeToRearrange, newPosition, newRotation);
+            Vector3 adjustedTarget = newPosition;
+            adjustedTarget.x -= yOffset * Mathf.Sign(adjustedTarget.x);
+            coroutines[numCards + i] = MoveTo(dropzones[i].transform, timeToRearrange, adjustedTarget, newRotation);
             StartCoroutine(coroutines[numCards + i]);
         }
 
@@ -172,6 +179,10 @@ public class DeckController : MonoBehaviour
         if (newRotation == null)
             newRotation = startRotation;
         while (time < duration && transform != null) {
+            if(transform.parent != hand)
+            {
+                yield break;
+            }
             transform.localPosition = Vector3.Lerp(startPosition, newPosition, (time / duration));
             transform.localRotation = Quaternion.Lerp(startRotation, newRotation.Value, (time / duration));
             time += Time.deltaTime;

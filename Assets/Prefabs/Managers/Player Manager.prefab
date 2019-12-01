@@ -1458,7 +1458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038800926564550858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.092, y: -0.387, z: -0.375}
+  m_LocalPosition: {x: -0.092, y: -0.387, z: 0}
   m_LocalScale: {x: 0.32134792, y: 0.5934597, z: 0.67894816}
   m_Children: []
   m_Father: {fileID: 2038800928251704771}
@@ -1778,7 +1778,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038800927445780093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 0.065, z: 0.13}
+  m_LocalPosition: {x: 0.0375, y: 0.065, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2038800928251704771}
@@ -2068,6 +2068,7 @@ MonoBehaviour:
   headsetSources:
   - {fileID: 5635135074087280771}
   - {fileID: 4130122021925410914}
+  playerClass: {fileID: 0}
 --- !u!1 &2038800928180275167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2092,7 +2093,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038800928180275167}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 0.065, z: 0.13}
+  m_LocalPosition: {x: -0.0375, y: 0.065, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2038800926974031778}
@@ -4199,10 +4200,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2038800928112920950}
     m_Modifications:
-    - target: {fileID: 1540271613746846, guid: 114b3c3ce4645364a97c8f0803bed65b, type: 3}
-      propertyPath: m_Name
-      value: TrackedAlias
-      objectReference: {fileID: 0}
     - target: {fileID: 4419020640412130, guid: 114b3c3ce4645364a97c8f0803bed65b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4246,6 +4243,10 @@ PrefabInstance:
     - target: {fileID: 4419020640412130, guid: 114b3c3ce4645364a97c8f0803bed65b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540271613746846, guid: 114b3c3ce4645364a97c8f0803bed65b, type: 3}
+      propertyPath: m_Name
+      value: TrackedAlias
       objectReference: {fileID: 0}
     - target: {fileID: 960702652617744129, guid: 114b3c3ce4645364a97c8f0803bed65b,
         type: 3}
@@ -4289,10 +4290,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2038800928112920950}
     m_Modifications:
-    - target: {fileID: 1467290445770872, guid: b6b557e5a38efee4f90e60a9287d7b93, type: 3}
-      propertyPath: m_Name
-      value: UnityXRCameraRig
-      objectReference: {fileID: 0}
     - target: {fileID: 4938262979527042, guid: b6b557e5a38efee4f90e60a9287d7b93, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4336,6 +4333,10 @@ PrefabInstance:
     - target: {fileID: 4938262979527042, guid: b6b557e5a38efee4f90e60a9287d7b93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1467290445770872, guid: b6b557e5a38efee4f90e60a9287d7b93, type: 3}
+      propertyPath: m_Name
+      value: UnityXRCameraRig
       objectReference: {fileID: 0}
     - target: {fileID: 114331813819599554, guid: b6b557e5a38efee4f90e60a9287d7b93,
         type: 3}
@@ -4387,10 +4388,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2038800928112920950}
     m_Modifications:
-    - target: {fileID: 1121419207030402, guid: 9623e1c09606a01498f200718f0f607d, type: 3}
-      propertyPath: m_Name
-      value: SimulatedCameraRig
-      objectReference: {fileID: 0}
     - target: {fileID: 4665875853779370, guid: 9623e1c09606a01498f200718f0f607d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4434,6 +4431,10 @@ PrefabInstance:
     - target: {fileID: 4665875853779370, guid: 9623e1c09606a01498f200718f0f607d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121419207030402, guid: 9623e1c09606a01498f200718f0f607d, type: 3}
+      propertyPath: m_Name
+      value: SimulatedCameraRig
       objectReference: {fileID: 0}
     - target: {fileID: 224410820355853394, guid: 9623e1c09606a01498f200718f0f607d,
         type: 3}
