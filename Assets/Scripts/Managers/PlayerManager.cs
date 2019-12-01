@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using Zinnia.Tracking.Follow;
 
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
+    
+    private float gold = 0;
 
     [SerializeField] private GameObject leftHand;
     [SerializeField] private GameObject rightHand;
@@ -19,8 +22,8 @@ public class PlayerManager : MonoBehaviour
     public EnemyReadoutUI energyBar;
     [HideInPlayMode, ChildGameObjectsOnly]
     public EnemyReadoutUI healthBar;
-    [HideInEditorMode]
-    public float gold = 0;
+    [HideInPlayMode, ChildGameObjectsOnly]
+    public TextMeshPro goldText;
     [SerializeField] private List<Transform> leftControllerSources;
     [SerializeField] private List<Transform> rightControllerSources;
     [SerializeField] private List<Transform> headsetSources;
@@ -32,6 +35,24 @@ public class PlayerManager : MonoBehaviour
     private Transform headsetSource;
     Rigidbody leftRB;
     Rigidbody rightRB;
+
+    public float Gold {
+        get => gold;
+        set {
+            gold = value;
+            goldText.text = "" + gold;
+        }
+    }
+
+    [Button(ButtonSizes.Large)]
+    public void ResetGold() {
+        Gold = 0;
+    }
+
+    [Button(ButtonSizes.Large)]
+    public void MoreGold() {
+        Gold += 100;
+    }
 
     private void Awake() {
         if (Instance == null) {

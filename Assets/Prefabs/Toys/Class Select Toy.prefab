@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2208741366932229421}
   - component: {fileID: 5743760241935486840}
   - component: {fileID: 9143985203863507784}
+  - component: {fileID: 1329239821048748482}
   m_Layer: 0
   m_Name: Class Select Toy
   m_TagString: Grabbable
@@ -100,6 +101,22 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Zinnia.Action.BooleanAction+UnityEvent, Zinnia.Runtime, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1329239821048748482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141749092700269470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406d478cdbf496a4ead48dfdc7df8d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 516
+  triggerInteraction: 0
 --- !u!1 &8242068388707634038
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +484,11 @@ PrefabInstance:
       propertyPath: targetValidity.field
       value: 
       objectReference: {fileID: 5743760241935486840}
+    - target: {fileID: 4314037140793392826, guid: 1950b2150beec924d9cff768bb4e815c,
+        type: 3}
+      propertyPath: physicsCast
+      value: 
+      objectReference: {fileID: 1329239821048748482}
     - target: {fileID: 5236815662525435047, guid: 1950b2150beec924d9cff768bb4e815c,
         type: 3}
       propertyPath: sources.Array.size

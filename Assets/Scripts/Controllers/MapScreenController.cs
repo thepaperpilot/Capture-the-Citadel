@@ -23,8 +23,6 @@ public class MapScreenController : MonoBehaviour, IScreenSelector
         }
         GameObject toyInstance = Instantiate(toy);
         PlayerManager.Instance.Grab(toyInstance);
-        foreach (Hand hand in PlayerManager.Instance.GetComponentsInChildren<Hand>())
-            hand.canChangeState = true;
     }
 
     public void SelectScene(string scene) {

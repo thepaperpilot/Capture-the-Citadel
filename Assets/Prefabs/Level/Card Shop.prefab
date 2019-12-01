@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3431481021695216942}
-  - component: {fileID: 3078540446654024560}
   m_Layer: 0
   m_Name: Card Shop
   m_TagString: Untagged
@@ -32,20 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3078540446654024560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621609494368129191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 831831fcd96541543b2799cea6512126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  card: {fileID: 6861479272376773854}
-  costText: {fileID: 1208447515665126480}
 --- !u!1 &702518073535745446
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7795293750508702556}
+  - component: {fileID: 4364284125106883799}
   m_Layer: 0
   m_Name: Vertical Offset
   m_TagString: Untagged
@@ -79,6 +65,20 @@ Transform:
   m_Father: {fileID: 3431481021695216942}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4364284125106883799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702518073535745446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831831fcd96541543b2799cea6512126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 6861479272376773854}
+  costText: {fileID: 1208447515665126480}
 --- !u!1 &6102782285344670012
 GameObject:
   m_ObjectHideFlags: 0

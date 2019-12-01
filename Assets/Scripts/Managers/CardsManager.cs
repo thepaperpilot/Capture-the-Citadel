@@ -51,10 +51,10 @@ public class CardsManager : SerializedMonoBehaviour
             ActionsManager.Instance.AddToTop(new ShuffleDiscardsAction());
         }
         int count = Mathf.Min(amount, drawPile.Count());
-        IEnumerable<AbstractCard> cardsToDraw = drawPile.Take(count);
+        AbstractCard[] cardsToDraw = drawPile.Take(count).ToArray();
         hand.AddRange(cardsToDraw);
         drawPile.RemoveRange(0, count);
-        yield return PlayerManager.Instance.Draw(cardsToDraw.ToArray());
+        yield return PlayerManager.Instance.Draw(cardsToDraw);
     }
 
     public IEnumerator Discard(AbstractCard card) {

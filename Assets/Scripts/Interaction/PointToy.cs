@@ -173,4 +173,8 @@ public class PointToy : Toy, IRule
             hex.Highlight();
         }
     }
+
+    public override bool CanBeDropped() {
+        return (target & PointTargets.Scene) == PointTargets.None;
+    }
 }

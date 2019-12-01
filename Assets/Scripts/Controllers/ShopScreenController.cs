@@ -62,15 +62,13 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
             sceneSelector.Setup(nextScene, this);
 
         GameObject toyInstance = Instantiate(toy);
-        PlayerManager.Instance.Grab(toyInstance);        
-        foreach (Hand hand in PlayerManager.Instance.GetComponentsInChildren<Hand>())
-            hand.canChangeState = true;
+        PlayerManager.Instance.Grab(toyInstance);
     }
 
     public bool Buy(AbstractCard selectedCard, int cost) {
-        if (PlayerManager.Instance.gold < cost) return false;
+        if (PlayerManager.Instance.Gold < cost) return false;
         CardsManager.Instance.deck.Add(selectedCard);
-        PlayerManager.Instance.gold -= cost;
+        PlayerManager.Instance.Gold -= cost;
         return true;
     }
 

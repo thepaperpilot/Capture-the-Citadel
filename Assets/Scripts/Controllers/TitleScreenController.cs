@@ -31,8 +31,6 @@ public class TitleScreenController : MonoBehaviour
         CardsManager.Instance.deck = selectedClass.startingDeck;
         RelicsManager.Instance.relics = new List<RelicsManager.RelicData>() { new RelicsManager.RelicData { relic = selectedClass.startingRelic } };
         CombatManager.Instance.maxHealth = selectedClass.startingHealth;
-        foreach (Hand hand in PlayerManager.Instance.GetComponentsInChildren<Hand>())
-            hand.canChangeState = true;
         SceneManager.LoadScene(mapScene);
     }
 
