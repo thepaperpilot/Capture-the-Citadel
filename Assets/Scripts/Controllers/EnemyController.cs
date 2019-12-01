@@ -364,7 +364,7 @@ public class EnemyController : CombatantController
 
         if (health <= 0)
         {
-            //die
+            CombatManager.Instance.KillEnemy(this);
         }
         else
         {
