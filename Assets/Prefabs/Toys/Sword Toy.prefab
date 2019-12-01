@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4465807379444170594}
   - component: {fileID: 5935404433526647746}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword Toy
   m_TagString: Grabbable
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 8786350659801512213}
   - component: {fileID: 5570136673176148113}
   - component: {fileID: 4977643978450951342}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 8712955320725190312}
   - component: {fileID: 1010546754632107479}
   - component: {fileID: 9157940127418837690}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,6 +195,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4465807379444170594}
     m_Modifications:
+    - target: {fileID: 4369269474183149730, guid: 68c0514549630034f851864a56fa4a7a,
+        type: 3}
+      propertyPath: m_Name
+      value: Toy Particle Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369269474183149730, guid: 68c0514549630034f851864a56fa4a7a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2569580216825076439, guid: 68c0514549630034f851864a56fa4a7a,
         type: 3}
       propertyPath: ShapeModule.m_Scale.y
@@ -224,11 +234,6 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4369269474183149730, guid: 68c0514549630034f851864a56fa4a7a,
-        type: 3}
-      propertyPath: m_Name
-      value: Toy Particle Effect
       objectReference: {fileID: 0}
     - target: {fileID: 412052539942226475, guid: 68c0514549630034f851864a56fa4a7a,
         type: 3}

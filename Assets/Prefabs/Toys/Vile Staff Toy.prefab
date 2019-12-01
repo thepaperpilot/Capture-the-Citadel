@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7482643846814916046}
-  m_Layer: 0
-  m_Name: Vile Staff
+  m_Layer: 9
+  m_Name: Vile Staff Toy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6149528419311929017}
   - component: {fileID: 2885827950216674447}
   - component: {fileID: 8876608404681195638}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VileStaff
   m_TagString: Untagged
   m_Icon: {fileID: 0}

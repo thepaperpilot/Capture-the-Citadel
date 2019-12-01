@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4068890660139182870}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Holy Axe Toy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 9133177057443983241}
   - component: {fileID: 280514673386526143}
   - component: {fileID: 5825441236772120902}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HolyAxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
