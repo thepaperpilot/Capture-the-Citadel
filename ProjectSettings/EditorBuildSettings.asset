@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Combat.unity
     guid: 956ed62e2b8ad3040bf44f63e1e0a0f1
+  - enabled: 1
+    path: Assets/Combat Rewards.unity
+    guid: 09cb65c105a510d4996c9279243b4947
   m_configObjects: {}

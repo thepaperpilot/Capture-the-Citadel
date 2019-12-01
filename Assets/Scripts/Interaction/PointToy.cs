@@ -87,6 +87,12 @@ public class PointToy : Toy, IRule
                 active.transform.localScale = Vector3.one * 1.3f;
                 return;
             }
+            CardRewardController rewardController = gObject.GetComponentInParent<CardRewardController>();
+            if (rewardController != null) {
+                active = rewardController.gameObject;
+                active.transform.localScale = Vector3.one * 1.3f;
+                return;
+            }
         }
     }
 
@@ -134,6 +140,11 @@ public class PointToy : Toy, IRule
                 CardBuyerController cardBuyerController = active.GetComponent<CardBuyerController>();
                 if (cardBuyerController) {
                     cardBuyerController.Buy();
+                    return;
+                }
+                CardRewardController cardRewardController = active.GetComponent<CardRewardController>();
+                if (cardRewardController) {
+                    cardRewardController.Choose();
                     return;
                 }
             }

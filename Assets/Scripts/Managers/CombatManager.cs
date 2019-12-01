@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class CombatManager : MonoBehaviour
 
     [HideInEditorMode, ShowInInspector]
     private List<CombatantController> combatants = new List<CombatantController>();
+
+    [SerializeField, ValueDropdown("FindScenes")]
+    private string rewardsScreen;
 
     private void Awake() {
         if (Instance == null) {
@@ -99,9 +103,21 @@ public class CombatManager : MonoBehaviour
                     });
                 break;
         }
+        ActionsManager.Instance.AddToBottom(new ChangeSceneAction(rewardsScreen));
     }
 
     public bool IsPlayerTurn() {
         return currentTurn == player;
     }
+#if UNITY_EDITOR
+    private IEnumerable FindScenes() {
+        int sceneCount = SceneManager.sceneCountInBuildSettings;     
+        ValueDropdownItem[] scenes = new ValueDropdownItem[sceneCount];
+        for( int i = 0; i < sceneCount; i++ ) {
+            string name = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+            scenes[i] = new ValueDropdownItem(name, name);
+        }
+        return scenes;
+    }
+#endif
 }
