@@ -36,6 +36,9 @@ public class PlayerManager : MonoBehaviour
     Rigidbody leftRB;
     Rigidbody rightRB;
 
+    [HideInEditorMode]
+    public AbstractClass playerClass;
+
     public float Gold {
         get => gold;
         set {

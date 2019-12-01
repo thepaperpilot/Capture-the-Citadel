@@ -28,6 +28,7 @@ public class TitleScreenController : MonoBehaviour
     }
 
     public void SelectClass(AbstractClass selectedClass) {
+        PlayerManager.Instance.playerClass = selectedClass;
         CardsManager.Instance.deck = selectedClass.startingDeck;
         RelicsManager.Instance.relics = new List<RelicsManager.RelicData>() { new RelicsManager.RelicData { relic = selectedClass.startingRelic } };
         CombatManager.Instance.maxHealth = selectedClass.startingHealth;

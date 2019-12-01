@@ -34,7 +34,7 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
 
         CardBuyerController[] controllers =
             LevelManager.Instance.GetComponentsInChildren<CardBuyerController>();
-        float total = CardsManager.Instance.allCards.Sum(c =>
+        float total = PlayerManager.Instance.playerClass.cardPool.Sum(c =>
         c.rarity == AbstractCard.Rarities.COMMON ? common :
         c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
         c.rarity == AbstractCard.Rarities.RARE ? rare : 0);
@@ -43,7 +43,7 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
         while (cards.Count < controllers.Length) {
             float target = UnityEngine.Random.Range(0, total);
             float current = 0;
-            AbstractCard card = CardsManager.Instance.allCards.SkipWhile(c => {
+            AbstractCard card = PlayerManager.Instance.playerClass.cardPool.SkipWhile(c => {
                 current += c.rarity == AbstractCard.Rarities.COMMON ? common :
                     c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
                     c.rarity == AbstractCard.Rarities.RARE ? rare : 0;
