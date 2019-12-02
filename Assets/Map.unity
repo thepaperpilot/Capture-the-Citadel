@@ -281,6 +281,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9151693997751792433, guid: 7c82e647fb78dac40bbe0352fb615f97,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c82e647fb78dac40bbe0352fb615f97, type: 3}
 --- !u!1001 &1217879849
@@ -655,8 +660,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1912276245290469519, guid: 5091486308b8da248bbdd8f9b6eda8e5,
         type: 3}
+      propertyPath: scenes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912276245290469519, guid: 5091486308b8da248bbdd8f9b6eda8e5,
+        type: 3}
       propertyPath: scenes.Array.data[0]
       value: Combat
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912276245290469519, guid: 5091486308b8da248bbdd8f9b6eda8e5,
+        type: 3}
+      propertyPath: scenes.Array.data[1]
+      value: Shop
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5091486308b8da248bbdd8f9b6eda8e5, type: 3}

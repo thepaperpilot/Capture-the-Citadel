@@ -87,7 +87,7 @@ public class CombatAction : AbstractAction
                     }
                     break;
                 case TYPE.STATUS:
-                    controller.GetComponent<StatusController>().AddStatus(Status.FromName(status), amount);
+                    controller.GetComponent<StatusController>().AddStatus(Status.FromName(status, actor != CombatManager.Instance.player), amount);
                     break;
                 case TYPE.LOSE_HP:
                     ActionsManager.Instance.AddToTop(new LoseHealthAction(controller, amount));

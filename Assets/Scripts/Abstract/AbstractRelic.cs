@@ -131,7 +131,7 @@ public class AbstractRelic : ScriptableObject
             foreach (CombatantController controller in targets) {
                 switch (effect) {
                     case Effects.ADD_STATUS:
-                        controller.GetComponent<StatusController>().AddStatus(Status.FromName(status), amount);
+                        controller.GetComponent<StatusController>().AddStatus(Status.FromName(status, false), amount);
                         break;
                     case Effects.DAMAGE:
                         if (controller != CombatManager.Instance.player)

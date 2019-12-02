@@ -28,6 +28,7 @@ public class Status
     public Name name;
     public int amount;
     public bool decreasing;
+    protected bool gracePeriod = false;
     protected int priority; //Lower values will go first
     public int displayOrder;
 
@@ -39,6 +40,11 @@ public class Status
     {
         if (decreasing)
         {
+            if (gracePeriod)
+            {
+                gracePeriod = false;
+                return;
+            }
             amount--;
             CheckRemoval();
         }
@@ -80,7 +86,12 @@ public class Status
         }
     }
 
-    public static Status FromName(Name name)
+    protected bool isGracePeriod(bool fromMonster)
+    {
+        return fromMonster && !CombatManager.Instance.IsPlayerTurn();
+    }
+
+    public static Status FromName(Name name, bool fromMonster)
     {
         switch (name)
         {
@@ -97,13 +108,13 @@ public class Status
             case Name.HAMSTRING:
                 return new HamstringStatus();
             case Name.POISON:
-                return new PoisonStatus();
+                return new PoisonStatus(fromMonster);
             case Name.SPIKES:
                 return new SpikesStatus();
             case Name.PRAYER_FATIGUE:
                 return new PrayerFatigueStatus();
             case Name.SABOTAGE:
-                return new SabotageStatus();
+                return new SabotageStatus(fromMonster);
         }
         return null;
     }

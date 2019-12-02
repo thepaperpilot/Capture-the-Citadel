@@ -273,6 +273,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7844326823174961393, guid: 1304ee771b1ba1b4696507bbdeab0244,
         type: 3}
+      propertyPath: allCards.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7844326823174961393, guid: 1304ee771b1ba1b4696507bbdeab0244,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7844326823174961393, guid: 1304ee771b1ba1b4696507bbdeab0244,
