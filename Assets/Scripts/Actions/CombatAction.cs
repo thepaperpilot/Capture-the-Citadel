@@ -12,7 +12,8 @@ public class CombatAction : AbstractAction
         DRAW,
         MOVE,
         STATUS,
-        LOSE_HP
+        LOSE_HP,
+        PLAY_SOUND
     }
 
     [EnumToggleButtons]
@@ -20,8 +21,12 @@ public class CombatAction : AbstractAction
     //[ShowIf("type", TYPE.STATUS), ValueDropdown("GetStatusEffects")]
     [ShowIf("type", TYPE.STATUS)]
     public Status.Name status;
+    [HideIf("type", TYPE.PLAY_SOUND)]
     public int amount;
+    [HideIf("type", TYPE.PLAY_SOUND)]
     public bool ranged;
+    [ShowIf("type", TYPE.PLAY_SOUND)]
+    public AudioClip sound;
 
     [HideInInspector]
     // Targets must be set before adding this action to the ActionsManager
@@ -93,6 +98,9 @@ public class CombatAction : AbstractAction
                     break;
                 case TYPE.LOSE_HP:
                     ActionsManager.Instance.AddToTop(new LoseHealthAction(controller, amount));
+                    break;
+                case TYPE.PLAY_SOUND:
+                    controller.GetComponent<AudioSource>().PlayOneShot(sound);
                     break;
             }
         }

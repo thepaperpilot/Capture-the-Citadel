@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(StatusController))]
+[RequireComponent(typeof(AudioSource))]
 public abstract class CombatantController : MonoBehaviour
 {
     [SerializeField, ShowInInspector]
