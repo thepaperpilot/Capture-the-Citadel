@@ -13,7 +13,7 @@ public abstract class CombatantController : MonoBehaviour
 
     [HideInEditorMode, ShowInInspector]
     protected int health = 0;
-    [HideInInspector]
+    //[HideInInspector]
     public Hex tile;
     public StatusController statusController;
 

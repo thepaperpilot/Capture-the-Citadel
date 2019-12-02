@@ -65,8 +65,8 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  levelPrefab: {fileID: 435020585338547215, guid: d7f139e8f5bf7124eabeb08e9de9aabf,
-    type: 3}
   randomActions:
   - {fileID: 11400000, guid: 434dde3309efbc24596005ef141a07d7, type: 2}
+  - {fileID: 11400000, guid: a492aeff5c118044f923dc2ed88b9b94, type: 2}
+  - {fileID: 11400000, guid: 934c09d91a2c51145b153b996b08a56f, type: 2}
   acting: 0

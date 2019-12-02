@@ -100,7 +100,10 @@ public class PointToy : Toy, IRule
             EnemyController controller = gObject.GetComponent<EnemyController>();
             if(controller != null)
             {
-                active = controller.gameObject;
+                if (controller.tile.inSight)
+                {
+                    active = controller.gameObject;
+                }
                 return;
             }
         }

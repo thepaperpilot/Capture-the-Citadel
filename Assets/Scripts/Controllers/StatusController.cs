@@ -54,6 +54,7 @@ public class StatusController : MonoBehaviour
             newStatus.amount = stacks;
             newStatus.displayOrder = order;
             order++;
+            newStatus.controller = this;
             statuses.Add(newStatus);
             statuses.Sort(new StatusPrioritySort());
         }

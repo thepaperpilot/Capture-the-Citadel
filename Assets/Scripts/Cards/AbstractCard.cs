@@ -77,7 +77,9 @@ public class AbstractCard : ScriptableObject
 #endif
 
     public void Play(GameObject hit) {
+        List<AbstractAction> modifiedActions = new List<AbstractAction>();
         foreach (CardAction action in actions) {
+            action.actor = CombatManager.Instance.player;
             switch (action.target) {
                 case CardAction.Targets.ALL_ENEMIES:
                     action.targets = CombatManager.Instance.enemies;
@@ -91,9 +93,28 @@ public class AbstractCard : ScriptableObject
             }
             if (action.type == CardAction.TYPE.MOVE) {
                 action.destination = hit.GetComponent<Hex>();
+                modifiedActions.Add(action);
             }
-            action.actor = CombatManager.Instance.player;
+            else if(action.type == CardAction.TYPE.STATUS)
+            {
+                if (action.target == CardAction.Targets.ENEMY)
+                {
+                    if (action.targets[0].tile.inSight)
+                    {
+                        modifiedActions.Add(action);
+                    }
+                }
+                else
+                {
+                    modifiedActions.Add(action);
+                }
+            }
+            else
+            {
+                modifiedActions.Add(action);
+            }
+            
         }
-        ActionsManager.Instance.AddToTop(actions);
+        ActionsManager.Instance.AddToTop(modifiedActions.ToArray());
     }
 }

@@ -14,8 +14,13 @@ public class HitToy : Toy
     private void OnTriggerEnter(Collider other) {
         switch (target) {
             case CollisionTargets.ENEMY:
-                if (other.GetComponentInParent<EnemyController>()) {
-                    Trigger(other.gameObject);
+                EnemyController controller = other.GetComponentInParent<EnemyController>();
+                if (controller != null) {
+                    if(controller.tile.pathDistance == 1)
+                    {
+                        Trigger(other.gameObject);
+                    }
+                    
                 }
                 break;
         }
