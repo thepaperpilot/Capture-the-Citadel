@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Status
 {
-    public enum STATUS_TYPE
+    public enum StatusType
     {
         BUFF,
         DEBUFF
     }
 
-    public enum NAME
+    public enum Name
     {
         STRENGTH,
         DEFENSE,
@@ -20,11 +20,12 @@ public class Status
         POISON,
         HAMSTRING,
         SPIKES,
-        PRAYER_FATIGUE
+        PRAYER_FATIGUE,
+        SABOTAGE
     }
 
-    protected STATUS_TYPE type;
-    public NAME name;
+    protected StatusType type;
+    public Name name;
     public int amount;
     public bool decreasing;
     protected int priority; //Lower values will go first
@@ -61,7 +62,7 @@ public class Status
 
     public virtual void AddStacks(int stacks) { amount += stacks; CheckRemoval(); }
 
-    public STATUS_TYPE GetStatusType()
+    public StatusType GetStatusType()
     {
         return type;
     }
@@ -79,29 +80,30 @@ public class Status
         }
     }
 
-    public static Status FromName(NAME name)
+    public static Status FromName(Name name)
     {
         switch (name)
         {
-            case NAME.STRENGTH:
+            case Name.STRENGTH:
                 return new StrengthStatus();
-            case NAME.DEFENSE:
+            case Name.DEFENSE:
                 return new DefenseStatus();
-            case NAME.SWIFTNESS:
+            case Name.SWIFTNESS:
                 return new SwiftnessStatus();
-            case NAME.AEGIS:
+            case Name.AEGIS:
                 return new AegisStatus();
-            case NAME.FORTIFY:
+            case Name.FORTIFY:
                 return new FortifyStatus();
-            case NAME.HAMSTRING:
+            case Name.HAMSTRING:
                 return new HamstringStatus();
-            case NAME.POISON:
+            case Name.POISON:
                 return new PoisonStatus();
-            case NAME.SPIKES:
+            case Name.SPIKES:
                 return new SpikesStatus();
-            case NAME.PRAYER_FATIGUE:
+            case Name.PRAYER_FATIGUE:
                 return new PrayerFatigueStatus();
-
+            case Name.SABOTAGE:
+                return new SabotageStatus();
         }
         return null;
     }

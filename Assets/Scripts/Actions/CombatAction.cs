@@ -19,7 +19,7 @@ public class CombatAction : AbstractAction
     public TYPE type;
     //[ShowIf("type", TYPE.STATUS), ValueDropdown("GetStatusEffects")]
     [ShowIf("type", TYPE.STATUS)]
-    public Status.NAME status;
+    public Status.Name status;
     public int amount;
     public bool ranged;
 
@@ -57,6 +57,7 @@ public class CombatAction : AbstractAction
                         actor.transform.LookAt(controller.tile.transform);
                         if ((ranged && actor.tile.inSight) || (!ranged && actor.tile.playerDistance == 1))
                         {
+                            yield return new WaitForSeconds(1);
                             ActionsManager.Instance.AddToTop(new TakeDamageAction(actor, controller, amount));
                         }
                     }
@@ -87,6 +88,9 @@ public class CombatAction : AbstractAction
                     break;
                 case TYPE.STATUS:
                     controller.GetComponent<StatusController>().AddStatus(Status.FromName(status), amount);
+                    break;
+                case TYPE.LOSE_HP:
+                    ActionsManager.Instance.AddToTop(new LoseHealthAction(controller, amount));
                     break;
             }
         }

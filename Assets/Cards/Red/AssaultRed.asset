@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 27545e71278dfdc4f83cce393283b973, type: 3}
   name: Smack
-  description: Deal 3 damage to an enemy.
+  description: Deal 3 damage to an adjacent enemy.
   energyCost: 1
+  exhaust: 0
   rarity: 1
+  color: 1
   actions:
   - type: 0
-    status: {fileID: 0}
+    status: 0
     amount: 3
     ranged: 0
     targets:

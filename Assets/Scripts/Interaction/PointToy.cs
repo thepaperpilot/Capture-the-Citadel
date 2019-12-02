@@ -16,7 +16,8 @@ public class PointToy : Toy, IRule
         Hex = 1 << 1,
         Class = 1 << 2,
         Scene = 1 << 3,
-        Shop = 1 << 4
+        Shop = 1 << 4,
+        Enemy = 1 << 5,
     }
 
     [SerializeField]
@@ -42,7 +43,7 @@ public class PointToy : Toy, IRule
         facade.Configuration.ConfigureSelectionAction();
     }
 
-    public override void Destroy(int delay = 0, bool skipParticles = false) {
+    protected override void Destroy(int delay, bool skipParticles) {
         if ((target & PointTargets.Hex) != PointTargets.None) {
             foreach (Hex hex in availableHexes) {
                 hex.Unhighlight();
@@ -94,6 +95,15 @@ public class PointToy : Toy, IRule
                 return;
             }
         }
+        if((target & PointTargets.Enemy) != PointTargets.None)
+        {
+            EnemyController controller = gObject.GetComponent<EnemyController>();
+            if(controller != null)
+            {
+                active = controller.gameObject;
+                return;
+            }
+        }
     }
 
     public void OnExit() {
@@ -108,7 +118,8 @@ public class PointToy : Toy, IRule
     }
 
     public void Select() {
-        if (active != null) {
+        if (active != null)
+        {
             if (card != null) {
                 Trigger(active, true);
             } else {

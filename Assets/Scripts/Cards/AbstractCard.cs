@@ -16,6 +16,13 @@ public class AbstractCard : ScriptableObject
         RARE
     }
 
+    public enum ClassColor
+    {
+        COLORLESS,
+        RED,
+        GREEN
+    }
+
     [Space, HorizontalGroup("Split", 100)]
     [HideInInlineEditors, HideLabel, PreviewField(100), OnValueChanged("DrawPreview")]
     public Sprite image;
@@ -29,8 +36,12 @@ public class AbstractCard : ScriptableObject
     public string description;
     [HideInInlineEditors, Range(0, 5), OnValueChanged("DrawPreview")]
     public int energyCost;
+    [HideInInlineEditors, OnValueChanged("DrawPreview")]
+    public bool exhaust;
     [HideInInlineEditors, EnumToggleButtons, OnValueChanged("DrawPreview")]
     public Rarities rarity;
+    [HideInInlineEditors, EnumToggleButtons, OnValueChanged("DrawPreview")]
+    public ClassColor color;
     [HideInInlineEditors, Space]
     public CardAction[] actions;
     [SerializeField, AssetList(Path="Prefabs/Toys", CustomFilterMethod="FindToy")]

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  image: {fileID: -3948453097499792371, guid: 22a0dc881b63b9d44a3b6eef198056a6, type: 3}
-  name: Warrior
-  description: Warriors can use a card as a shield that can reduce damage on an incoming
-    attack.
+  image: {fileID: 21300000, guid: 27545e71278dfdc4f83cce393283b973, type: 3}
+  name: Inquisitor
+  description: Wade into battle and strike down all who dare challenge you.
   energyCost: 0
+  exhaust: 0
   rarity: 0
+  color: 1
   actions: []
   toy: {fileID: 0}

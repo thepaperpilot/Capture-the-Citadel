@@ -6,8 +6,8 @@ public class PoisonStatus : Status
 {
     public PoisonStatus()
     {
-        name = NAME.POISON;
-        type = STATUS_TYPE.DEBUFF;
+        name = Name.POISON;
+        type = StatusType.DEBUFF;
         priority = 10; //After multiplication
         decreasing = true;
     }

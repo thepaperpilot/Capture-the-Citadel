@@ -6,8 +6,8 @@ public class DefenseStatus : Status
 {
     public DefenseStatus()
     {
-        name = NAME.DEFENSE;
-        type = STATUS_TYPE.BUFF;
+        name = Name.DEFENSE;
+        type = StatusType.BUFF;
         priority = 0;
     }
 

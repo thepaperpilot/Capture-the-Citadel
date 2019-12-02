@@ -17,4 +17,6 @@ public class AbstractClass : ScriptableObject
     public AbstractRelic startingRelic;
     [Space, AssetList, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     public AbstractCard card;
+
+    public AbstractCard.ClassColor color;
 }

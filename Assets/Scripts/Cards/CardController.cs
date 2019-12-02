@@ -40,6 +40,15 @@ public class CardController : MonoBehaviour
     [SerializeField, AssetsOnly, HideLabel, PreviewField(ObjectFieldAlignment.Center)]
     private Material rare;
 
+    [FoldoutGroup("Card Background Colors", true)]
+    [HorizontalGroup("Card Background Colors/h")]
+    [BoxGroup("Card Background Colors/h/Red")]
+    [SerializeField, AssetsOnly, HideLabel, PreviewField(ObjectFieldAlignment.Center)]
+    private Material backgroundRed;
+    [BoxGroup("Card Background Colors/h/Green")]
+    [SerializeField, AssetsOnly, HideLabel, PreviewField(ObjectFieldAlignment.Center)]
+    private Material backgroundGreen;
+
     [HideInInspector]
     public AbstractCard card;
     
@@ -55,6 +64,17 @@ public class CardController : MonoBehaviour
                 break;
             case AbstractCard.Rarities.RARE:
                 border.material = rare;
+                break;
+        }
+
+        switch (card.color)
+        {
+            case AbstractCard.ClassColor.COLORLESS: //Make colorless its own thing later
+            case AbstractCard.ClassColor.RED:
+                front.material = backgroundRed;
+                break;
+            case AbstractCard.ClassColor.GREEN:
+                front.material = backgroundGreen;
                 break;
         }
 #if UNITY_EDITOR

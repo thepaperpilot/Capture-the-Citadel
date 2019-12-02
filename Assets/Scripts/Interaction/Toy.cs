@@ -23,10 +23,28 @@ public class Toy : MonoBehaviour
 
         triggered = true;
         card.Play(gameObject);
-        Destroy(overrideDelay ? 0 : delayDespawn);
+        Finish(overrideDelay ? 0 : delayDespawn);
     }
 
-    public virtual void Destroy(int delay = 0, bool skipParticles = false) {
+    public void Refund(int delay = 0, bool skipParticles = false)
+    {
+        Destroy(delay, skipParticles);
+    }
+
+    public void Finish(int delay = 0, bool skipParticles = false)
+    {
+        if (card.exhaust)
+        {
+            CardsManager.Instance.Exhaust(card);
+        }
+        else
+        {
+            CardsManager.Instance.Discard(card);
+        }
+        Destroy(delay, skipParticles);
+    }
+
+    protected virtual void Destroy(int delay, bool skipParticles) {
         if (skipParticles) {
             if (delay == 0)
                 DestroyImmediate(toyRoot);
@@ -42,12 +60,10 @@ public class Toy : MonoBehaviour
         particles.gameObject.SetActive(false);
         particles.gameObject.SetActive(true);
         renderer.gameObject.SetActive(false);
-        Destroy(toyRoot, 1.5f);
+        Destroy(toyRoot, 0.5f);
     }
 
     public virtual bool CanBeDropped() {
         return true;
     }
-
-    public virtual void Init() { }
 }

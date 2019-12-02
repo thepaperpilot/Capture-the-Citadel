@@ -6,8 +6,8 @@ public class SwiftnessStatus : Status
 {
     public SwiftnessStatus()
     {
-        name = NAME.SWIFTNESS;
-        type = STATUS_TYPE.BUFF;
+        name = Name.SWIFTNESS;
+        type = StatusType.BUFF;
         priority = 0;
         decreasing = false;
     }

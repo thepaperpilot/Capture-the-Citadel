@@ -6,9 +6,9 @@ public class FortifyStatus : Status
 {
     public FortifyStatus()
     {
-        name = NAME.FORTIFY;
+        name = Name.FORTIFY;
         priority = 0;
-        type = STATUS_TYPE.BUFF;
+        type = StatusType.BUFF;
         decreasing = false;
     }
 

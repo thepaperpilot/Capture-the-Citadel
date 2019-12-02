@@ -16,14 +16,17 @@ MonoBehaviour:
   name: Assault
   description: Deal 3 damage to an enemy in sight.
   energyCost: 1
-  rarity: 0
+  exhaust: 0
+  rarity: 1
+  color: 2
   actions:
   - type: 0
-    status: {fileID: 0}
+    status: 0
     amount: 2
     ranged: 1
-    targets: []
+    targets:
+    - {fileID: 0}
     actor: {fileID: 0}
     destination: {fileID: 0}
     target: 1
-  toy: {fileID: 0}
+  toy: {fileID: 3297623662295660927, guid: 9a2a6a7f4f474e249a12b65e7ea1651a, type: 3}

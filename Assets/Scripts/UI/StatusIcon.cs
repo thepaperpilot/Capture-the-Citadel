@@ -27,6 +27,8 @@ public class StatusIcon : MonoBehaviour
     public Sprite spikesTex;
     [SerializeField, FoldoutGroup("Sprites")]
     public Sprite prayerFatigueTex;
+    [SerializeField, FoldoutGroup("Sprites")]
+    public Sprite sabotageTex;
 
     public void Init(Status status)
     {
@@ -34,28 +36,30 @@ public class StatusIcon : MonoBehaviour
         amountText.text = status.amount.ToString();
     }
 
-    private Sprite GetIcon(Status.NAME name)
+    private Sprite GetIcon(Status.Name name)
     {
         switch (name)
         {
-            case Status.NAME.STRENGTH:
+            case Status.Name.STRENGTH:
                 return strengthTex;
-            case Status.NAME.DEFENSE:
+            case Status.Name.DEFENSE:
                 return defenseTex;
-            case Status.NAME.SWIFTNESS:
+            case Status.Name.SWIFTNESS:
                 return swiftnessTex;
-            case Status.NAME.AEGIS:
+            case Status.Name.AEGIS:
                 return aegisTex;
-            case Status.NAME.FORTIFY:
+            case Status.Name.FORTIFY:
                 return fortifyTex;
-            case Status.NAME.HAMSTRING:
+            case Status.Name.HAMSTRING:
                 return hamstringTex;
-            case Status.NAME.POISON:
+            case Status.Name.POISON:
                 return poisonTex;
-            case Status.NAME.SPIKES:
+            case Status.Name.SPIKES:
                 return spikesTex;
-            case Status.NAME.PRAYER_FATIGUE:
+            case Status.Name.PRAYER_FATIGUE:
                 return prayerFatigueTex;
+            case Status.Name.SABOTAGE:
+                return sabotageTex;
             default:
                 return null;
         }

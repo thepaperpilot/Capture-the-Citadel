@@ -14,17 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 3673667057570157979, guid: a52fe72842deebe4a97bbbabafdc1fe9, type: 3}
   name: Prayer of Justice
-  description: Gain 1 Strength
+  description: Gain 2 Strength. At the end of your turn, lose 2 Strength.
   energyCost: 1
-  rarity: 3
+  exhaust: 0
+  rarity: 1
+  color: 1
   actions:
   - type: 3
     status: 0
-    amount: 1
+    amount: 2
     ranged: 0
     targets:
     - {fileID: 0}
     actor: {fileID: 0}
     destination: {fileID: 0}
     target: 0
-  toy: {fileID: 838485361750478193, guid: 0e95fca652182f148b7602146ca7855d, type: 3}
+  - type: 3
+    status: 8
+    amount: 2
+    ranged: 0
+    targets: []
+    actor: {fileID: 0}
+    destination: {fileID: 0}
+    target: 0
+  toy: {fileID: 4561849584493709916, guid: 4066941fb1c342e4aa64a18db61861f8, type: 3}

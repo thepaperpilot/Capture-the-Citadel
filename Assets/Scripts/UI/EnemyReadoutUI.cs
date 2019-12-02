@@ -34,7 +34,7 @@ public class EnemyReadoutUI : MonoBehaviour
     [SerializeField, ShowInInspector]
     private float barWidth = 0.32f;
     private float statusWidth = 0.1f;
-    private int statusPerRow = 16;
+    private int statusPerRow = 8;
     private float intentWidth = 0.2f;
 
     public struct Intent

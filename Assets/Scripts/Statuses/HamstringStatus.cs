@@ -6,8 +6,8 @@ public class HamstringStatus : Status
 {
     public HamstringStatus()
     {
-        name = NAME.HAMSTRING;
-        type = STATUS_TYPE.DEBUFF;
+        name = Name.HAMSTRING;
+        type = StatusType.DEBUFF;
         priority = -10;
         decreasing = false;
     }

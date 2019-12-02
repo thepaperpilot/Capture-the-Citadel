@@ -20,6 +20,7 @@ public class TitleScreenController : MonoBehaviour
         LevelManager.Instance.SetLevel(level);
         ClassSelectorController[] controllers =
             LevelManager.Instance.GetComponentsInChildren<ClassSelectorController>();
+        Debug.Log("Controllers: " + controllers.Length + " Classes: " + classes.Length);
         for (int i = 0; i < controllers.Length && i < classes.Length; i++) {
             controllers[i].Setup(classes[i], this);
         }
@@ -28,7 +29,7 @@ public class TitleScreenController : MonoBehaviour
     }
 
     public void SelectClass(AbstractClass selectedClass) {
-        PlayerManager.Instance.playerClass = selectedClass;
+        PlayerManager.Instance.SetClass(selectedClass);
         CardsManager.Instance.deck = selectedClass.startingDeck;
         RelicsManager.Instance.relics = new List<RelicsManager.RelicData>() { new RelicsManager.RelicData { relic = selectedClass.startingRelic } };
         CombatManager.Instance.maxHealth = selectedClass.startingHealth;

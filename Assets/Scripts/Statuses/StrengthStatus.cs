@@ -6,8 +6,8 @@ public class StrengthStatus : Status
 {
     public StrengthStatus()
     {
-        name = NAME.STRENGTH;
-        type = STATUS_TYPE.BUFF;
+        name = Name.STRENGTH;
+        type = StatusType.BUFF;
         decreasing = false;
         priority = 0;
     }

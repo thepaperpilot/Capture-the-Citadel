@@ -116,6 +116,21 @@ public class PlayerManager : MonoBehaviour
         //rightRB.AddForce(rightDelta, ForceMode.Acceleration);
     }
 
+    public void SetClass(AbstractClass selectedClass)
+    {
+        playerClass = selectedClass;
+        if(selectedClass == null)
+        {
+            left.SetTheme(AbstractCard.ClassColor.COLORLESS);
+            right.SetTheme(AbstractCard.ClassColor.COLORLESS);
+        }
+        else
+        {
+            left.SetTheme(selectedClass.color);
+            right.SetTheme(selectedClass.color);
+        }
+    }
+
     public void MovePlayer(Vector3 position, Quaternion rotation) {
         playAreaAlias.transform.SetPositionAndRotation(position, rotation);
     }
@@ -163,5 +178,15 @@ public class PlayerManager : MonoBehaviour
     // This is used by DebugManager
     public DeckController GetDeckController() {
         return deckController;
+    }
+
+    public void Reset()
+    {
+        gold = 0;
+    }
+
+    public Hand GetRightHand()
+    {
+        return right;
     }
 }

@@ -115,6 +115,15 @@ public class DeckController : MonoBehaviour
         cardPosition = new Vector3(0, 0, .02f * numCards);
     }
 
+    public void Clear()
+    {
+        while(cardsInHand.Count > 0)
+        {
+            Destroy(cardsInHand[0].gameObject);
+            cardsInHand.RemoveAt(0);
+        }
+    }
+
     public IEnumerator Draw(AbstractCard card, bool setDeckSize = true) {
         GameObject cardObject = Instantiate(cardPrefab, transform);
         cardObject.transform.localPosition = cardPosition;

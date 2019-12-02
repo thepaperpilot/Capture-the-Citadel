@@ -6,8 +6,8 @@ public class SpikesStatus : Status
 {
     public SpikesStatus()
     {
-        name = NAME.SPIKES;
-        type = STATUS_TYPE.BUFF;
+        name = Name.SPIKES;
+        type = StatusType.BUFF;
         priority = 0;
         decreasing = false;
     }

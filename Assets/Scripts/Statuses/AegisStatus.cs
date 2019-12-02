@@ -6,8 +6,8 @@ public class AegisStatus : Status
 {
     public AegisStatus()
     {
-        name = NAME.AEGIS;
-        type = STATUS_TYPE.BUFF;
+        name = Name.AEGIS;
+        type = StatusType.BUFF;
         priority = 100;
         decreasing = false;
     }

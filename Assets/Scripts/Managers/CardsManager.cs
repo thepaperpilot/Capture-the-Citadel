@@ -27,6 +27,9 @@ public class CardsManager : SerializedMonoBehaviour
     [HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public List<AbstractCard> discards;
+    [HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+    [AssetSelector(FlattenTreeView = true, DrawDropdownForListElements = false, IsUniqueList = false)]
+    public List<AbstractCard> exhausts;
 
     private void Awake() {
         if (Instance == null) {
@@ -42,10 +45,17 @@ public class CardsManager : SerializedMonoBehaviour
         drawPile = new List<AbstractCard>(deck);
         Shuffle(drawPile);
         discards = new List<AbstractCard>();
+        exhausts = new List<AbstractCard>();
+        PlayerManager.Instance.GetDeckController().Clear();
         ActionsManager.Instance.AddToTop(new DrawAction(startingHandSize - cardDrawPerTurn));
     }
 
     public IEnumerator Draw(int amount) {
+        amount = Mathf.Min(drawPile.Count + discards.Count, amount); //Don't try to draw more cards than exist outside of hand
+        if(hand.Count + amount > 10)
+        {
+            amount = Mathf.Max(0,10 - hand.Count);
+        }
         if (amount > drawPile.Count() && discards.Count() > 0) {
             ActionsManager.Instance.AddToTop(new DrawAction(amount - drawPile.Count()));
             ActionsManager.Instance.AddToTop(new ShuffleDiscardsAction());
@@ -57,10 +67,15 @@ public class CardsManager : SerializedMonoBehaviour
         yield return PlayerManager.Instance.Draw(cardsToDraw);
     }
 
-    public IEnumerator Discard(AbstractCard card) {
+    public void Discard(AbstractCard card) {
         hand.Remove(card);
         discards.Add(card);
-        yield return null;
+    }
+
+    public void Exhaust(AbstractCard card)
+    {
+        hand.Remove(card);
+        exhausts.Add(card);
     }
 
     [HideInEditorMode, Button(ButtonSizes.Medium)]

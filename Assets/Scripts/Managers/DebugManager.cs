@@ -49,5 +49,18 @@ public class DebugManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             CombatManager.Instance.player.FillEnergy();
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            foreach(CombatantController enemy in CombatManager.Instance.enemies)
+            {
+                CombatManager.Instance.KillEnemy(enemy);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            CombatManager.Instance.player.statusController.AddStatus(new StrengthStatus(), 1);
+        }
     }
 }

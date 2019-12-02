@@ -44,6 +44,11 @@ public class Hand : MonoBehaviour
     public BooleanAction trigger;
     public BooleanAction grip;
 
+    public SkinnedMeshRenderer handRenderer;
+    public Material noMat;
+    public Material gauntletMat;
+    public Material gloveMat;
+
     void Awake() {
         anim = GetComponentInChildren<Animator>();
     }
@@ -75,6 +80,22 @@ public class Hand : MonoBehaviour
     void Update()
     {
         UpdateState();
+    }
+
+    public void SetTheme(AbstractCard.ClassColor color)
+    {
+        switch (color)
+        {
+            case AbstractCard.ClassColor.COLORLESS:
+                handRenderer.material = noMat;
+                break;
+            case AbstractCard.ClassColor.RED:
+                handRenderer.material = gauntletMat;
+                break;
+            case AbstractCard.ClassColor.GREEN:
+                handRenderer.material = gloveMat;
+                break;
+        }
     }
 
     private void UpdateState()
@@ -274,7 +295,7 @@ public class Hand : MonoBehaviour
                 if (toy != null)
                 {
                     if (!checkToy || toy.CanBeDropped()) {
-                        toy.Destroy();
+                        toy.Refund();
                         heldObject = null;
                         if (toy.card) {
                             CombatManager.Instance.player.SpendEnergy(-toy.card.energyCost);
@@ -329,6 +350,11 @@ public class Hand : MonoBehaviour
             childRB.isKinematic = true;
         }
         ChangeToState(HandAnimPose.HOLDING);
+    }
+
+    public bool GetTriggerPressed()
+    {
+        return triggerPressed;
     }
 
 }

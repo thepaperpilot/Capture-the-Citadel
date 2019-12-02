@@ -94,7 +94,7 @@ public class AbstractRelic : ScriptableObject
         public Targets target;
         [BoxGroup("Effect")]
         [ShowIf("effect", Effects.ADD_STATUS), ValueDropdown("GetStatusEffects")]
-        public Status.NAME status;
+        public Status.Name status;
         [BoxGroup("Effect")]
         [HideIf("effect", Effects.AFFECT_CARD)]
         public int amount;

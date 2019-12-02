@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : CombatantController
 {
@@ -46,14 +47,11 @@ public class PlayerController : CombatantController
     public override void LoseHealth(int amount)
     {
         health -= Mathf.Max(0, statusController.GetHealthLost(amount));
+        UpdateHealthBar();
 
         if (health <= 0)
         {
-
-        }
-        else
-        {
-            UpdateHealthBar();
+            Die();
         }
     }
 
@@ -65,5 +63,15 @@ public class PlayerController : CombatantController
     public void UpdateHealthBar()
     {
         PlayerManager.Instance.healthBar.ChangeHealth(health);
+    }
+
+    private void Die()
+    {
+        PlayerManager.Instance.SetClass(null);
+        PlayerManager.Instance.Reset();
+        CardsManager.Instance.deck = new List<AbstractCard>();
+        RelicsManager.Instance.relics = new List<RelicsManager.RelicData>();
+        CombatManager.Instance.maxHealth = 1;
+        SceneManager.LoadScene("Title");
     }
 }

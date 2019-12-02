@@ -6,8 +6,8 @@ public class PrayerFatigueStatus : Status
 {
     public PrayerFatigueStatus()
     {
-        name = NAME.PRAYER_FATIGUE;
-        type = STATUS_TYPE.DEBUFF;
+        name = Name.PRAYER_FATIGUE;
+        type = StatusType.DEBUFF;
         priority = 0;
     }
 
