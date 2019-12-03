@@ -142,11 +142,13 @@ public class PlayerManager : MonoBehaviour
     public IEnumerator StartTurn() {
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
         CombatManager.Instance.player.FillEnergy();
+        CombatManager.Instance.player.statusController.OnTurnStart();
         ActionsManager.Instance.AddToTop(new DrawAction(CardsManager.Instance.cardDrawPerTurn));
         yield return deckController.SlideOut();
     }
 
     public IEnumerator EndTurn() {
+        CombatManager.Instance.player.statusController.OnTurnEnd();
         yield return deckController.SlideIn();
     }
     

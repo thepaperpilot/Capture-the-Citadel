@@ -15,7 +15,7 @@ public class CardRewardController : MonoBehaviour
     }
 
     public void Setup(AbstractCard abstractCard, RewardsScreenController controller) {
-        card.Setup(abstractCard, false);
+        card.Setup(abstractCard, true);
         this.abstractCard = abstractCard;
         this.controller = controller;
     }

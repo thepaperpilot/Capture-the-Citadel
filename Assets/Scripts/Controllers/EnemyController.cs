@@ -94,16 +94,28 @@ public class EnemyController : CombatantController
     
 
     void Start() {
+        healthBar = Instantiate(healthBarFab, healthBarPos).GetComponent<EnemyReadoutUI>();
+        healthBar.transform.localPosition = Vector3.zero;
+        healthBar.Init(maxHealth, displayName);
+
         currentStrategy = normalStrategy;
+        foreach (StrategyChange change in conditionalStrategyChanges)
+        {
+            if (currentStrategy.Equals(change.newStrategy))
+                continue;
+
+            if (change.condition == Conditions.NUM_TURNS && turn == change.number && !change.used)
+            {
+                ChangeStrategy(change);
+            }
+        }
         if (currentStrategy.type == StrategyTypes.LOOP) {
             nextMove = currentStrategy.moves[0];
         } else {
             nextMove = currentStrategy.moves[UnityEngine.Random.Range(0, currentStrategy.moves.Length)];
         }
 
-        healthBar = Instantiate(healthBarFab, healthBarPos).GetComponent<EnemyReadoutUI>();
-        healthBar.transform.localPosition = Vector3.zero;
-        healthBar.Init(maxHealth, displayName);
+        
 
         UpdateIntent();
     }
@@ -225,6 +237,7 @@ public class EnemyController : CombatantController
     }
 
     public void PlayTurn() {
+        statusController.OnTurnStart();
         turn++;
         
         // Perform our actions
@@ -265,6 +278,7 @@ public class EnemyController : CombatantController
                     }
                     else
                     {
+                        Debug.Log(tile);
                         bestScore = bestHex.sightDistance;
                         foreach (Hex other in currentHex.neighbors)
                         {
@@ -306,11 +320,26 @@ public class EnemyController : CombatantController
             else if (action.type == CardAction.TYPE.ATTACK)
             {
                 CardAction attackAction = new CardAction();
+                attackAction.ranged = action.ranged;
                 attackAction.actor = this;
                 attackAction.amount = statusController.GetDamageDealt(action.amount);
                 attackAction.type = CombatAction.TYPE.ATTACK;
                 attackAction.targets = action.targets;
                 modifiedActions.Add(attackAction);
+            }
+            else if (action.type == CardAction.TYPE.STATUS)
+            {
+                if(action.target == CardAction.Targets.PLAYER)
+                {
+                    if (tile.inSight)
+                    {
+                        modifiedActions.Add(action);
+                    }
+                }
+                else
+                {
+                    modifiedActions.Add(action);
+                }
             }
             else
             {
@@ -323,6 +352,7 @@ public class EnemyController : CombatantController
 
     public void EndTurn()
     {
+        statusController.OnTurnEnd();
         healthBar.ClearIntents();
     }
 

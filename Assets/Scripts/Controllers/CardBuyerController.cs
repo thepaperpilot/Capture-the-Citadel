@@ -21,7 +21,7 @@ public class CardBuyerController : MonoBehaviour
     }
 
     public void Setup(AbstractCard abstractCard, ShopScreenController controller) {
-        card.Setup(abstractCard, false);
+        card.Setup(abstractCard, true);
         this.abstractCard = abstractCard;
         this.controller = controller;
         Vector2Int goldRange =

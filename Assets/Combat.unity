@@ -273,6 +273,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7844326823174961393, guid: 1304ee771b1ba1b4696507bbdeab0244,
         type: 3}
+      propertyPath: allCards.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7844326823174961393, guid: 1304ee771b1ba1b4696507bbdeab0244,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7844326823174961393, guid: 1304ee771b1ba1b4696507bbdeab0244,
@@ -348,10 +353,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1489993308393079360, guid: 5163ffe7a5861e94c9daca1b99e87c88,
         type: 3}
+      propertyPath: randomActions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489993308393079360, guid: 5163ffe7a5861e94c9daca1b99e87c88,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1489993308393079360, guid: 5163ffe7a5861e94c9daca1b99e87c88,
         type: 3}
+    - target: {fileID: 1489993308393079360, guid: 5163ffe7a5861e94c9daca1b99e87c88,
+        type: 3}
+      propertyPath: randomActions.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a492aeff5c118044f923dc2ed88b9b94,
+        type: 2}
+    - target: {fileID: 1489993308393079360, guid: 5163ffe7a5861e94c9daca1b99e87c88,
+        type: 3}
+      propertyPath: randomActions.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 934c09d91a2c51145b153b996b08a56f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5163ffe7a5861e94c9daca1b99e87c88, type: 3}
 --- !u!1001 &1429755206

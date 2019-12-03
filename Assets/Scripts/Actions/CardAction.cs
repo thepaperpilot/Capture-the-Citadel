@@ -13,5 +13,6 @@ public class CardAction : CombatAction
     }
 
     [EnumToggleButtons]
+    [HideIf("type", TYPE.PLAY_SOUND)]
     public Targets target;
 }

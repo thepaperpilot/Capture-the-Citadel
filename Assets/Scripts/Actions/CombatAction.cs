@@ -12,7 +12,8 @@ public class CombatAction : AbstractAction
         DRAW,
         MOVE,
         STATUS,
-        LOSE_HP
+        LOSE_HP,
+        PLAY_SOUND
     }
 
     [EnumToggleButtons]
@@ -20,8 +21,12 @@ public class CombatAction : AbstractAction
     //[ShowIf("type", TYPE.STATUS), ValueDropdown("GetStatusEffects")]
     [ShowIf("type", TYPE.STATUS)]
     public Status.Name status;
+    [HideIf("type", TYPE.PLAY_SOUND)]
     public int amount;
+    [HideIf("type", TYPE.PLAY_SOUND)]
     public bool ranged;
+    [ShowIf("type", TYPE.PLAY_SOUND)]
+    public AudioClip sound;
 
     [HideInInspector]
     // Targets must be set before adding this action to the ActionsManager
@@ -57,9 +62,11 @@ public class CombatAction : AbstractAction
                         actor.transform.LookAt(controller.tile.transform);
                         if ((ranged && actor.tile.inSight) || (!ranged && actor.tile.playerDistance == 1))
                         {
+                            Debug.Log("Ranged hit: " + amount);
                             yield return new WaitForSeconds(1);
                             ActionsManager.Instance.AddToTop(new TakeDamageAction(actor, controller, amount));
                         }
+                        Debug.Log("Ranged obstructed: " + amount);
                     }
                         
                     break;
@@ -88,10 +95,13 @@ public class CombatAction : AbstractAction
                     }
                     break;
                 case TYPE.STATUS:
-                    controller.GetComponent<StatusController>().AddStatus(Status.FromName(status), amount);
+                    controller.GetComponent<StatusController>().AddStatus(Status.FromName(status, actor != CombatManager.Instance.player), amount);
                     break;
                 case TYPE.LOSE_HP:
                     ActionsManager.Instance.AddToTop(new LoseHealthAction(controller, amount));
+                    break;
+                case TYPE.PLAY_SOUND:
+                    controller.GetComponent<AudioSource>().PlayOneShot(sound);
                     break;
             }
         }

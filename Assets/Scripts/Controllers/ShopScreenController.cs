@@ -50,7 +50,20 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
                 return target > current;
             }).FirstOrDefault();
             if (card != null)
-                cards.Add(card);
+            {
+                bool unique = true;
+                foreach (AbstractCard addedCard in cards)
+                {
+                    if (addedCard.name.Equals(card.name))
+                    {
+                        unique = false;
+                    }
+                }
+                if (unique)
+                {
+                    cards.Add(card);
+                }
+            }
         }
         for (int i = 0; i < controllers.Length; i++) {
             controllers[i].Setup(cards[i], this);
