@@ -36,7 +36,7 @@ public class Hand : MonoBehaviour
 
     [SerializeField] Transform grabTarget;
     [SerializeField] Transform pinchTarget;
-    [ShowIf("id", HandID.RIGHT)]
+    //[ShowIf("id", HandID.RIGHT)]
     [SerializeField] Transform cardHolder;
     [SerializeField] float grabRadius = 0.05f;
     [SerializeField] float pinchRadius = 0.02f;
@@ -241,6 +241,19 @@ public class Hand : MonoBehaviour
                 PlayerManager.Instance.GetDeckController().PickupCard(heldObject.GetComponent<CardController>());
                 return;
             }
+            else if (collider.CompareTag("Pawn"))
+            {
+                if (!collider.GetComponent<MapPawnController>().locked)
+                {
+                    if (heldObject != null)
+                    {
+                        Release();
+                    }
+                    heldObject = collider.gameObject;
+                    collider.transform.SetParent(cardHolder);
+                }
+                return;
+            }
         }
     }
 
@@ -287,6 +300,14 @@ public class Hand : MonoBehaviour
                 {
                     PlayCard(heldObject);
                 }
+                return true;
+            }
+            else if (heldObject.CompareTag("Pawn"))
+            {
+                heldObject.transform.SetParent(null);
+                MapPawnController pawn = heldObject.GetComponent<MapPawnController>();
+                heldObject = null;
+                pawn.Drop();
                 return true;
             }
             else

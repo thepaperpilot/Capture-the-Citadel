@@ -11,16 +11,17 @@ public class MapScreenController : MonoBehaviour, IScreenSelector
     [SerializeField, AssetList(Path="Prefabs/Toys", CustomFilterMethod="FindToy")]
     [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Foldout)]
     private GameObject toy;
-    [SerializeField, ValueDropdown("FindScenes")]
-    private string[] scenes;
+    //[SerializeField, ValueDropdown("FindScenes")]
+    //private string[] scenes;
 
     void Start() {
         LevelManager.Instance.SetLevel(level);
+        /*
         SceneSelectorController[] controllers =
             LevelManager.Instance.GetComponentsInChildren<SceneSelectorController>();
         for (int i = 0; i < controllers.Length && i < scenes.Length; i++) {
             controllers[i].Setup(scenes[i], this);
-        }
+        }*/
         GameObject toyInstance = Instantiate(toy);
         PlayerManager.Instance.Grab(toyInstance);
     }

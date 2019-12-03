@@ -17,6 +17,8 @@ TagManager:
   - Hex
   - Scene
   - Shop
+  - Pawn
+  - MapTile
   layers:
   - Default
   - TransparentFX
