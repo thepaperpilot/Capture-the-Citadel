@@ -89,6 +89,15 @@ public class AbstractCard : ScriptableObject
                     action.targets = new CombatantController[] { CombatManager.Instance.player };
                     break;
             }
+            if(action.type == CardAction.TYPE.ATTACK)
+            {
+                CardAction attackAction = new CardAction();
+                attackAction.actor = action.actor;
+                attackAction.amount = action.actor.statusController.GetDamageDealt(action.amount);
+                attackAction.type = CombatAction.TYPE.ATTACK;
+                attackAction.targets = action.targets;
+                modifiedActions.Add(attackAction);
+            }
             if (action.type == CardAction.TYPE.MOVE) {
                 action.destination = hit.GetComponent<Hex>();
             }

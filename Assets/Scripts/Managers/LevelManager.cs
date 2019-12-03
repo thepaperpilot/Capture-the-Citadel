@@ -37,6 +37,7 @@ public class LevelManager : SerializedMonoBehaviour
         ClearLevel();
 
         GameObject levelGObject = Instantiate(levelPrefab, transform);
+        levelGObject.transform.position = Vector3.zero;
         controller = levelGObject.GetComponent<LevelController>();
         controller.Setup(level);
 
