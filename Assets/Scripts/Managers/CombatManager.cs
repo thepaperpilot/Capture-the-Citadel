@@ -83,6 +83,9 @@ public class CombatManager : MonoBehaviour
 
     public void KillEnemy(CombatantController enemy) {
         combatants.Remove(enemy);
+        List<CombatantController> newEnemies = new List<CombatantController>(enemies);
+        newEnemies.Remove(enemy);
+        enemies = newEnemies.ToArray();
         Destroy(enemy.gameObject);
         if (combatants.Count == 1 && combatants[0] == player)
             EndCombat();

@@ -92,6 +92,7 @@ public class CombatAction : AbstractAction
                         controller.tile.occupant = null;
                         destination.occupant = controller.gameObject;
                         controller.tile = destination;
+                        controller.statusController.OnMove();
                     }
                     break;
                 case TYPE.STATUS:

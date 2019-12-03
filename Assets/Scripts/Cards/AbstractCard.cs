@@ -77,6 +77,11 @@ public class AbstractCard : ScriptableObject
 #endif
 
     public void Play(GameObject hit) {
+        CombatManager.Instance.player.statusController.OnPlayCard(this);
+        foreach(CombatantController enemy in CombatManager.Instance.enemies)
+        {
+            enemy.statusController.OnPlayCard(this);
+        }
         List<AbstractAction> modifiedActions = new List<AbstractAction>();
         foreach (CardAction action in actions) {
             action.actor = CombatManager.Instance.player;

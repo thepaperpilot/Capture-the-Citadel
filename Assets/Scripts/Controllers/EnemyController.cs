@@ -305,11 +305,8 @@ public class EnemyController : CombatantController
                         moveAction.targets = new CombatantController[] { this };
                         modifiedActions.Add(moveAction);
 
-                        //If the entered hex contains a trap, spring it
-
                         currentHex = bestHex;
                         remainingMovement--;
-                        statusController.OnMove();
                     }
                 }
                 if (moved)
