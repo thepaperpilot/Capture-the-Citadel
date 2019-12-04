@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Treasure.unity
     guid: 46fc858ec5aab0d41a3c1cc650c1ecef
+  - enabled: 1
+    path: Assets/EliteCombat.unity
+    guid: 7656f13d7717ef04eba132b805bb7bf8
   m_configObjects: {}
