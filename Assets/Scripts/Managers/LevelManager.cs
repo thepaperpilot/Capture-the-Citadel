@@ -7,12 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : SerializedMonoBehaviour
 {
-    public enum Situation
-    {
-        COMBAT,
-        NON_COMBAT
-    }
-
     public static LevelManager Instance;
 
     [AssetList(Path="Prefabs", CustomFilterMethod="FindLevelControllers")]
@@ -21,8 +15,6 @@ public class LevelManager : SerializedMonoBehaviour
     public GameObject levelPrefab;
     [HideInEditorMode]
     public LevelController controller;
-
-    public Situation situation = Situation.NON_COMBAT;
 
     private void Awake() {
         if (Instance == null) {

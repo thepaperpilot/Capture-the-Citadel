@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad4e47377ec7faf48a31ea5cedbfcda5, type: 3}
-  m_Name: New Abstract Event
+  m_Name: Wolf Attack
   m_EditorClassIdentifier: 
-  level: {fileID: 11400000, guid: c41976471ab400941b92124ff433d5c2, type: 2}
-  title: 
+  level: {fileID: 11400000, guid: d90cbc058afe2ab4a892fcce3bbbdfbf, type: 2}
+  title: You're attacked by some wolves!
   description: 
   options:
   - type: 3
-    description: 
+    description: Prepare yourself
     amount: 0
     cards:
     - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
