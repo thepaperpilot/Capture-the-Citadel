@@ -11,9 +11,9 @@ public class RelicAction : AbstractAction
     public enum Triggers
     {
         COLLECT,
-        COMBAT_START,
-        COMBAT_END,
         TURN_START,
+        COMBAT_END,
+        TURN_START_LATE,
         TURN_END,
         DAMAGE_TAKEN,
         DAMAGE_GIVEN,
@@ -55,11 +55,11 @@ public class RelicAction : AbstractAction
     [BoxGroup("Trigger")]
     public Triggers trigger;
     [BoxGroup("Trigger")]
-    [ShowIf("trigger", Triggers.TURN_START)]
+    [ShowIf("@trigger == Triggers.TURN_START || trigger == Triggers.TURN_START_LATE")]
     public bool everyTurn;
     [BoxGroup("Trigger"), MinMaxSlider(0, 11)]
     [InfoBox("Turn it up to 11 to indicate their is no upper limit")]
-    [ShowIf("@(trigger == Triggers.TURN_START && !everyTurn) || trigger == Triggers.DAMAGE_GIVEN || trigger == Triggers.DAMAGE_TAKEN")]
+    [ShowIf("@(trigger == Triggers.TURN_START && !everyTurn) || (trigger == Triggers.TURN_START_LATE && !everyTurn) || trigger == Triggers.DAMAGE_GIVEN || trigger == Triggers.DAMAGE_TAKEN")]
     public Vector2Int range;
     [BoxGroup("Trigger")]
     [ShowIf("trigger", Triggers.DROP_ZONE), PreviewField(50)]
@@ -98,6 +98,7 @@ public class RelicAction : AbstractAction
     {
         // Make sure all conditions are met
         if ((trigger == Triggers.TURN_START && !everyTurn) ||
+            (trigger == Triggers.TURN_START_LATE && !everyTurn) ||
             trigger == Triggers.DAMAGE_GIVEN ||
             trigger == Triggers.DAMAGE_TAKEN)
         {

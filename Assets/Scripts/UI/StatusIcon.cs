@@ -29,6 +29,8 @@ public class StatusIcon : MonoBehaviour
     public Sprite prayerFatigueTex;
     [SerializeField, FoldoutGroup("Sprites")]
     public Sprite sabotageTex;
+    [SerializeField, FoldoutGroup("Sprites")]
+    public Sprite handyTex;
 
     public void Init(Status status)
     {
@@ -60,6 +62,8 @@ public class StatusIcon : MonoBehaviour
                 return prayerFatigueTex;
             case Status.Name.SABOTAGE:
                 return sabotageTex;
+            case Status.Name.HANDY:
+                return handyTex;
             default:
                 return null;
         }

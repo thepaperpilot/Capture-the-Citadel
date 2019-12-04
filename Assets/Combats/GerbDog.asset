@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 11400000, guid: d8882783cd257f244b42c72ce98bceff, type: 2}
   goldRange: {x: 50, y: 75}
-  relicReward: 0
+  relicReward: 1
   relicRarity: 0
   relic: {fileID: 0}

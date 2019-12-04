@@ -163,6 +163,17 @@ public class StatusController : MonoBehaviour
         return modifiedMovment;
     }
 
+    public int GetHandSize(int baseHand)
+    {
+        int modifiedHand = baseHand;
+        foreach(Status status in statuses)
+        {
+            modifiedHand = status.GetHandSize(modifiedHand);
+        }
+        CheckRemoval();
+        return modifiedHand;
+    }
+
     public List<Status> GetStatuses()
     {
         return new List<Status>(statuses);

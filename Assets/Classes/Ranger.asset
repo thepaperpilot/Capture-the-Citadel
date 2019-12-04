@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daf1b19c77322541af786d813596646, type: 3}
   m_Name: Ranger
   m_EditorClassIdentifier: 
-  startingHealth: 16
+  startingHealth: 24
+  startingGold: 99
+  baseEnergyPerTurn: 3
   startingDeck:
   - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
   - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
@@ -37,6 +39,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f8278f989eb72744dad87826ba8c9f1d, type: 2}
   - {fileID: 11400000, guid: aabd54a044d30174da6567581e52e885, type: 2}
   - {fileID: 11400000, guid: d34de183cef2da742bda3a37c98fc471, type: 2}
-  startingRelic: {fileID: 11400000, guid: 5c0b5e600154a014c84d511839dc5263, type: 2}
+  startingRelic: {fileID: 11400000, guid: 51201cd8d2a3aa54a921948fad554d8a, type: 2}
   card: {fileID: 11400000, guid: e59d48249b710dd459d5d0a9daa1cf70, type: 2}
   color: 2

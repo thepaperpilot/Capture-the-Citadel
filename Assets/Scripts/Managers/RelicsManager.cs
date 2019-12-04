@@ -17,7 +17,7 @@ public class RelicsManager : MonoBehaviour
         public AbstractCard card;
     }
 
-    [HideInEditorMode]
+    [ShowInInspector, HideInEditorMode]
     private List<RelicData> relics = new List<RelicData>();
 
     [AssetList(AutoPopulate=true)]
@@ -59,8 +59,8 @@ public class RelicsManager : MonoBehaviour
         return relics;
     }
 
-    public void OnCombatStart() {
-        TriggerRelics(RelicAction.Triggers.COMBAT_START);
+    public void OnTurnStart(int turn) {
+        TriggerRelics(RelicAction.Triggers.TURN_START, turn);
     }
 
     public void OnCombatEnd()
@@ -68,8 +68,8 @@ public class RelicsManager : MonoBehaviour
         TriggerRelics(RelicAction.Triggers.COMBAT_END);
     }
 
-    public void OnTurnStart(int turn) {
-        TriggerRelics(RelicAction.Triggers.TURN_START, turn);
+    public void OnTurnStartLate(int turn) {
+        TriggerRelics(RelicAction.Triggers.TURN_START_LATE, turn);
     }
 
     public void OnTurnEnd(int turn)
@@ -104,7 +104,7 @@ public class RelicsManager : MonoBehaviour
         TriggerRelics(RelicAction.Triggers.MOVEMENT);
     }
 
-    public void GetNewRelic() {
+    public AbstractRelic GetNewRelic() {
         IEnumerable<AbstractRelic> validRelics = allRelics.Where(r => !relics.Any(rData => rData.relic == r));
         float total = validRelics.Sum(r =>
             r.rarity == AbstractRelic.Rarities.COMMON ? common :
@@ -121,27 +121,25 @@ public class RelicsManager : MonoBehaviour
             return target > next;
         }).FirstOrDefault();
         if (relic != null) {
-            relics.Add(new RelicData() {
-                relic = validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1))
-            });
+            return validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1));
         } else {
             // TODO
+            return null;
         }
     }
 
-    public void GetNewRelic(AbstractRelic.Rarities rarity) {
+    public AbstractRelic GetNewRelic(AbstractRelic.Rarities rarity) {
         IEnumerable<AbstractRelic> validRelics = allRelics.Where(r => r.rarity == rarity && !relics.Any(rData => rData.relic == r));
         if (validRelics.Count() > 0) {
-            relics.Add(new RelicData() {
-                relic = validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1))
-            });
+            return validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1));
         } else {
-            // TODO
+            return null;
+            //TODO
         }
     }
 
     // TODO refactor to make this nicer lmao
-    private void TriggerRelics(RelicAction.Triggers trigger, int data = 0, CombatantController enemy = null) {
+    private void TriggerRelics(RelicAction.Triggers trigger, int data = -1, CombatantController enemy = null) {
         List<RelicAction> actions = new List<RelicAction>();
         foreach (RelicData relicData in relics) {
             List<RelicAction> triggeredActions = relicData.relic.actions.Where(t => t.trigger == trigger).ToList();

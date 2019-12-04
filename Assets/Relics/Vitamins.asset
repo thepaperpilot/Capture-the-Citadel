@@ -13,6 +13,21 @@ MonoBehaviour:
   m_Name: Vitamins
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  name: 
-  rarity: 0
-  actions: []
+  model: {fileID: 7986962752386910278, guid: 87ff983a4e1343d4da34060d43812ae6, type: 3}
+  name: Vitamins
+  description: Increase your max health by 4
+  rarity: 1
+  actions:
+  - trigger: 0
+    everyTurn: 0
+    range: {x: 0, y: 0}
+    sprite: {fileID: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    effect: 6
+    targetedEffect: 0
+    target: 0
+    status: 0
+    amount: 3
+    data: 0
+    discard: {fileID: 0}
+    targets: []

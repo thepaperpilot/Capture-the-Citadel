@@ -13,7 +13,7 @@ public class AbstractLevel : SerializedScriptableObject
         FLOOR
     }
 
-    new public string name;
+    new public string name = "untitled";
 
     [HideInInlineEditors, Range(1, 12), OnValueChanged("ResizeTable")]
     public int rows = 8;

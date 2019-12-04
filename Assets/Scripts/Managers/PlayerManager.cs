@@ -150,13 +150,13 @@ public class PlayerManager : MonoBehaviour
 
     public IEnumerator StartTurn(int turn) {
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
+        RelicsManager.Instance.OnTurnStart(turn);
         CombatManager.Instance.player.FillEnergy();
-        if(turn == 0)
-        {
-            RelicsManager.Instance.OnCombatStart();
-        }
+        int targetCardNum = CombatManager.Instance.player.statusController.GetHandSize(CardsManager.Instance.handSize);
+        int cardsToDraw = Mathf.Max(0, targetCardNum - CardsManager.Instance.hand.Count());
+        ActionsManager.Instance.AddToTop(new DrawAction(cardsToDraw));
         CombatManager.Instance.player.statusController.OnTurnStart();
-        ActionsManager.Instance.AddToTop(new DrawAction(CardsManager.Instance.cardDrawPerTurn));
+        RelicsManager.Instance.OnTurnStartLate(turn);
         yield return deckController.SlideOut();
     }
 

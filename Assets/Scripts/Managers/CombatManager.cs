@@ -96,26 +96,16 @@ public class CombatManager : MonoBehaviour
     public void EndCombat() {
         ActionsManager.Instance.AddToTop(new EndCombatAction());
         RelicsManager.Instance.OnCombatEnd();
-        ActionsManager.Instance.AddToTop(new GainGoldAction(Random.Range(combat.goldRange.x, combat.goldRange.y)));
-        switch (combat.relicReward) {
-            case AbstractCombat.RelicRewards.RANDOM_RELIC:
-                RelicsManager.Instance.GetNewRelic();
-                break;
-            case AbstractCombat.RelicRewards.SET_RARITY:
-                RelicsManager.Instance.GetNewRelic(combat.relicRarity);
-                break;
-            case AbstractCombat.RelicRewards.SET_RELIC:
-                if (!RelicsManager.Instance.GetRelics().Any(r => r.relic == combat.relic))
-                    RelicsManager.Instance.AddRelic(new RelicsManager.RelicData() {
-                        relic = combat.relic
-                    });
-                break;
-        }
         ActionsManager.Instance.AddToBottom(new ChangeSceneAction(rewardsScreen));
     }
 
     public bool IsPlayerTurn() {
         return currentTurn == player;
+    }
+
+    public AbstractCombat GetCombat()
+    {
+        return combat;
     }
 #if UNITY_EDITOR
     private IEnumerable FindScenes() {

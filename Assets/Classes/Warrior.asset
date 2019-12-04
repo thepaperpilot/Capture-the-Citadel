@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daf1b19c77322541af786d813596646, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  startingHealth: 20
+  startingHealth: 30
+  startingGold: 99
+  baseEnergyPerTurn: 3
   startingDeck:
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
   - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
@@ -37,6 +39,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9a33ff85433e06489499b5fc2f19348, type: 2}
   - {fileID: 11400000, guid: ea477bf732ff0954b8589ebba2999a25, type: 2}
   - {fileID: 11400000, guid: e736a3cbb87dfff4e8f06ac481e68364, type: 2}
-  startingRelic: {fileID: 11400000, guid: 5c0b5e600154a014c84d511839dc5263, type: 2}
+  startingRelic: {fileID: 11400000, guid: 3c94534ca83310a44b905862511474ea, type: 2}
   card: {fileID: 11400000, guid: 0302c6071fd7af345984402c455a1ada, type: 2}
   color: 1

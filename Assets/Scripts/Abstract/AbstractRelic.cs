@@ -18,8 +18,13 @@ public class AbstractRelic : ScriptableObject
     }
 
     [Space, HorizontalGroup("Split", 50)]
+    [Space, VerticalGroup("Split/Assets")]
     [HideLabel, PreviewField(50)]
     public Sprite image;
+    [Space, VerticalGroup("Split/Assets")]
+    [HideLabel, PreviewField(50)]
+    [SerializeField]
+    public GameObject model;
     [Space, VerticalGroup("Split/Properties")]
     new public string name;
     [Space, VerticalGroup("Split/Properties")]

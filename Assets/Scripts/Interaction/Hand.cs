@@ -229,6 +229,11 @@ public class Hand : MonoBehaviour
                 }
                 return true;
             }
+            else if (collider.CompareTag("Relic"))
+            {
+                collider.GetComponent<RelicPickup>().Collect();
+                return false;
+            }
         }
         return false;
     }

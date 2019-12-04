@@ -14,8 +14,8 @@ public class CardsManager : SerializedMonoBehaviour
     public  List<AbstractCard> deck;
     [AssetList(AutoPopulate=true, CustomFilterMethod="FindCards")]
     public AbstractCard[] allCards;
-    public int startingHandSize = 5;
-    public int cardDrawPerTurn = 3;
+    public int handSize = 5;
+    //public int cardDrawPerTurn = 3;
 
     [Title("Combat")]
     [Space, HideInEditorMode, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
@@ -47,10 +47,11 @@ public class CardsManager : SerializedMonoBehaviour
         discards = new List<AbstractCard>();
         exhausts = new List<AbstractCard>();
         PlayerManager.Instance.GetDeckController().Clear();
-        ActionsManager.Instance.AddToTop(new DrawAction(startingHandSize - cardDrawPerTurn));
+        //ActionsManager.Instance.AddToTop(new DrawAction(CombatManager.Instance.player.statusController.GetHandSize(handSize)));
     }
 
     public IEnumerator Draw(int amount) {
+        amount = Mathf.Max(amount, 0);
         amount = Mathf.Min(drawPile.Count + discards.Count, amount); //Don't try to draw more cards than exist outside of hand
         if(hand.Count + amount > 10)
         {

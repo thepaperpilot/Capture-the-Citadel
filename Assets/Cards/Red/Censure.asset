@@ -10,14 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
-  m_Name: New Abstract Card
+  m_Name: Censure
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  name: 
-  description: 
-  energyCost: 0
+  image: {fileID: 8678599395955565001, guid: 7b9f75ab32df5bd48a662f4a5b1c508a, type: 3}
+  name: Censure
+  description: Deal 5 damage. Inflict 1 Sabotage.
+  energyCost: 2
   exhaust: 0
-  rarity: 0
-  color: 0
-  actions: []
-  toy: {fileID: 0}
+  rarity: 2
+  color: 1
+  actions:
+  - type: 0
+    status: 0
+    amount: 5
+    ranged: 0
+    sound: {fileID: 0}
+    targets: []
+    actor: {fileID: 0}
+    destination: {fileID: 0}
+    target: 1
+  - type: 3
+    status: 9
+    amount: 1
+    ranged: 0
+    sound: {fileID: 0}
+    targets: []
+    actor: {fileID: 0}
+    destination: {fileID: 0}
+    target: 0
+  toy: {fileID: 4228172597749279638, guid: 1124e6e6794eeb349af99415d420246e, type: 3}

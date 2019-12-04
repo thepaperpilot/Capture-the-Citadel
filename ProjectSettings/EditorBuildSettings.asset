@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Event.unity
     guid: e17136b47d376b24caa323404aab4c58
+  - enabled: 1
+    path: Assets/Treasure.unity
+    guid: 46fc858ec5aab0d41a3c1cc650c1ecef
   m_configObjects: {}

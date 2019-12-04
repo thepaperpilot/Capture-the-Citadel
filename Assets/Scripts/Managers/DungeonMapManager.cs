@@ -50,10 +50,10 @@ public class DungeonMapManager : MonoBehaviour
                 //SelectScene("BossCombat");
                 break;
             case MapRoom.RoomType.EVENT:
-                SelectScene("Event");
+                //SelectScene("Event");
                 break;
             case MapRoom.RoomType.CHEST:
-                //SelectScene("Chest");
+                SelectScene("Treasure");
                 break;
             case MapRoom.RoomType.REST:
                 SelectScene("Rest");
@@ -272,7 +272,7 @@ public class DungeonMapManager : MonoBehaviour
             }
 
             //Place events
-            int eventCount = freeRooms.Count / 2;
+            int eventCount = 0;// freeRooms.Count / 2;
             for (int i = 0; i < eventCount; i++)
             {
                 MapRoom eventRoom = freeRooms[Random.Range(0, freeRooms.Count)];

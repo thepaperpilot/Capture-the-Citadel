@@ -25,6 +25,42 @@ public class RewardsScreenController : MonoBehaviour, IScreenSelector
     void Start() {
         LevelManager.Instance.SetLevel(level);
 
+        AbstractCombat combat = CombatManager.Instance.GetCombat();
+        ActionsManager.Instance.AddToTop(new GainGoldAction(Random.Range(combat.goldRange.x, combat.goldRange.y)));
+        
+
+        RelicPedestalController pedestal = FindObjectOfType<RelicPedestalController>();
+        if(combat.relicReward == AbstractCombat.RelicRewards.NO_RELIC)
+        {
+            Destroy(pedestal.gameObject);
+        }
+        else
+        {
+            AbstractRelic rewardRelic = null;
+            switch (combat.relicReward)
+            {
+                case AbstractCombat.RelicRewards.RANDOM_RELIC:
+                    rewardRelic = RelicsManager.Instance.GetNewRelic();
+                    break;
+                case AbstractCombat.RelicRewards.SET_RARITY:
+                    rewardRelic = RelicsManager.Instance.GetNewRelic(combat.relicRarity);
+                    break;
+                case AbstractCombat.RelicRewards.SET_RELIC:
+                    if (!RelicsManager.Instance.GetRelics().Any(r => r.relic == combat.relic))
+                        rewardRelic = combat.relic;
+                    break;
+            }
+            if(rewardRelic == null)
+            {
+                //Destroy(pedestal.gameObject);
+            }
+            else
+            {
+                pedestal.Init(rewardRelic);
+            }
+        }
+        
+
         CardRewardController[] controllers =
             LevelManager.Instance.GetComponentsInChildren<CardRewardController>();
         float total = PlayerManager.Instance.playerClass.cardPool.Sum(c =>
@@ -75,7 +111,12 @@ public class RewardsScreenController : MonoBehaviour, IScreenSelector
 
     public void Choose(AbstractCard selectedCard) {
         CardsManager.Instance.deck.Add(selectedCard);
-        SelectScene(nextScene);
+        CardRewardController[] controllers =
+            LevelManager.Instance.GetComponentsInChildren<CardRewardController>();
+        foreach (CardRewardController controller in controllers)
+        {
+            Destroy(controller.gameObject);
+        }
     }
 
     public void SelectScene(string scene) {

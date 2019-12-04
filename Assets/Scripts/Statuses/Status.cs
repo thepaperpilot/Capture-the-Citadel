@@ -21,7 +21,8 @@ public class Status
         HAMSTRING,
         SPIKES,
         PRAYER_FATIGUE,
-        SABOTAGE
+        SABOTAGE,
+        HANDY
     }
 
     protected StatusType type;
@@ -65,6 +66,8 @@ public class Status
     public virtual int GetHealthLost(int amount) { return amount; }
 
     public virtual int GetMovement(int movement) { return movement; }
+
+    public virtual int GetHandSize(int hand) { return hand; }
 
     public virtual void AddStacks(int stacks) { amount += stacks; CheckRemoval(); }
 
@@ -131,6 +134,8 @@ public class Status
                 return new PrayerFatigueStatus();
             case Name.SABOTAGE:
                 return new SabotageStatus(fromMonster);
+            case Name.HANDY:
+                return new HandyStatus();
         }
         return null;
     }
