@@ -22,6 +22,8 @@ public class EnemyReadoutUI : MonoBehaviour
     [SerializeField, ShowInInspector]
     Transform statusParent;
     [SerializeField, ShowInInspector]
+    GameObject losIndicator;
+    [SerializeField, ShowInInspector]
     TextMeshPro healthText;
     [SerializeField, ShowInInspector]
     TextMeshPro nameText;
@@ -53,6 +55,11 @@ public class EnemyReadoutUI : MonoBehaviour
             this.icon = icon;
             this.amount = -1;
         }
+    }
+
+    public void UpdateLoS(bool inSight)
+    {
+        losIndicator.SetActive(inSight);
     }
 
     public void Init(int maxHealth, string name)

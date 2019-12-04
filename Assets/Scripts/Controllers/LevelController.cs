@@ -285,6 +285,11 @@ public class LevelController : MonoBehaviour
             {
                 hex.inSight = false;
             }
+            EnemyController enemy = hex.GetComponentInChildren<EnemyController>();
+            if (enemy)
+            {
+                enemy.SetInSight(hex.inSight);
+            }
         }
     }
 

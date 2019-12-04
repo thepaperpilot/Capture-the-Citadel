@@ -120,6 +120,11 @@ public class EnemyController : CombatantController
         UpdateIntent();
     }
 
+    public void SetInSight(bool inSight)
+    {
+        healthBar.UpdateLoS(inSight);
+    }
+
     void UpdateIntent()
     {
         bool debuffIncluded = false;
