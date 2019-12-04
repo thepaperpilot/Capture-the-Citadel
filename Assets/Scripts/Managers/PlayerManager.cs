@@ -131,13 +131,14 @@ public class PlayerManager : MonoBehaviour
         {
             left.SetTheme(selectedClass.color);
             right.SetTheme(selectedClass.color);
+            Gold = selectedClass.startingGold;
+            maxHealth = selectedClass.startingHealth;
+            energyPerTurn = selectedClass.baseEnergyPerTurn;
+            energyBar.Init(energyPerTurn, "");
+            energyBar.ChangeValue(0);
+            health = maxHealth;
         }
-        Gold = selectedClass.startingGold;
-        maxHealth = selectedClass.startingHealth;
-        energyPerTurn = selectedClass.baseEnergyPerTurn;
-        energyBar.Init(energyPerTurn, "");
-        energyBar.ChangeValue(0);
-        health = maxHealth;
+        
     }
 
     public void MovePlayer(Vector3 position, Quaternion rotation) {

@@ -101,12 +101,13 @@ public class AbstractCard : ScriptableObject
             {
                 CardAction attackAction = new CardAction();
                 attackAction.actor = action.actor;
+                attackAction.ranged = action.ranged;
                 attackAction.amount = action.actor.statusController.GetDamageDealt(action.amount);
                 attackAction.type = CombatAction.TYPE.ATTACK;
                 attackAction.targets = action.targets;
                 modifiedActions.Add(attackAction);
             }
-            if (action.type == CardAction.TYPE.MOVE) {
+            else if (action.type == CardAction.TYPE.MOVE) {
                 action.destination = hit.GetComponent<Hex>();
                 modifiedActions.Add(action);
             }
