@@ -13,8 +13,6 @@ public class CombatManager : MonoBehaviour
     public PlayerController player;
     [HideInInspector]
     public CombatantController[] enemies;
-    [HideInInspector]
-    public int maxHealth;
 
     [HideInEditorMode]
     [SerializeField] private CombatantController currentTurn;
@@ -51,12 +49,15 @@ public class CombatManager : MonoBehaviour
         turn = 0;
         this.combat = combat;
         currentTurn = player;
-        RelicsManager.Instance.OnCombatStart();
-        ActionsManager.Instance.AddToTop(new PlayerTurnAction());
+        ActionsManager.Instance.AddToTop(new PlayerTurnAction { turn = 0 });
     }
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void EndTurn() {
+        if(currentTurn == player)
+        {
+            RelicsManager.Instance.OnTurnEnd(turn);
+        }
         if (currentTurn != player) {
             ((EnemyController)currentTurn).EndTurn();
         }
@@ -82,6 +83,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void KillEnemy(CombatantController enemy) {
+        RelicsManager.Instance.OnMonsterKilled();
         combatants.Remove(enemy);
         List<CombatantController> newEnemies = new List<CombatantController>(enemies);
         newEnemies.Remove(enemy);
@@ -92,6 +94,8 @@ public class CombatManager : MonoBehaviour
     }
 
     public void EndCombat() {
+        ActionsManager.Instance.AddToTop(new EndCombatAction());
+        RelicsManager.Instance.OnCombatEnd();
         ActionsManager.Instance.AddToTop(new GainGoldAction(Random.Range(combat.goldRange.x, combat.goldRange.y)));
         switch (combat.relicReward) {
             case AbstractCombat.RelicRewards.RANDOM_RELIC:
@@ -101,8 +105,8 @@ public class CombatManager : MonoBehaviour
                 RelicsManager.Instance.GetNewRelic(combat.relicRarity);
                 break;
             case AbstractCombat.RelicRewards.SET_RELIC:
-                if (!RelicsManager.Instance.relics.Any(r => r.relic == combat.relic))
-                    RelicsManager.Instance.relics.Add(new RelicsManager.RelicData() {
+                if (!RelicsManager.Instance.GetRelics().Any(r => r.relic == combat.relic))
+                    RelicsManager.Instance.AddRelic(new RelicsManager.RelicData() {
                         relic = combat.relic
                     });
                 break;

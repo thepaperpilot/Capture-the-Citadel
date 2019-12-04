@@ -4,6 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zinnia.Tracking.Follow;
 
 public class PlayerManager : MonoBehaviour
@@ -17,7 +18,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject playAreaAlias;
     [SerializeField] private GameObject headsetAlias;
     [SerializeField] private DeckController deckController;
-    public int maxEnergy;
+    public int maxHealth;
+    public int health;
+    public int energyPerTurn;
     [HideInPlayMode, ChildGameObjectsOnly]
     public EnemyReadoutUI energyBar;
     [HideInPlayMode, ChildGameObjectsOnly]
@@ -86,7 +89,7 @@ public class PlayerManager : MonoBehaviour
         leftRB = leftHand.GetComponent<Rigidbody>();
         rightRB = rightHand.GetComponent<Rigidbody>();
 
-        energyBar.Init(maxEnergy, "");
+        energyBar.Init(energyPerTurn, "");
     }
 
     void Update()
@@ -129,6 +132,12 @@ public class PlayerManager : MonoBehaviour
             left.SetTheme(selectedClass.color);
             right.SetTheme(selectedClass.color);
         }
+        Gold = selectedClass.startingGold;
+        maxHealth = selectedClass.startingHealth;
+        energyPerTurn = selectedClass.baseEnergyPerTurn;
+        energyBar.Init(energyPerTurn, "");
+        energyBar.ChangeValue(0);
+        health = maxHealth;
     }
 
     public void MovePlayer(Vector3 position, Quaternion rotation) {
@@ -139,9 +148,13 @@ public class PlayerManager : MonoBehaviour
         deckController.SetupDropzones();
     }
 
-    public IEnumerator StartTurn() {
+    public IEnumerator StartTurn(int turn) {
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
         CombatManager.Instance.player.FillEnergy();
+        if(turn == 0)
+        {
+            RelicsManager.Instance.OnCombatStart();
+        }
         CombatManager.Instance.player.statusController.OnTurnStart();
         ActionsManager.Instance.AddToTop(new DrawAction(CardsManager.Instance.cardDrawPerTurn));
         yield return deckController.SlideOut();
@@ -182,9 +195,53 @@ public class PlayerManager : MonoBehaviour
         return deckController;
     }
 
-    public void Reset()
+    public void ChangeMaxHealth(int amount)
     {
+        if (amount > 0)
+        {
+            maxHealth += amount;
+            health += amount;
+        }
+        else
+        {
+            maxHealth -= amount;
+            health = Mathf.Min(health, maxHealth);
+        }
+        healthBar.Init(maxHealth, "");
+        healthBar.ChangeValue(health);
+    }
+
+    public void NonCombatLoseHealth(int amount)
+    {
+        if(amount > 0)
+        {
+            health -= Mathf.Max(0, amount);
+            healthBar.ChangeValue(health);
+            if (health <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
+    public void NonCombatHeal(int amount)
+    {
+        if(amount > 0)
+        {
+            health += amount;
+            health = Mathf.Min(health, maxHealth);
+            healthBar.ChangeValue(health);
+        }
+    }
+
+    public void Die()
+    {
+        SetClass(null);
         gold = 0;
+        CardsManager.Instance.deck = new List<AbstractCard>();
+        RelicsManager.Instance.ResetRelics();
+        ChangeSceneAction sceneChange = new ChangeSceneAction("Title");
+        ActionsManager.Instance.AddToBottom(sceneChange);
     }
 
     public Hand GetRightHand()

@@ -65,6 +65,7 @@ public class MapTableController : MonoBehaviour
             {
                 pawn.locked = true;
                 MovePawn(pawn, tile.transform);
+                Destroy(FindObjectOfType<MapScreenController>().toyInstance);
                 Debug.Log(tile.room.content);
                 DungeonMapManager.Instance.LaunchRoom(tile.room);
             }

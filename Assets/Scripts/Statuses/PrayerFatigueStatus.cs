@@ -13,7 +13,7 @@ public class PrayerFatigueStatus : Status
 
     public override void OnTurnEnd()
     {
-        controller.AddStatus(new StrengthStatus(), -amount);
+        CauseStatus(Name.STRENGTH, -amount);
         controller.RemoveStatus(this);
     }
 }

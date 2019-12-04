@@ -78,7 +78,8 @@ public class AbstractCard : ScriptableObject
 
     public void Play(GameObject hit) {
         CombatManager.Instance.player.statusController.OnPlayCard(this);
-        foreach(CombatantController enemy in CombatManager.Instance.enemies)
+        RelicsManager.Instance.OnPlayCard(this);
+        foreach (CombatantController enemy in CombatManager.Instance.enemies)
         {
             enemy.statusController.OnPlayCard(this);
         }

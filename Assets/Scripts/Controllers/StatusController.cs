@@ -31,7 +31,7 @@ public class StatusController : MonoBehaviour
         }
     }
 
-    private void ResetStatuses(Scene scene, LoadSceneMode mode) {
+    public void ResetStatuses() {
         statuses.Clear();
         toRemove.Clear();
         order = 0;

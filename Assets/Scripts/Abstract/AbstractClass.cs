@@ -7,6 +7,8 @@ using UnityEngine;
 public class AbstractClass : ScriptableObject
 {
     public int startingHealth;
+    public int startingGold = 99;
+    public int baseEnergyPerTurn = 3;
     [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
     [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
     public List<AbstractCard> startingDeck;

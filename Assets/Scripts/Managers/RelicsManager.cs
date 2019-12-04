@@ -18,7 +18,7 @@ public class RelicsManager : MonoBehaviour
     }
 
     [HideInEditorMode]
-    public List<RelicData> relics = new List<RelicData>();
+    private List<RelicData> relics = new List<RelicData>();
 
     [AssetList(AutoPopulate=true)]
     public AbstractRelic[] allRelics;
@@ -39,24 +39,69 @@ public class RelicsManager : MonoBehaviour
         }
     }
 
+    public void AddRelic(RelicData relicData)
+    {
+        relics.Add(relicData);
+        List<RelicAction> triggeredActions = relicData.relic.actions.Where(t => t.trigger == RelicAction.Triggers.COLLECT).ToList();
+        if(triggeredActions.Count > 0)
+        {
+            ActionsManager.Instance.AddToTop(triggeredActions.ToArray());
+        }
+    }
+
+    public void ResetRelics()
+    {
+        relics = new List<RelicData>();
+    }
+
+    public List<RelicData> GetRelics()
+    {
+        return relics;
+    }
+
     public void OnCombatStart() {
-        TriggerRelics(AbstractRelic.Triggers.COMBAT_START);
+        TriggerRelics(RelicAction.Triggers.COMBAT_START);
+    }
+
+    public void OnCombatEnd()
+    {
+        TriggerRelics(RelicAction.Triggers.COMBAT_END);
     }
 
     public void OnTurnStart(int turn) {
-        TriggerRelics(AbstractRelic.Triggers.COMBAT_START, turn);
+        TriggerRelics(RelicAction.Triggers.TURN_START, turn);
+    }
+
+    public void OnTurnEnd(int turn)
+    {
+        TriggerRelics(RelicAction.Triggers.TURN_END, turn);
     }
 
     public void OnDamageTaken(int damage, CombatantController attacker) {
-        TriggerRelics(AbstractRelic.Triggers.DAMAGE_TAKEN, damage, attacker);
+        TriggerRelics(RelicAction.Triggers.DAMAGE_TAKEN, damage, attacker);
     }
 
     public void OnDamageGiven(int damage, CombatantController victim) {
-        TriggerRelics(AbstractRelic.Triggers.DAMAGE_GIVEN, damage, victim);
+        TriggerRelics(RelicAction.Triggers.DAMAGE_GIVEN, damage, victim);
+    }
+
+    public void OnPlayCard(AbstractCard card)
+    {
+        TriggerRelics(RelicAction.Triggers.PLAY_CARD);
     }
 
     public void OnShuffle() {
-        TriggerRelics(AbstractRelic.Triggers.SHUFFLE);
+        TriggerRelics(RelicAction.Triggers.SHUFFLE);
+    }
+
+    public void OnMonsterKilled()
+    {
+        TriggerRelics(RelicAction.Triggers.MONSTER_DEATH);
+    }
+
+    public void OnMovement(int amount)
+    {
+        TriggerRelics(RelicAction.Triggers.MOVEMENT);
     }
 
     public void GetNewRelic() {
@@ -96,40 +141,43 @@ public class RelicsManager : MonoBehaviour
     }
 
     // TODO refactor to make this nicer lmao
-    private void TriggerRelics(AbstractRelic.Triggers trigger, int data = 0, CombatantController enemy = null) {
-        IEnumerable<AbstractRelic.RelicAction> actions = new List<AbstractRelic.RelicAction>();
+    private void TriggerRelics(RelicAction.Triggers trigger, int data = 0, CombatantController enemy = null) {
+        List<RelicAction> actions = new List<RelicAction>();
         foreach (RelicData relicData in relics) {
-            IEnumerable<AbstractRelic.RelicAction> triggers = relicData.relic.triggers.Where(t => t.trigger == trigger);
-            actions.Concat(triggers);
-            foreach (AbstractRelic.RelicAction action in triggers) {
-                action.relicData = relicData;
-                action.data = data;
-                if (action.trigger == AbstractRelic.Triggers.DAMAGE_GIVEN || action.trigger == AbstractRelic.Triggers.DAMAGE_TAKEN) {
-                    switch (action.targetedEffect) {
-                        case AbstractRelic.TargetedTriggerTargets.ALL_ENEMIES:
+            List<RelicAction> triggeredActions = relicData.relic.actions.Where(t => t.trigger == trigger).ToList();
+            actions.AddRange(triggeredActions);
+            foreach (RelicAction action in triggeredActions) {
+                if (action.trigger == RelicAction.Triggers.DAMAGE_GIVEN || action.trigger == RelicAction.Triggers.DAMAGE_TAKEN)
+                {
+                    switch (action.targetedEffect)
+                    {
+                        case RelicAction.TargetedTriggerTargets.ALL_ENEMIES:
                             action.targets = CombatManager.Instance.enemies;
                             break;
-                        case AbstractRelic.TargetedTriggerTargets.PLAYER:
+                        case RelicAction.TargetedTriggerTargets.PLAYER:
                             action.targets = new CombatantController[] { CombatManager.Instance.player };
                             break;
-                        case AbstractRelic.TargetedTriggerTargets.RANDOM_ENEMY:
+                        case RelicAction.TargetedTriggerTargets.RANDOM_ENEMY:
                             action.targets = new CombatantController[] {
                                 CombatManager.Instance.enemies[UnityEngine.Random.Range(0, CombatManager.Instance.enemies.Length - 1)]
                             };
                             break;
-                        case AbstractRelic.TargetedTriggerTargets.ENEMY:
+                        case RelicAction.TargetedTriggerTargets.ENEMY:
                             action.targets = new CombatantController[] { enemy };
                             break;
                     }
-                } else {
-                    switch (action.target) {
-                        case AbstractRelic.Targets.ALL_ENEMIES:
+                }
+                else
+                {
+                    switch (action.target)
+                    {
+                        case RelicAction.Targets.ALL_ENEMIES:
                             action.targets = CombatManager.Instance.enemies;
                             break;
-                        case AbstractRelic.Targets.PLAYER:
+                        case RelicAction.Targets.PLAYER:
                             action.targets = new CombatantController[] { CombatManager.Instance.player };
                             break;
-                        case AbstractRelic.Targets.RANDOM_ENEMY:
+                        case RelicAction.Targets.RANDOM_ENEMY:
                             action.targets = new CombatantController[] {
                                 CombatManager.Instance.enemies[UnityEngine.Random.Range(0, CombatManager.Instance.enemies.Length - 1)]
                             };
@@ -138,6 +186,9 @@ public class RelicsManager : MonoBehaviour
                 }
             }
         }
-        ActionsManager.Instance.AddToTop(actions.ToArray());
+        if(actions.ToArray().Length > 0)
+        {
+            ActionsManager.Instance.AddToTop(actions.ToArray());
+        }
     }
 }

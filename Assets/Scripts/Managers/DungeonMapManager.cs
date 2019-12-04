@@ -50,13 +50,13 @@ public class DungeonMapManager : MonoBehaviour
                 //SelectScene("BossCombat");
                 break;
             case MapRoom.RoomType.EVENT:
-                //SelectScene("Event");
+                SelectScene("Event");
                 break;
             case MapRoom.RoomType.CHEST:
                 //SelectScene("Chest");
                 break;
             case MapRoom.RoomType.REST:
-                //SelectScene("Rest");
+                SelectScene("Rest");
                 break;
             case MapRoom.RoomType.SHOP:
                 SelectScene("Shop");
@@ -67,7 +67,8 @@ public class DungeonMapManager : MonoBehaviour
 
     public void SelectScene(string scene)
     {
-        SceneManager.LoadScene(scene);
+        ChangeSceneAction sceneChange = new ChangeSceneAction(scene);
+        ActionsManager.Instance.AddToBottom(sceneChange);
     }
 
 

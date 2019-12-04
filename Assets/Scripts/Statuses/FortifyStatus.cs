@@ -14,7 +14,7 @@ public class FortifyStatus : Status
 
     public override void OnTurnEnd()
     {
-        controller.AddStatus(new DefenseStatus(), amount);
+        CauseStatus(Name.DEFENSE, amount);
         base.OnTurnEnd();
     }
 }

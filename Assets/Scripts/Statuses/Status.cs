@@ -91,6 +91,22 @@ public class Status
         return fromMonster && !CombatManager.Instance.IsPlayerTurn();
     }
 
+    protected void CauseStatus(Name status, int amt)
+    {
+        CauseStatus(new CombatantController[] { controller.GetCombatant()}, status, amt);
+    }
+
+    protected void CauseStatus(CombatantController[] recipients, Name status, int amt)
+    {
+        CombatAction statusAction = new CombatAction();
+        statusAction.actor = controller.GetCombatant();
+        statusAction.targets = recipients;
+        statusAction.type = CombatAction.TYPE.STATUS;
+        statusAction.status = status;
+        statusAction.amount = amt;
+        ActionsManager.Instance.AddToTop(statusAction);
+    }
+
     public static Status FromName(Name name, bool fromMonster)
     {
         switch (name)

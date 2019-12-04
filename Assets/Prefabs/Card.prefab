@@ -169,7 +169,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!33 &3145692904922080839
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -234,12 +234,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 1
+  m_fontSize: 1.2
   m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 0.1
-  m_fontSizeMax: 1
+  m_fontSizeMin: 0.2
+  m_fontSizeMax: 1.2
   m_fontStyle: 32
   m_textAlignment: 258
   m_characterSpacing: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: -0.07697949}
+  m_margin: {x: 0, y: -0.07516272, z: 0, w: -0.04633954}
   m_textInfo:
     textComponent: {fileID: 2622387268610111302}
     characterCount: 11
@@ -637,7 +637,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!33 &2573134583265097089
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -702,7 +702,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 1.85
+  m_fontSize: 2.2
   m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -740,7 +740,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -0.02425921, z: 0, w: -0.010915607}
   m_textInfo:
     textComponent: {fileID: 3401105545751673571}
     characterCount: 3
@@ -791,7 +791,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6105101907951397553}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0.012}
+  m_LocalPosition: {x: 0, y: 0.086, z: 0.012}
   m_LocalScale: {x: 0.243, y: 0.19999999, z: 1}
   m_Children: []
   m_Father: {fileID: 3064187619262401227}

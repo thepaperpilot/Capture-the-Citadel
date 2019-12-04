@@ -381,13 +381,13 @@ public class EnemyController : CombatantController
     {
         health += amount;
         health = Mathf.Min(health, maxHealth);
-        healthBar.ChangeHealth(health);
+        healthBar.ChangeValue(health);
     }
 
     public override void LoseHealth(int amount)
     {
         health -= Mathf.Max(0, statusController.GetHealthLost(amount));
-        healthBar.ChangeHealth(health);
+        healthBar.ChangeValue(health);
 
         if (health <= 0)
         {

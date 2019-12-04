@@ -17,8 +17,11 @@ public class PlayerController : CombatantController
 
     protected override void Awake()
     {
-        base.Awake();
+        maxHealth = PlayerManager.Instance.maxHealth;
+        health = PlayerManager.Instance.health;
+        statusController = GetComponent<StatusController>();
         PlayerManager.Instance.healthBar.Init(maxHealth, "");
+        PlayerManager.Instance.healthBar.ChangeValue(health);
     }
 
     public override void UpdateStatuses()
@@ -28,30 +31,44 @@ public class PlayerController : CombatantController
 
     [Button(ButtonSizes.Medium), HideInEditorMode]
     public void FillEnergy() {
-        Energy = PlayerManager.Instance.maxEnergy;
-        PlayerManager.Instance.energyBar.ChangeHealth(energy);
+        Energy = PlayerManager.Instance.energyPerTurn;
+        PlayerManager.Instance.energyBar.ChangeValue(energy);
     }
 
     public void SpendEnergy(int amount) {
-        Energy -= amount;
-        PlayerManager.Instance.energyBar.ChangeHealth(energy);
+        if(amount > 0)
+        {
+            Energy -= amount;
+            PlayerManager.Instance.energyBar.ChangeValue(energy);
+        }
+    }
+
+    public void AddEnergy(int amount)
+    {
+        if(amount > 0)
+        {
+            Energy += amount;
+            PlayerManager.Instance.energyBar.ChangeValue(energy);
+        }
     }
 
     public override void Heal(int amount)
     {
         health += amount;
         health = Mathf.Min(health, maxHealth);
+        PlayerManager.Instance.health = health;
         UpdateHealthBar();
     }
 
     public override void LoseHealth(int amount)
     {
         health -= Mathf.Max(0, statusController.GetHealthLost(amount));
+        PlayerManager.Instance.health = health;
         UpdateHealthBar();
 
         if (health <= 0)
         {
-            Die();
+            PlayerManager.Instance.Die();
         }
     }
 
@@ -62,16 +79,8 @@ public class PlayerController : CombatantController
 
     public void UpdateHealthBar()
     {
-        PlayerManager.Instance.healthBar.ChangeHealth(health);
+        PlayerManager.Instance.healthBar.ChangeValue(health);
     }
 
-    private void Die()
-    {
-        PlayerManager.Instance.SetClass(null);
-        PlayerManager.Instance.Reset();
-        CardsManager.Instance.deck = new List<AbstractCard>();
-        RelicsManager.Instance.relics = new List<RelicsManager.RelicData>();
-        CombatManager.Instance.maxHealth = 1;
-        SceneManager.LoadScene("Title");
-    }
+    
 }

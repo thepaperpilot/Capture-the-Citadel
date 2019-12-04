@@ -12,7 +12,7 @@ public class DropZoneController : MonoBehaviour
     [SerializeField, ChildGameObjectsOnly]
     private SpriteRenderer pad;
     
-    public void Setup(AbstractRelic.RelicAction action) {
+    public void Setup(RelicAction action) {
         image.sprite = action.sprite;
         pad.color = action.color;
     }

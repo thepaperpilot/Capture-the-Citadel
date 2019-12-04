@@ -39,7 +39,7 @@ public class Hand : MonoBehaviour
     //[ShowIf("id", HandID.RIGHT)]
     [SerializeField] Transform cardHolder;
     [SerializeField] float grabRadius = 0.05f;
-    [SerializeField] float pinchRadius = 0.02f;
+    [SerializeField] float pinchRadius = 0.04f;
     
     public BooleanAction trigger;
     public BooleanAction grip;
@@ -49,12 +49,18 @@ public class Hand : MonoBehaviour
     public Material gauntletMat;
     public Material gloveMat;
 
+    public LayerMask handLayer;
+
+    public GameObject debugPinchRender;
+    public bool showDebugPinch;
+
     void Awake() {
         anim = GetComponentInChildren<Animator>();
     }
 
     void Start()
     {
+        debugPinchRender.SetActive(false);
         if (id == HandID.RIGHT)
         {
             triggerAxis = "VRTK_Axis10_RightTrigger";
@@ -79,6 +85,11 @@ public class Hand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        inPointArea = CheckPointArea();
+        if (showDebugPinch)
+        {
+            debugPinchRender.SetActive(inPointArea);
+        }
         UpdateState();
     }
 
@@ -338,21 +349,17 @@ public class Hand : MonoBehaviour
         return true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private bool CheckPointArea()
     {
-        if (other.CompareTag("PointingZone"))
+        Collider[] hits = Physics.OverlapSphere(cardHolder.position, 0.1f, handLayer, QueryTriggerInteraction.Collide);
+        foreach(Collider hit in hits)
         {
-            inPointArea = true;
+            if (hit.CompareTag("PointingZone"))
+            {
+                return true;
+            }
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("PointingZone"))
-        {
-            Debug.Log("Exit");
-            inPointArea = false;
-        }
+        return false;
     }
 
     public void Grab(GameObject gameObject) {

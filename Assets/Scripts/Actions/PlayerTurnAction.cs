@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PlayerTurnAction : AbstractAction
 {
+    public int turn = -1;
+
     public IEnumerator Run()
     {
-        yield return PlayerManager.Instance.StartTurn();
+        yield return PlayerManager.Instance.StartTurn(turn);
     }
 }

@@ -31,9 +31,10 @@ public class TitleScreenController : MonoBehaviour
     public void SelectClass(AbstractClass selectedClass) {
         PlayerManager.Instance.SetClass(selectedClass);
         CardsManager.Instance.deck = selectedClass.startingDeck;
-        RelicsManager.Instance.relics = new List<RelicsManager.RelicData>() { new RelicsManager.RelicData { relic = selectedClass.startingRelic } };
-        CombatManager.Instance.maxHealth = selectedClass.startingHealth;
-        SceneManager.LoadScene(mapScene);
+        RelicsManager.Instance.ResetRelics();
+        RelicsManager.Instance.AddRelic(new RelicsManager.RelicData { relic = selectedClass.startingRelic });
+        ChangeSceneAction sceneChange = new ChangeSceneAction(mapScene);
+        ActionsManager.Instance.AddToBottom(sceneChange);
     }
 
 #if UNITY_EDITOR

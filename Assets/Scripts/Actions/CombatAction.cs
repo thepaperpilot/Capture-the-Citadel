@@ -83,6 +83,7 @@ public class CombatAction : AbstractAction
                         PlayerManager.Instance.MovePlayer(controller.transform.position, controller.transform.rotation);
                         LevelManager.Instance.controller.playerHex = destination;
                         controller.statusController.OnMove();
+                        RelicsManager.Instance.OnMovement(destination.pathDistance);
                         ActionsManager.Instance.AddToTop(new BakeNavigationAction(BakeNavigationAction.BakeType.PLAYER_CHANGED));
                     } else {
                         controller.transform.LookAt(destination.transform);

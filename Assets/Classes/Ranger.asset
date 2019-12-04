@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daf1b19c77322541af786d813596646, type: 3}
   m_Name: Ranger
   m_EditorClassIdentifier: 
-  startingHealth: 8
+  startingHealth: 16
   startingDeck:
   - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
   - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}

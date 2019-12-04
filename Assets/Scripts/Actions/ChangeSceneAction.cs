@@ -14,6 +14,7 @@ public class ChangeSceneAction : AbstractAction
 
     public IEnumerator Run()
     {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(scene);
         yield return null;
     }

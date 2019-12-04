@@ -44,7 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 11400000, guid: bbfc4a60742021f4f8f739e28da27250, type: 2}
-  toy: {fileID: 5141749092700269470, guid: 12633586cb4834c42933e5218884e86d, type: 3}
-  scenes:
-  - SystemsTest
-  - Shop
+  toyFab: {fileID: 5141749092700269470, guid: 12633586cb4834c42933e5218884e86d, type: 3}
+  toyInstance: {fileID: 0}

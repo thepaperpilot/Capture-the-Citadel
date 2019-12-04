@@ -66,8 +66,8 @@ public class DeckController : MonoBehaviour
             Destroy(controller.gameObject);
         }
         dropzones.Clear();
-        foreach (RelicsManager.RelicData rData in RelicsManager.Instance.relics) {
-            foreach (AbstractRelic.RelicAction action in rData.relic.triggers.Where(t => t.trigger == AbstractRelic.Triggers.DROP_ZONE)) {
+        foreach (RelicsManager.RelicData rData in RelicsManager.Instance.GetRelics()) {
+            foreach (RelicAction action in rData.relic.actions.Where(t => t.trigger == RelicAction.Triggers.DROP_ZONE)) {
                 GameObject dropzone = Instantiate(dropzonePrefab, hand);
                 DropZoneController controller = dropzone.GetComponent<DropZoneController>();
                 controller.Setup(action);

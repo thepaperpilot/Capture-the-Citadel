@@ -79,7 +79,8 @@ public class RewardsScreenController : MonoBehaviour, IScreenSelector
     }
 
     public void SelectScene(string scene) {
-        SceneManager.LoadScene(scene);
+        ChangeSceneAction sceneChange = new ChangeSceneAction(scene);
+        ActionsManager.Instance.AddToBottom(sceneChange);
     }
 
 #if UNITY_EDITOR

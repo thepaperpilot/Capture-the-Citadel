@@ -63,7 +63,7 @@ MonoBehaviour:
   raySource: {fileID: 4377567209080259615}
   controller: {fileID: 0}
   locked: 0
-  maxDist: 0.1
+  maxDist: 0.2
   mapLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -230,7 +230,6 @@ GameObject:
   - component: {fileID: 876040294299229575}
   - component: {fileID: 7713225984825082713}
   - component: {fileID: 9167419245111477054}
-  - component: {fileID: 5175944221182292848}
   m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
@@ -298,20 +297,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &5175944221182292848
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8273658431253396257}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8287630067707921329
 GameObject:
   m_ObjectHideFlags: 0

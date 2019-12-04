@@ -10,7 +10,9 @@ public class MapScreenController : MonoBehaviour, IScreenSelector
     private AbstractLevel level;
     [SerializeField, AssetList(Path="Prefabs/Toys", CustomFilterMethod="FindToy")]
     [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Foldout)]
-    private GameObject toy;
+    private GameObject toyFab;
+
+    public GameObject toyInstance;
     //[SerializeField, ValueDropdown("FindScenes")]
     //private string[] scenes;
 
@@ -22,12 +24,13 @@ public class MapScreenController : MonoBehaviour, IScreenSelector
         for (int i = 0; i < controllers.Length && i < scenes.Length; i++) {
             controllers[i].Setup(scenes[i], this);
         }*/
-        GameObject toyInstance = Instantiate(toy);
+        toyInstance = Instantiate(toyFab);
         PlayerManager.Instance.Grab(toyInstance);
     }
 
     public void SelectScene(string scene) {
-        SceneManager.LoadScene(scene);
+        ChangeSceneAction sceneChange = new ChangeSceneAction(scene);
+        ActionsManager.Instance.AddToBottom(sceneChange);
     }
 
 #if UNITY_EDITOR

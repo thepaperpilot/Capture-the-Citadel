@@ -862,7 +862,7 @@ MonoBehaviour:
       moves:
       - actions:
         - type: 3
-          status: 7
+          status: 3
           amount: 1
           ranged: 0
           sound: {fileID: 0}

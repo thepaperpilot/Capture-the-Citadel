@@ -57,6 +57,10 @@ public class EnemyReadoutUI : MonoBehaviour
 
     public void Init(int maxHealth, string name)
     {
+        if(maxHealth < 1)
+        {
+            maxHealth = 1;
+        }
         //transform.localScale = Vector3.back;
         this.maxHealth = maxHealth;
         nameText.text = name;
@@ -76,10 +80,10 @@ public class EnemyReadoutUI : MonoBehaviour
             
             temp.localScale = new Vector3(1 / factor, 1, 1);
         }
-        ChangeHealth(maxHealth);
+        ChangeValue(maxHealth);
     }
 
-    public void ChangeHealth(int newHealth)
+    public void ChangeValue(int newHealth)
     {
         missingPortion.localScale = new Vector3(Mathf.Clamp((maxHealth - newHealth) * unitHealth, 0, 1), 1, 1);
         healthText.text = newHealth + "/" + maxHealth;

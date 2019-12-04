@@ -10,10 +10,6 @@ public class ActionsManager : SerializedMonoBehaviour
 {
     public static ActionsManager Instance;
 
-    [InfoBox("These are the actions that are randomly chosen between when entering a new floor")]
-    [SerializeField, AssetSelector(FlattenTreeView=true, ExcludeExistingValuesInList=true)]
-    [InlineEditor(InlineEditorObjectFieldModes.Foldout)]
-    private ScriptableObjectAction[] randomActions = new ScriptableObjectAction[0];
     [SerializeField, HideInEditorMode]
     private List<AbstractAction> actions = new List<AbstractAction>();
     [SerializeField, HideInEditorMode]
@@ -30,14 +26,22 @@ public class ActionsManager : SerializedMonoBehaviour
 
     private void Start() {
         SceneManager.sceneLoaded += ResetActions;
-        AddToBottom(GetRandomAction());
+        SceneActionsController controller = FindObjectOfType<SceneActionsController>();
+        if (controller)
+        {
+            controller.DoRandomAction();
+        }
     }
 
     private void ResetActions(Scene scene, LoadSceneMode mode) {
         actions.RemoveRange(0, actions.Count);
         acting = false;
         StopAllCoroutines();
-        AddToBottom(GetRandomAction());
+        SceneActionsController controller = FindObjectOfType<SceneActionsController>();
+        if (controller)
+        {
+            controller.DoRandomAction();
+        }
     }
 
     private void NextAction() {
@@ -70,10 +74,6 @@ public class ActionsManager : SerializedMonoBehaviour
         actions.AddRange(newActions);
         if (!acting)
             NextAction();
-    }
-
-    public AbstractAction GetRandomAction() {
-        return randomActions[UnityEngine.Random.Range(0, randomActions.Length)];
     }
 
     public bool HasAction(Type type) {
