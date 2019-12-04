@@ -15,6 +15,10 @@ public class ActionsManager : SerializedMonoBehaviour
     [SerializeField, HideInEditorMode]
     private bool acting = false;
 
+    [AssetList(Path="Prefabs/Toys", CustomFilterMethod="FindToy")]
+    [InlineEditor(InlineEditorModes.LargePreview, InlineEditorObjectFieldModes.Foldout)]
+    public GameObject eventToy;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -86,4 +90,11 @@ public class ActionsManager : SerializedMonoBehaviour
         if (actions.Count > 0)
             NextAction();
     }
+
+    
+#if UNITY_EDITOR
+    private bool FindToy(GameObject obj) {
+        return obj.GetComponentInChildren<Toy>() != null;
+    }
+#endif
 }

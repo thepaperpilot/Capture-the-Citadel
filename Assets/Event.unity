@@ -150,7 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomActions:
+  - {fileID: 11400000, guid: 36a7a185bf9e282488beb4f27ed49fb1, type: 2}
   - {fileID: 11400000, guid: 596caeb1a3974314d88387eb85f155f7, type: 2}
+  - {fileID: 11400000, guid: a492aeff5c118044f923dc2ed88b9b94, type: 2}
 --- !u!4 &339649509
 Transform:
   m_ObjectHideFlags: 0

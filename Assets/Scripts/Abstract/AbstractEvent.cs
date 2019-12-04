@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Events/Generic Event")]
 public class AbstractEvent : ScriptableObjectAction
@@ -20,7 +21,10 @@ public class AbstractEvent : ScriptableObjectAction
         public OutcomeTypes type;
         [Required]
         public string description;
-        [ShowIf("type", OutcomeTypes.HEALTH)]
+        [InfoBox("This determines whether we should return to the map scene immediately after selecting this option")]
+        public bool returnImmediately;
+        [HideIf("type", OutcomeTypes.CARD)]
+        [HideIf("type", OutcomeTypes.ACTION)]
         public int amount;
         [Space, ShowIf("type", OutcomeTypes.CARD), InlineEditor(InlineEditorObjectFieldModes.Foldout)]
         [AssetSelector(FlattenTreeView=true, DrawDropdownForListElements=false, IsUniqueList=false)]
@@ -56,5 +60,26 @@ public class AbstractEvent : ScriptableObjectAction
     public override IEnumerator Run()
     {
         yield return base.Run();
+
+        OptionController[] controllers =
+            LevelManager.Instance.GetComponentsInChildren<OptionController>();
+        for (int i = 0; i < controllers.Length && i < options.Length; i++) {
+            controllers[i].Setup(options[i], this);
+        }
+
+        EventInfoController eventInfoController =
+            LevelManager.Instance.GetComponentInChildren<EventInfoController>();
+        if (eventInfoController != null)
+            eventInfoController.Setup(this);
+
+        GameObject toyInstance = Instantiate(ActionsManager.Instance.eventToy);
+        PlayerManager.Instance.Grab(toyInstance);
+        yield return null;
+    }
+
+    public void Choose(Option option) {
+        option.Select();
+        if (option.returnImmediately)
+            SceneManager.LoadScene("Map");
     }
 }

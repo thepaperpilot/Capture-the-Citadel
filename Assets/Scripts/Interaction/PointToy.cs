@@ -19,6 +19,7 @@ public class PointToy : Toy, IRule
         Shop = 1 << 4,
         Enemy = 1 << 5,
         Campfire = 1 << 6,
+        Event = 1 << 7
     }
 
     [SerializeField]
@@ -118,6 +119,16 @@ public class PointToy : Toy, IRule
                 return;
             }
         }
+        if ((target & PointTargets.Event) != PointTargets.None)
+        {
+            OptionController controller = gObject.GetComponentInParent<OptionController>();
+            if (controller != null)
+            {
+                active = controller.gameObject;
+                active.transform.localScale = Vector3.one * 1.3f;
+                return;
+            }
+        }
     }
 
     public void OnExit() {
@@ -176,6 +187,13 @@ public class PointToy : Toy, IRule
                 if (campfireSelectorController)
                 {
                     campfireSelectorController.Select();
+                    Destroy(0, true);
+                    return;
+                }
+                OptionController optionController = active.GetComponent<OptionController>();
+                if (optionController)
+                {
+                    optionController.Choose();
                     Destroy(0, true);
                     return;
                 }
