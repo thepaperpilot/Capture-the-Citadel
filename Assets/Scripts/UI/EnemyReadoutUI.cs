@@ -85,8 +85,12 @@ public class EnemyReadoutUI : MonoBehaviour
 
     public void ChangeValue(int newHealth)
     {
-        missingPortion.localScale = new Vector3(Mathf.Clamp((maxHealth - newHealth) * unitHealth, 0, 1), 1, 1);
-        healthText.text = newHealth + "/" + maxHealth;
+        try
+        {
+            missingPortion.localScale = new Vector3(Mathf.Clamp((maxHealth - newHealth) * unitHealth, 0, 1), 1, 1);
+            healthText.text = newHealth + "/" + maxHealth;
+        }
+        catch { }
     }
 
     public void ClearIntents()

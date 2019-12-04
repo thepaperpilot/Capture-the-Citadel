@@ -46,6 +46,11 @@ MonoBehaviour:
   level: {fileID: 11400000, guid: 1bda9e701bc7e5c458e813de5d1cd1a7, type: 2}
   toy: {fileID: 5141749092700269470, guid: afcbe855abbd2fe4c9f59b06c31714f6, type: 3}
   nextScene: Map
+  colorlessPool:
+  - {fileID: 11400000, guid: a99beea6627c56444bc0009a1ef7a026, type: 2}
+  - {fileID: 11400000, guid: ba29bbae607326e49ac1920eacad8284, type: 2}
+  - {fileID: 11400000, guid: 8ad2799e9057e3f4b9c652930264313f, type: 2}
+  - {fileID: 11400000, guid: 80857061a4505b14a8109df4adcc329a, type: 2}
   common: 1
   uncommon: 0.5
   rare: 0.1

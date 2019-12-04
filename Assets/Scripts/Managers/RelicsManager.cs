@@ -114,14 +114,14 @@ public class RelicsManager : MonoBehaviour
         float target = UnityEngine.Random.Range(0, total);
         float current = 0;
         AbstractRelic relic = validRelics.SkipWhile(r => {
-            float next = current + (
-                r.rarity == AbstractRelic.Rarities.COMMON ? common :
+            current += r.rarity == AbstractRelic.Rarities.COMMON ? common :
                 r.rarity == AbstractRelic.Rarities.UNCOMMON ? uncommon :
-                r.rarity == AbstractRelic.Rarities.RARE ? rare : 0);
-            return target > next;
+                r.rarity == AbstractRelic.Rarities.RARE ? rare : 0;
+            return target > current;
         }).FirstOrDefault();
         if (relic != null) {
-            return validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1));
+            return relic;
+            //return validRelics.ElementAt(UnityEngine.Random.Range(0, validRelics.Count() - 1));
         } else {
             // TODO
             return null;
@@ -145,6 +145,7 @@ public class RelicsManager : MonoBehaviour
             List<RelicAction> triggeredActions = relicData.relic.actions.Where(t => t.trigger == trigger).ToList();
             actions.AddRange(triggeredActions);
             foreach (RelicAction action in triggeredActions) {
+                action.data = data;
                 if (action.trigger == RelicAction.Triggers.DAMAGE_GIVEN || action.trigger == RelicAction.Triggers.DAMAGE_TAKEN)
                 {
                     switch (action.targetedEffect)

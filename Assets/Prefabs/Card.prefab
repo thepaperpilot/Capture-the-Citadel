@@ -361,6 +361,7 @@ MonoBehaviour:
   rare: {fileID: 2100000, guid: 4b48b8683f498724e8ca2bd1e9d43845, type: 2}
   backgroundRed: {fileID: 2100000, guid: 31525d6dc6ea036448726874c1edea87, type: 2}
   backgroundGreen: {fileID: 2100000, guid: 60cefb39d539d3847afa3ebccb03d7dd, type: 2}
+  backgroundColorless: {fileID: 2100000, guid: 2ce143f1e5064a14c8603ed2695d85de, type: 2}
   card: {fileID: 0}
 --- !u!65 &367139311085832510
 BoxCollider:

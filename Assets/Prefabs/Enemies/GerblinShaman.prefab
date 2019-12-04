@@ -102,7 +102,7 @@ MonoBehaviour:
     - actions:
       - type: 3
         status: 1
-        amount: 2
+        amount: 1
         ranged: 1
         sound: {fileID: 0}
         targets: []
@@ -114,7 +114,7 @@ MonoBehaviour:
     - actions:
       - type: 3
         status: 0
-        amount: 2
+        amount: 1
         ranged: 1
         sound: {fileID: 0}
         targets: []
@@ -123,7 +123,7 @@ MonoBehaviour:
         target: 2
       - type: 3
         status: 8
-        amount: 2
+        amount: 1
         ranged: 1
         sound: {fileID: 0}
         targets: []

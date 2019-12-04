@@ -15,6 +15,10 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
     [SerializeField, ValueDropdown("FindScenes")]
     private string nextScene;
 
+    [Space, InlineEditor(InlineEditorObjectFieldModes.Foldout)]
+    [AssetSelector(FlattenTreeView = true, DrawDropdownForListElements = false)]
+    public List<AbstractCard> colorlessPool;
+
     [BoxGroup("Card weights")]
     public float common = 1;
     [BoxGroup("Card weights")]
@@ -38,17 +42,36 @@ public class ShopScreenController : MonoBehaviour, IScreenSelector
         c.rarity == AbstractCard.Rarities.COMMON ? common :
         c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
         c.rarity == AbstractCard.Rarities.RARE ? rare : 0);
+        float colorlessTotal = colorlessPool.Sum(c =>
+        c.rarity == AbstractCard.Rarities.COMMON ? common :
+        c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
+        c.rarity == AbstractCard.Rarities.RARE ? rare : 0);
 
         List<AbstractCard> cards = new List<AbstractCard>();
         while (cards.Count < controllers.Length) {
-            float target = UnityEngine.Random.Range(0, total);
-            float current = 0;
-            AbstractCard card = PlayerManager.Instance.playerClass.cardPool.SkipWhile(c => {
-                current += c.rarity == AbstractCard.Rarities.COMMON ? common :
-                    c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
-                    c.rarity == AbstractCard.Rarities.RARE ? rare : 0;
-                return target > current;
-            }).FirstOrDefault();
+            AbstractCard card = null;
+            if (controllers[cards.Count].colorless)
+            {
+                float target = UnityEngine.Random.Range(0, colorlessTotal);
+                float current = 0;
+                card = colorlessPool.SkipWhile(c => {
+                    current += c.rarity == AbstractCard.Rarities.COMMON ? common :
+                        c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
+                        c.rarity == AbstractCard.Rarities.RARE ? rare : 0;
+                    return target > current;
+                }).FirstOrDefault();
+            }
+            else
+            {
+                float target = UnityEngine.Random.Range(0, total);
+                float current = 0;
+                card = PlayerManager.Instance.playerClass.cardPool.SkipWhile(c => {
+                    current += c.rarity == AbstractCard.Rarities.COMMON ? common :
+                        c.rarity == AbstractCard.Rarities.UNCOMMON ? uncommon :
+                        c.rarity == AbstractCard.Rarities.RARE ? rare : 0;
+                    return target > current;
+                }).FirstOrDefault();
+            }
             if (card != null)
             {
                 bool unique = true;

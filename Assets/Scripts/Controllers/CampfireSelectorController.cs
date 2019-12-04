@@ -21,7 +21,7 @@ public class CampfireSelectorController : MonoBehaviour
         switch (action)
         {
             case CampfireScreenController.CampfireAction.REST:
-                sign.text = "Rest\nRegain " + controller.GetHealAmount() + "health";
+                sign.text = "Rest\nRegain " + controller.GetHealAmount() + " health";
                 break;
             case CampfireScreenController.CampfireAction.UPGRADE:
                 sign.text = "WIP";

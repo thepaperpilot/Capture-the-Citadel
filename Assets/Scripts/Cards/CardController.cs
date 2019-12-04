@@ -48,6 +48,9 @@ public class CardController : MonoBehaviour
     [BoxGroup("Card Background Colors/h/Green")]
     [SerializeField, AssetsOnly, HideLabel, PreviewField(ObjectFieldAlignment.Center)]
     private Material backgroundGreen;
+    [BoxGroup("Card Background Colors/h/Colorless")]
+    [SerializeField, AssetsOnly, HideLabel, PreviewField(ObjectFieldAlignment.Center)]
+    private Material backgroundColorless;
 
     [HideInInspector]
     public AbstractCard card;
@@ -69,7 +72,9 @@ public class CardController : MonoBehaviour
 
         switch (card.color)
         {
-            case AbstractCard.ClassColor.COLORLESS: //Make colorless its own thing later
+            case AbstractCard.ClassColor.COLORLESS:
+                front.material = backgroundColorless;
+                break;
             case AbstractCard.ClassColor.RED:
                 front.material = backgroundRed;
                 break;

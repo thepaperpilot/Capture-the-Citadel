@@ -22,7 +22,8 @@ public class Status
         SPIKES,
         PRAYER_FATIGUE,
         SABOTAGE,
-        HANDY
+        HANDY,
+        BURNING
     }
 
     protected StatusType type;
@@ -136,6 +137,8 @@ public class Status
                 return new SabotageStatus(fromMonster);
             case Name.HANDY:
                 return new HandyStatus();
+            case Name.BURNING:
+                return new BurningStatus();
         }
         return null;
     }

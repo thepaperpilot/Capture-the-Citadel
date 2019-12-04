@@ -15,6 +15,8 @@ public class CardBuyerController : MonoBehaviour
     private ShopScreenController controller;
     private int cost;
 
+    public bool colorless = false;
+
     void Update()
     {
         transform.localRotation = Quaternion.LookRotation(transform.position - PlayerManager.Instance.GetHeadsetPos());

@@ -39,6 +39,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f8278f989eb72744dad87826ba8c9f1d, type: 2}
   - {fileID: 11400000, guid: aabd54a044d30174da6567581e52e885, type: 2}
   - {fileID: 11400000, guid: d34de183cef2da742bda3a37c98fc471, type: 2}
+  - {fileID: 11400000, guid: 1ec6412db34eb7645819aaadc8246634, type: 2}
   startingRelic: {fileID: 11400000, guid: 51201cd8d2a3aa54a921948fad554d8a, type: 2}
   card: {fileID: 11400000, guid: e59d48249b710dd459d5d0a9daa1cf70, type: 2}
   color: 2

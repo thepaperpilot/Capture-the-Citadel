@@ -30,7 +30,7 @@ public class TitleScreenController : MonoBehaviour
 
     public void SelectClass(AbstractClass selectedClass) {
         PlayerManager.Instance.SetClass(selectedClass);
-        CardsManager.Instance.deck = selectedClass.startingDeck;
+        CardsManager.Instance.deck = new List<AbstractCard>(selectedClass.startingDeck.ToArray());
         RelicsManager.Instance.ResetRelics();
         RelicsManager.Instance.AddRelic(new RelicsManager.RelicData { relic = selectedClass.startingRelic });
         ChangeSceneAction sceneChange = new ChangeSceneAction(mapScene);

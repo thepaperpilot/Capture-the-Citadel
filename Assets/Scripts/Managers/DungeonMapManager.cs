@@ -44,7 +44,7 @@ public class DungeonMapManager : MonoBehaviour
                 SelectScene("Combat");
                 break;
             case MapRoom.RoomType.ELITE:
-                //SelectScene("EliteCombat");
+                SelectScene("EliteCombat");
                 break;
             case MapRoom.RoomType.BOSS:
                 //SelectScene("BossCombat");

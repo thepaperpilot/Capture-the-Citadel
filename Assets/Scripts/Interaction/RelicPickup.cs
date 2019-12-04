@@ -30,6 +30,6 @@ public class RelicPickup : MonoBehaviour
     public void Collect()
     {
         RelicsManager.Instance.AddRelic(new RelicsManager.RelicData { relic = holdingRelic });
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }

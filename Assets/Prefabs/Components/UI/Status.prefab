@@ -138,6 +138,7 @@ MonoBehaviour:
   prayerFatigueTex: {fileID: 21300000, guid: e57bc54933f75e44bba7ca727f6a894c, type: 3}
   sabotageTex: {fileID: 21300000, guid: 57f58798f53628d42a4e5f665a5f3629, type: 3}
   handyTex: {fileID: 21300000, guid: a85c0b1625bacf94798f5db69d43a591, type: 3}
+  burningTex: {fileID: 21300000, guid: ded1db398106ee441ba1d172381ae3af, type: 3}
 --- !u!1 &7917862896880533357
 GameObject:
   m_ObjectHideFlags: 0

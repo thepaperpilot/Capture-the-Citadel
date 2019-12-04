@@ -96,6 +96,11 @@ public class RelicAction : AbstractAction
 
     public IEnumerator Run()
     {
+        if(trigger == Triggers.TURN_START  ||
+            trigger == Triggers.TURN_START_LATE)
+        {
+            Debug.Log("Relic activation turn" + data);
+        }
         // Make sure all conditions are met
         if ((trigger == Triggers.TURN_START && !everyTurn) ||
             (trigger == Triggers.TURN_START_LATE && !everyTurn) ||

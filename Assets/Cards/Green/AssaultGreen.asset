@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: fea518fa15e242f418eb46a3a53dffc5, type: 3}
   name: Assault
-  description: Deal 3 ranged damage.
+  description: Deal 2 ranged damage.
   energyCost: 1
   exhaust: 0
   rarity: 1

@@ -100,7 +100,14 @@ public class CombatAction : AbstractAction
                     controller.GetComponent<StatusController>().AddStatus(Status.FromName(status, actor != CombatManager.Instance.player), amount);
                     break;
                 case TYPE.LOSE_HP:
-                    ActionsManager.Instance.AddToTop(new LoseHealthAction(controller, amount));
+                    if(amount < 0)
+                    {
+                        ActionsManager.Instance.AddToTop(new HealAction(controller, -amount));
+                    }
+                    else
+                    {
+                        ActionsManager.Instance.AddToTop(new LoseHealthAction(controller, amount));
+                    }
                     break;
                 case TYPE.PLAY_SOUND:
                     controller.GetComponent<AudioSource>().PlayOneShot(sound);

@@ -19,6 +19,7 @@ TagManager:
   - Shop
   - Pawn
   - MapTile
+  - Relic
   layers:
   - Default
   - TransparentFX
