@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Wolf Attack
   m_EditorClassIdentifier: 
   level: {fileID: 11400000, guid: d90cbc058afe2ab4a892fcce3bbbdfbf, type: 2}
-  title: You're attacked by some wolves!
-  description: 
+  title: 
+  description: You're attacked by some wolves!
   options:
   - type: 3
     description: Prepare yourself
+    returnImmediately: 0
     amount: 0
     cards:
     - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}

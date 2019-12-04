@@ -17,12 +17,14 @@ MonoBehaviour:
   description: You come across a fountain spewing a golden liquid. What do you do?
   options:
   - type: 1
-    description: Bottle some for layer
+    description: Bottle some for later
+    returnImmediately: 1
     amount: 5
     cards: []
     action: {fileID: 0}
   - type: 2
     description: Drink from the fountain
+    returnImmediately: 1
     amount: 50
     cards: []
     action: {fileID: 0}
