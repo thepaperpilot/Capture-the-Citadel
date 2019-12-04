@@ -4,25 +4,36 @@ using UnityEngine;
 
 public class HitToy : Toy
 {
+
+
     public enum CollisionTargets {
         ENEMY
     }
+
+    bool used = false;
 
     [SerializeField]
     CollisionTargets target;
 
     private void OnTriggerEnter(Collider other) {
-        switch (target) {
-            case CollisionTargets.ENEMY:
-                EnemyController controller = other.GetComponentInParent<EnemyController>();
-                if (controller != null) {
-                    if(controller.tile.pathDistance == 1)
+        if (!used)
+        {
+            switch (target)
+            {
+                case CollisionTargets.ENEMY:
+                    EnemyController controller = other.GetComponentInParent<EnemyController>();
+                    if (controller != null)
                     {
-                        Trigger(other.gameObject);
+                        used = true;
+                        if (controller.tile.pathDistance == 1)
+                        {
+                            Trigger(other.gameObject);
+                        }
+
                     }
-                    
-                }
-                break;
+                    break;
+            }
         }
+        
     }
 }

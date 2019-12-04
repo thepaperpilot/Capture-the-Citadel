@@ -24,11 +24,7 @@ public class StatusController : MonoBehaviour
             statuses.Remove(toRemove[0]);
             toRemove.RemoveAt(0);
         }
-
-        if (changed)
-        {
-            combatant.UpdateStatuses();
-        }
+        combatant.UpdateStatuses();
     }
 
     public void ResetStatuses() {

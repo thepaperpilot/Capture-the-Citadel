@@ -835,7 +835,7 @@ MonoBehaviour:
     - actions:
       - type: 2
         status: 0
-        amount: 2
+        amount: 1
         ranged: 0
         sound: {fileID: 0}
         targets: []

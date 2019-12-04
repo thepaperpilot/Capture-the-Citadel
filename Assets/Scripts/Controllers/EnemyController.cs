@@ -189,6 +189,7 @@ public class EnemyController : CombatantController
     public override void UpdateStatuses()
     {
         healthBar.SetStatuses(statusController.GetStatuses());
+        UpdateIntent();
     }
 
     public void PlanTurn()

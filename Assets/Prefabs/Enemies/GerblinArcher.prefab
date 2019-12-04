@@ -639,7 +639,7 @@ MonoBehaviour:
         target: 1
       - type: 0
         status: 0
-        amount: 3
+        amount: 2
         ranged: 1
         sound: {fileID: 0}
         targets: []
