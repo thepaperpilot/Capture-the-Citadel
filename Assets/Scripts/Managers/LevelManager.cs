@@ -35,6 +35,8 @@ public class LevelManager : SerializedMonoBehaviour
 
         PlayerController playerController = levelGObject.GetComponentInChildren<PlayerController>();
         Transform playerTransform = playerController.transform;
+        if (level.flipPlayerStartDirection)
+            playerTransform.Rotate(Vector3.up, 180);
         PlayerManager.Instance.MovePlayer(playerTransform.position, playerTransform.rotation);
         Destroy(playerController.model);
         foreach (EnemyController enemy in levelGObject.GetComponentsInChildren<EnemyController>())
