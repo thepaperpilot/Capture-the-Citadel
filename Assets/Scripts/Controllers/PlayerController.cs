@@ -62,7 +62,7 @@ public class PlayerController : CombatantController
 
     public override void LoseHealth(int amount)
     {
-        health -= Mathf.Max(0, statusController.GetHealthLost(amount));
+        health -= Mathf.Max(0, statusController.GetHealthLost(amount, false));
         PlayerManager.Instance.health = health;
         UpdateHealthBar();
 
@@ -74,7 +74,7 @@ public class PlayerController : CombatantController
 
     public override void TakeDamage(int damage)
     {
-        LoseHealth(Mathf.Max(0, statusController.GetDamageTaken(damage)));
+        LoseHealth(Mathf.Max(0, statusController.GetDamageTaken(damage, false)));
     }
 
     public void UpdateHealthBar()

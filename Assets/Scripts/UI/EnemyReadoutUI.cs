@@ -59,7 +59,7 @@ public class EnemyReadoutUI : MonoBehaviour
 
     public void UpdateLoS(bool inSight)
     {
-        losIndicator.SetActive(inSight);
+        losIndicator.SetActive(!inSight);
     }
 
     public void Init(int maxHealth, string name)

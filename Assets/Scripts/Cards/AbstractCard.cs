@@ -102,7 +102,7 @@ public class AbstractCard : ScriptableObject
                 CardAction attackAction = new CardAction();
                 attackAction.actor = action.actor;
                 attackAction.ranged = action.ranged;
-                attackAction.amount = action.actor.statusController.GetDamageDealt(action.amount);
+                attackAction.amount = action.actor.statusController.GetDamageDealt(action.amount, false);
                 attackAction.type = CombatAction.TYPE.ATTACK;
                 attackAction.targets = action.targets;
                 modifiedActions.Add(attackAction);

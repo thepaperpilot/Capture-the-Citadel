@@ -14,10 +14,13 @@ public class SpikesStatus : Status
 
     public override void OnAttacked(CombatantController attacker)
     {
-        int damage = attacker.statusController.GetHealthLost(amount);
-        if(damage > 0)
+        if(attacker.tile.pathDistance == 1 || controller.GetCombatant().tile.pathDistance == 1)
         {
-            ActionsManager.Instance.AddToTop(new LoseHealthAction(attacker, damage));
+            int damage = attacker.statusController.GetHealthLost(amount, false);
+            if (damage > 0)
+            {
+                ActionsManager.Instance.AddToTop(new LoseHealthAction(attacker, damage));
+            }
         }
     }
 

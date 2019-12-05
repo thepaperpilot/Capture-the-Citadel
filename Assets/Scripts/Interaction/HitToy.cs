@@ -10,30 +10,28 @@ public class HitToy : Toy
         ENEMY
     }
 
-    bool used = false;
 
     [SerializeField]
     CollisionTargets target;
 
     private void OnTriggerEnter(Collider other) {
-        if (!used)
+        switch (target)
         {
-            switch (target)
-            {
-                case CollisionTargets.ENEMY:
-                    EnemyController controller = other.GetComponentInParent<EnemyController>();
-                    if (controller != null)
+            case CollisionTargets.ENEMY:
+                EnemyController controller = other.GetComponentInParent<EnemyController>();
+                if (controller != null)
+                {
+                    if (controller.tile.pathDistance == 1)
                     {
-                        used = true;
-                        if (controller.tile.pathDistance == 1)
+                        if (card != null)
                         {
-                            Trigger(other.gameObject);
+                            Trigger(other.gameObject, true);
                         }
-
+                        
                     }
-                    break;
-            }
+
+                }
+                break;
         }
-        
     }
 }

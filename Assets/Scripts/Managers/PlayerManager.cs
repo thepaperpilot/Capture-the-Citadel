@@ -153,7 +153,7 @@ public class PlayerManager : MonoBehaviour
         deckController.SetDeckSize(CardsManager.Instance.drawPile.Count);
         RelicsManager.Instance.OnTurnStart(turn);
         CombatManager.Instance.player.FillEnergy();
-        int targetCardNum = CombatManager.Instance.player.statusController.GetHandSize(CardsManager.Instance.handSize);
+        int targetCardNum = CombatManager.Instance.player.statusController.GetHandSize(CardsManager.Instance.handSize, false);
         int cardsToDraw = Mathf.Max(0, targetCardNum - CardsManager.Instance.hand.Count());
         ActionsManager.Instance.AddToTop(new DrawAction(cardsToDraw));
         CombatManager.Instance.player.statusController.OnTurnStart();

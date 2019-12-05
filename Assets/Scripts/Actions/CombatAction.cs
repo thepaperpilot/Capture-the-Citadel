@@ -62,11 +62,9 @@ public class CombatAction : AbstractAction
                         actor.transform.LookAt(controller.tile.transform);
                         if ((ranged && actor.tile.inSight) || (!ranged && actor.tile.playerDistance == 1))
                         {
-                            Debug.Log("Ranged hit: " + amount);
                             yield return new WaitForSeconds(1);
                             ActionsManager.Instance.AddToTop(new TakeDamageAction(actor, controller, amount));
                         }
-                        Debug.Log("Ranged obstructed: " + amount);
                     }
                         
                     break;
@@ -93,6 +91,7 @@ public class CombatAction : AbstractAction
                         controller.tile.occupant = null;
                         destination.occupant = controller.gameObject;
                         controller.tile = destination;
+                        ((EnemyController)controller).SetInSight(controller.tile.inSight);
                         controller.statusController.OnMove();
                     }
                     break;

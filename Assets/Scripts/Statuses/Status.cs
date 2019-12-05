@@ -56,19 +56,19 @@ public class Status
 
     public virtual void OnAttack(CombatantController target) { }
 
-    public virtual void OnPlayCard(AbstractCard card) { } //Not yet hooked up
+    public virtual void OnPlayCard(AbstractCard card) { }
 
-    public virtual void OnMove() { } //Hooked up, but only for enemies
+    public virtual void OnMove() { }
 
-    public virtual int GetDamageDealt(int damage) { return damage; }
+    public virtual int GetDamageDealt(int damage, bool preview) { return damage; }
 
-    public virtual int GetDamageTaken(int damage) { return damage; }
+    public virtual int GetDamageTaken(int damage, bool preview) { return damage; }
 
-    public virtual int GetHealthLost(int amount) { return amount; }
+    public virtual int GetHealthLost(int amount, bool preview) { return amount; }
 
-    public virtual int GetMovement(int movement) { return movement; }
+    public virtual int GetMovement(int movement, bool preview) { return movement; }
 
-    public virtual int GetHandSize(int hand) { return hand; }
+    public virtual int GetHandSize(int hand, bool preview) { return hand; }
 
     public virtual void AddStacks(int stacks) { amount += stacks; CheckRemoval(); }
 

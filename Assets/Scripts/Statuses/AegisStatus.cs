@@ -12,13 +12,16 @@ public class AegisStatus : Status
         decreasing = false;
     }
 
-    public override int GetDamageTaken(int damage)
+    public override int GetDamageTaken(int damage,bool preview)
     {
         if(damage > 0)
         {
-            amount--;
-            CheckRemoval();
-            return 0;
+            if (!preview)
+            {
+                amount--;
+                CheckRemoval();
+                return 0;
+            }
         }
         return damage;
     }

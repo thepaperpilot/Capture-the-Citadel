@@ -97,6 +97,7 @@ public class EnemyController : CombatantController
         healthBar = Instantiate(healthBarFab, healthBarPos).GetComponent<EnemyReadoutUI>();
         healthBar.transform.localPosition = Vector3.zero;
         healthBar.Init(maxHealth, displayName);
+        healthBar.UpdateLoS(tile.inSight);
 
         currentStrategy = normalStrategy;
         foreach (StrategyChange change in conditionalStrategyChanges)
@@ -122,7 +123,10 @@ public class EnemyController : CombatantController
 
     public void SetInSight(bool inSight)
     {
-        healthBar.UpdateLoS(inSight);
+        if (healthBar)
+        {
+            healthBar.UpdateLoS(inSight);
+        }
     }
 
     void UpdateIntent()
@@ -139,20 +143,20 @@ public class EnemyController : CombatantController
             {
                 if (action.ranged)
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, statusController.GetDamageDealt(action.amount)));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_RANGED, statusController.GetDamageDealt(action.amount, true)));
                 }
                 else if(action.amount < IntentIcon.MajorDamageThreshold)
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, statusController.GetDamageDealt(action.amount)));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK, statusController.GetDamageDealt(action.amount, true)));
                 }
                 else
                 {
-                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, statusController.GetDamageDealt(action.amount)));
+                    intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.ATTACK_MAJOR, statusController.GetDamageDealt(action.amount, true)));
                 }
             }
             else if (action.type == CombatAction.TYPE.MOVE)
             {
-                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.MOVE, statusController.GetMovement(action.amount)));
+                intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.MOVE, statusController.GetMovement(action.amount, true)));
             }
             else if(action.type == CombatAction.TYPE.STATUS)
             {
@@ -264,7 +268,7 @@ public class EnemyController : CombatantController
             if(action.type == CombatAction.TYPE.MOVE)
             {
                 bool moved = false;
-                int remainingMovement = statusController.GetMovement(action.amount);
+                int remainingMovement = statusController.GetMovement(action.amount, false);
                 Hex currentHex = tile;
                 while(remainingMovement > 0)
                 {
@@ -325,7 +329,7 @@ public class EnemyController : CombatantController
                 CardAction attackAction = new CardAction();
                 attackAction.ranged = action.ranged;
                 attackAction.actor = this;
-                attackAction.amount = statusController.GetDamageDealt(action.amount);
+                attackAction.amount = statusController.GetDamageDealt(action.amount, false);
                 attackAction.type = CombatAction.TYPE.ATTACK;
                 attackAction.targets = action.targets;
                 modifiedActions.Add(attackAction);
@@ -392,7 +396,7 @@ public class EnemyController : CombatantController
 
     public override void LoseHealth(int amount)
     {
-        health -= Mathf.Max(0, statusController.GetHealthLost(amount));
+        health -= Mathf.Max(0, statusController.GetHealthLost(amount, false));
         healthBar.ChangeValue(health);
 
         if (health <= 0)
@@ -407,6 +411,6 @@ public class EnemyController : CombatantController
 
     public override void TakeDamage(int damage)
     {
-        LoseHealth(Mathf.Max(0, statusController.GetDamageTaken(damage)));
+        LoseHealth(Mathf.Max(0, statusController.GetDamageTaken(damage, false)));
     }
 }

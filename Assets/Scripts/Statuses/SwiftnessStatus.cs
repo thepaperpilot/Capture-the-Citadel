@@ -12,7 +12,7 @@ public class SwiftnessStatus : Status
         decreasing = false;
     }
 
-    public override int GetMovement(int movement)
+    public override int GetMovement(int movement, bool preview)
     {
         return movement + amount;
     }

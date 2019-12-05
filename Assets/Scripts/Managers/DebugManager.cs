@@ -62,5 +62,10 @@ public class DebugManager : MonoBehaviour
         {
             PlayerManager.Instance.MoreGold();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            CombatManager.Instance.player.statusController.AddStatus(new StrengthStatus(), 1);
+        }
     }
 }

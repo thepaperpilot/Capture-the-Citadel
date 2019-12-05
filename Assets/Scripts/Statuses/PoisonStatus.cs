@@ -13,7 +13,7 @@ public class PoisonStatus : Status
         gracePeriod = isGracePeriod(fromMonster);
     }
 
-    public override int GetDamageTaken(int damage)
+    public override int GetDamageTaken(int damage,bool preview)
     {
         return damage + 1;
     }

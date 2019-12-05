@@ -12,7 +12,7 @@ public class HandyStatus : Status
         decreasing = false;
     }
 
-    public override int GetHandSize(int hand)
+    public override int GetHandSize(int hand, bool preview)
     {
         return hand + amount;
     }

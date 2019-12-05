@@ -12,7 +12,7 @@ public class StrengthStatus : Status
         priority = 0;
     }
 
-    public override int GetDamageDealt(int damage)
+    public override int GetDamageDealt(int damage, bool preview)
     {
         return damage + amount;
     }

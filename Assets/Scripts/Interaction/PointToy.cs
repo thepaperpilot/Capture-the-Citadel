@@ -220,7 +220,7 @@ public class PointToy : Toy, IRule
         if (target == PointTargets.Hex) {
             CombatAction action = card.actions.Where(a => a.type == CardAction.TYPE.MOVE).First();
             tile = CombatManager.Instance.player.tile;
-            range = CombatManager.Instance.player.statusController.GetMovement(action.amount);
+            range = CombatManager.Instance.player.statusController.GetMovement(action.amount, false);
         } else {
             tile = LevelManager.Instance.gameObject.GetComponentInChildren<PlayerController>().tile;
         }

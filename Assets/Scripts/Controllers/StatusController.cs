@@ -112,61 +112,76 @@ public class StatusController : MonoBehaviour
         {
             status.OnPlayCard(card);
         }
-        CheckRemoval();
+        //CheckRemoval();
     }
 
-    public int GetDamageDealt(int baseDamage)
+    public int GetDamageDealt(int baseDamage, bool preview)
     {
         int modifiedDamage = baseDamage;
         foreach (Status status in statuses)
         {
-            modifiedDamage = status.GetDamageDealt(modifiedDamage);
+            modifiedDamage = status.GetDamageDealt(modifiedDamage, preview);
         }
-        CheckRemoval();
+        if (!preview)
+        {
+            CheckRemoval();
+        }
         return modifiedDamage;
     }
 
-    public int GetDamageTaken(int baseDamage)
+    public int GetDamageTaken(int baseDamage, bool preview)
     {
         int modifiedDamage = baseDamage;
         foreach (Status status in statuses)
         {
-            modifiedDamage = status.GetDamageTaken(modifiedDamage);
+            modifiedDamage = status.GetDamageTaken(modifiedDamage, preview);
         }
-        CheckRemoval();
+        if (!preview)
+        {
+            CheckRemoval();
+        }
         return modifiedDamage;
     }
 
-    public int GetHealthLost(int baseAmount)
+    public int GetHealthLost(int baseAmount, bool preview)
     {
         int modifiedAmount = baseAmount;
         foreach (Status status in statuses)
         {
-            modifiedAmount = status.GetHealthLost(modifiedAmount);
+            modifiedAmount = status.GetHealthLost(modifiedAmount, preview);
         }
-        CheckRemoval();
+        if (!preview)
+        {
+            CheckRemoval();
+        }
         return modifiedAmount;
     }
 
-    public int GetMovement(int baseMovement)
+    public int GetMovement(int baseMovement, bool preview)
     {
         int modifiedMovment = baseMovement;
         foreach (Status status in statuses)
         {
-            modifiedMovment = status.GetMovement(modifiedMovment);
+            modifiedMovment = status.GetMovement(modifiedMovment, preview);
         }
-        CheckRemoval();
+        if (!preview)
+        {
+            CheckRemoval();
+        }
         return modifiedMovment;
     }
 
-    public int GetHandSize(int baseHand)
+    public int GetHandSize(int baseHand, bool preview)
     {
         int modifiedHand = baseHand;
         foreach(Status status in statuses)
         {
-            modifiedHand = status.GetHandSize(modifiedHand);
+            modifiedHand = status.GetHandSize(modifiedHand, preview);
         }
-        CheckRemoval();
+        if (!preview)
+        {
+            CheckRemoval();
+        }
         return modifiedHand;
     }
 

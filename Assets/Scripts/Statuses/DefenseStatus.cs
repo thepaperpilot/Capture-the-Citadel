@@ -11,7 +11,7 @@ public class DefenseStatus : Status
         priority = 0;
     }
 
-    public override int GetDamageTaken(int damage)
+    public override int GetDamageTaken(int damage, bool preview)
     {
         return damage - amount;
     }

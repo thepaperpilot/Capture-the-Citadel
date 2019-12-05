@@ -13,7 +13,7 @@ public class SabotageStatus : Status
         gracePeriod = isGracePeriod(fromMonster);
     }
 
-    public override int GetDamageDealt(int damage)
+    public override int GetDamageDealt(int damage, bool preview)
     {
         return Mathf.FloorToInt(0.5f * damage);
     }
