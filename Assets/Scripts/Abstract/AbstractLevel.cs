@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class AbstractLevel : SerializedScriptableObject
     public int rows = 8;
     [HideInInlineEditors, Range(1, 12), OnValueChanged("ResizeTable")]
     public int columns = 8;
+
+    [HideInInlineEditors]
+    public bool flipPlayerStartDirection;
 
     [BoxGroup("Level Geometry")]
     [TableMatrix(HorizontalTitle = "X axis", VerticalTitle = "Y axis")]

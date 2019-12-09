@@ -116,6 +116,15 @@ MonoBehaviour:
         actor: {fileID: 0}
         destination: {fileID: 0}
         target: 0
+      - type: 5
+        status: 0
+        amount: 0
+        ranged: 0
+        sound: {fileID: 8300000, guid: e0e50691ff245ac4cafadd23f6fe5cd9, type: 3}
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
       pathType: 0
       debuffIsMajor: 0
     - actions:
@@ -137,6 +146,15 @@ MonoBehaviour:
         actor: {fileID: 0}
         destination: {fileID: 0}
         target: 0
+      - type: 5
+        status: 0
+        amount: 0
+        ranged: 0
+        sound: {fileID: 8300000, guid: e0e50691ff245ac4cafadd23f6fe5cd9, type: 3}
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
       pathType: 0
       debuffIsMajor: 0
     - actions:
@@ -154,6 +172,15 @@ MonoBehaviour:
         amount: 2
         ranged: 0
         sound: {fileID: 0}
+        targets: []
+        actor: {fileID: 0}
+        destination: {fileID: 0}
+        target: 0
+      - type: 5
+        status: 0
+        amount: 0
+        ranged: 0
+        sound: {fileID: 8300000, guid: 1ae381869ff17a4489574510ee6b1fb0, type: 3}
         targets: []
         actor: {fileID: 0}
         destination: {fileID: 0}
@@ -177,6 +204,15 @@ MonoBehaviour:
           actor: {fileID: 0}
           destination: {fileID: 0}
           target: 2
+        - type: 5
+          status: 0
+          amount: 0
+          ranged: 0
+          sound: {fileID: 8300000, guid: bbb6a28f70eb7a545ae897afa10649c3, type: 3}
+          targets: []
+          actor: {fileID: 0}
+          destination: {fileID: 0}
+          target: 0
         pathType: 0
         debuffIsMajor: 0
     returnAfter: 1
