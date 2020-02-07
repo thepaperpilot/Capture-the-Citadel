@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: Dash
   m_EditorClassIdentifier: 
-  image: {fileID: 3469157094743108490, guid: 22a0dc881b63b9d44a3b6eef198056a6, type: 3}
+  image: {fileID: 21300000, guid: 4716d7f0185210143a04c41341fc7c7a, type: 3}
   name: Dash
   description: Move 4.
   energyCost: 1
@@ -24,6 +24,7 @@ MonoBehaviour:
     status: 0
     amount: 4
     ranged: 0
+    sound: {fileID: 0}
     targets: []
     actor: {fileID: 0}
     destination: {fileID: 0}

@@ -825,7 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613e6c0b4037a264eb77e25103e28f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 8
   tile: {fileID: 0}
   statusController: {fileID: 3882130378730960144}
   displayName: Gerblin Bruiser

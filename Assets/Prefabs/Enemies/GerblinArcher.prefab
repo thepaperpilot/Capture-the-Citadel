@@ -620,7 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613e6c0b4037a264eb77e25103e28f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+  maxHealth: 4
   tile: {fileID: 0}
   statusController: {fileID: 7375428671168273159}
   displayName: Gerblin Archer

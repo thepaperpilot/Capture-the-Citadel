@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: Plague
   m_EditorClassIdentifier: 
-  image: {fileID: 5775969252712499984, guid: 7b9f75ab32df5bd48a662f4a5b1c508a, type: 3}
+  image: {fileID: 21300000, guid: 28e1555057ab83149a2ed1f9fe763ce9, type: 3}
   name: Plague
   description: All enemies lose 3 health. Exhaust.
   energyCost: 2
@@ -24,6 +24,7 @@ MonoBehaviour:
     status: 0
     amount: 3
     ranged: 1
+    sound: {fileID: 0}
     targets: []
     actor: {fileID: 0}
     destination: {fileID: 0}

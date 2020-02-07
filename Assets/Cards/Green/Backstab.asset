@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: Backstab
   m_EditorClassIdentifier: 
-  image: {fileID: 1105131145188911010, guid: a52fe72842deebe4a97bbbabafdc1fe9, type: 3}
+  image: {fileID: 21300000, guid: 1991eb03671346f42bd574b44b2ca721, type: 3}
   name: Backstab
   description: Deal 4 melee damage. Inflict 1 Sabotage.
   energyCost: 1
@@ -24,6 +24,7 @@ MonoBehaviour:
     status: 0
     amount: 4
     ranged: 0
+    sound: {fileID: 0}
     targets: []
     actor: {fileID: 0}
     destination: {fileID: 0}
@@ -32,6 +33,7 @@ MonoBehaviour:
     status: 9
     amount: 1
     ranged: 0
+    sound: {fileID: 0}
     targets: []
     actor: {fileID: 0}
     destination: {fileID: 0}

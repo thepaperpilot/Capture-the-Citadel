@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: Swiftness
   m_EditorClassIdentifier: 
-  image: {fileID: -5451932119399321488, guid: 22a0dc881b63b9d44a3b6eef198056a6, type: 3}
+  image: {fileID: 21300000, guid: db879bb4f5cc4d6428cb253b4a9dc0b7, type: 3}
   name: Swiftness
   description: Gain +1 to all Move actions. Exhaust
   energyCost: 1
   exhaust: 1
-  rarity: 0
+  rarity: 3
   color: 2
   actions:
   - type: 3

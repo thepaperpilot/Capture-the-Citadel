@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613e6c0b4037a264eb77e25103e28f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 8
+  maxHealth: 6
   tile: {fileID: 0}
   statusController: {fileID: 5407470240725026585}
   displayName: Gerblin Shaman

@@ -181,6 +181,10 @@ public class EnemyController : CombatantController
                     allBuffIncluded = true;
                 }
             }
+            else if(action.type == CombatAction.TYPE.PLAY_SOUND)
+            {
+                //Do not add to intent
+            }
             else
             {
                 intents.Add(new EnemyReadoutUI.Intent(IntentIcon.Intent.OTHER));

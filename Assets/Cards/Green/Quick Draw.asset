@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: Quick Draw
   m_EditorClassIdentifier: 
-  image: {fileID: -225262636045133025, guid: 89608e16cbdd9af4aa472c2a89b2082e, type: 3}
+  image: {fileID: 21300000, guid: 63f62afcb96ada349b84fcf954c213b2, type: 3}
   name: Quick Draw
   description: Deal 2 ranged damage. Draw 1 card.
   energyCost: 0
@@ -24,6 +24,7 @@ MonoBehaviour:
     status: 0
     amount: 2
     ranged: 1
+    sound: {fileID: 0}
     targets: []
     actor: {fileID: 0}
     destination: {fileID: 0}
@@ -32,6 +33,7 @@ MonoBehaviour:
     status: 0
     amount: 1
     ranged: 0
+    sound: {fileID: 0}
     targets: []
     actor: {fileID: 0}
     destination: {fileID: 0}

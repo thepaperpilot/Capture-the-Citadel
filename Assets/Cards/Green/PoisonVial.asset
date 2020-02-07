@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
   m_Name: PoisonVial
   m_EditorClassIdentifier: 
-  image: {fileID: 5428176494171219322, guid: 22a0dc881b63b9d44a3b6eef198056a6, type: 3}
+  image: {fileID: 21300000, guid: fbf8cdb201274404c9eb9675c3957ba9, type: 3}
   name: Poison Vial
   description: Apply 2 poison to an enemy.
   energyCost: 1
@@ -24,7 +24,9 @@ MonoBehaviour:
     status: 5
     amount: 2
     ranged: 1
-    targets: []
+    sound: {fileID: 0}
+    targets:
+    - {fileID: 0}
     actor: {fileID: 0}
     destination: {fileID: 0}
     target: 1
