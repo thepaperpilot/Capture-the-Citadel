@@ -10,6 +10,10 @@ s .gitignore file should be placed at the root of your Unity project directory
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db.meta
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 
@@ -57,4 +61,3 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-

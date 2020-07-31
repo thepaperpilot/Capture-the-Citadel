@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0daf1b19c77322541af786d813596646, type: 3}
+  m_Name: Ranger
+  m_EditorClassIdentifier: 
+  startingHealth: 24
+  startingGold: 99
+  baseEnergyPerTurn: 3
+  startingDeck:
+  - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
+  - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
+  - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
+  - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
+  - {fileID: 11400000, guid: 22df983994a7c224886eeb43695e6a95, type: 2}
+  - {fileID: 11400000, guid: dfc96783b5041d242ad99121a44aac04, type: 2}
+  - {fileID: 11400000, guid: dfc96783b5041d242ad99121a44aac04, type: 2}
+  - {fileID: 11400000, guid: dfc96783b5041d242ad99121a44aac04, type: 2}
+  - {fileID: 11400000, guid: dfc96783b5041d242ad99121a44aac04, type: 2}
+  - {fileID: 11400000, guid: dfc96783b5041d242ad99121a44aac04, type: 2}
+  - {fileID: 11400000, guid: f0c130c6cb47db746996e8ff3166e242, type: 2}
+  - {fileID: 11400000, guid: f0c130c6cb47db746996e8ff3166e242, type: 2}
+  - {fileID: 11400000, guid: f0c130c6cb47db746996e8ff3166e242, type: 2}
+  - {fileID: 11400000, guid: d9dc7b47e62594a4b90c94667c3c0604, type: 2}
+  - {fileID: 11400000, guid: f407d4a8c94029c48b5d1742af25d865, type: 2}
+  cardPool:
+  - {fileID: 11400000, guid: 25158255a2e510f49ba16088cd5dab04, type: 2}
+  - {fileID: 11400000, guid: fb3d2a9a7fb1e894884d016bbd4f6254, type: 2}
+  - {fileID: 11400000, guid: cd67d00511bc62a458c05733d942180d, type: 2}
+  - {fileID: 11400000, guid: 994f55be3f6633647ac510a64808152b, type: 2}
+  - {fileID: 11400000, guid: f8278f989eb72744dad87826ba8c9f1d, type: 2}
+  - {fileID: 11400000, guid: aabd54a044d30174da6567581e52e885, type: 2}
+  - {fileID: 11400000, guid: d34de183cef2da742bda3a37c98fc471, type: 2}
+  - {fileID: 11400000, guid: 1ec6412db34eb7645819aaadc8246634, type: 2}
+  startingRelic: {fileID: 11400000, guid: 51201cd8d2a3aa54a921948fad554d8a, type: 2}
+  card: {fileID: 11400000, guid: e59d48249b710dd459d5d0a9daa1cf70, type: 2}
+  color: 2

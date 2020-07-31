@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e14a0500809cb46bb561d5f7a1bf49, type: 3}
+  m_Name: Six-Fingered Glove
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  model: {fileID: 2332718209225197229, guid: 63662955f9761154b924c926469d6dcd, type: 3}
+  name: Six-Fingered Glove
+  description: Increase your hand size by 1.
+  rarity: 3
+  actions:
+  - trigger: 1
+    everyTurn: 0
+    range: {x: 0, y: 0}
+    sprite: {fileID: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
+    effect: 0
+    targetedEffect: 0
+    target: 0
+    status: 10
+    amount: 1
+    data: 0
+    discard: {fileID: 0}
+    targets: []

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0daf1b19c77322541af786d813596646, type: 3}
+  m_Name: Warrior
+  m_EditorClassIdentifier: 
+  startingHealth: 30
+  startingGold: 99
+  baseEnergyPerTurn: 3
+  startingDeck:
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 2e8da052b3250c74d96ff358dca4723a, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
+  - {fileID: 11400000, guid: 5c432090bc62ed84c823a95ce8ef509a, type: 2}
+  - {fileID: 11400000, guid: 0b51f5507238aaf40be8815540da41e8, type: 2}
+  - {fileID: 11400000, guid: 0b51f5507238aaf40be8815540da41e8, type: 2}
+  - {fileID: 11400000, guid: 0b51f5507238aaf40be8815540da41e8, type: 2}
+  - {fileID: 11400000, guid: 0b51f5507238aaf40be8815540da41e8, type: 2}
+  - {fileID: 11400000, guid: 0b51f5507238aaf40be8815540da41e8, type: 2}
+  - {fileID: 11400000, guid: 9f52d65743ab9374eb86f58f237a85f8, type: 2}
+  - {fileID: 11400000, guid: e93badd637a38ab4396eb6c3555373fe, type: 2}
+  cardPool:
+  - {fileID: 11400000, guid: 34b9c1a6d71f74f4f9c672f327fbbe46, type: 2}
+  - {fileID: 11400000, guid: 7be325b53e1fbab4989f5a0ad0c295e0, type: 2}
+  - {fileID: 11400000, guid: e1e59f3bbb6f13445bd9215f363bae15, type: 2}
+  - {fileID: 11400000, guid: 12f72a691a9daf7408da4d214464bcfb, type: 2}
+  - {fileID: 11400000, guid: d9a33ff85433e06489499b5fc2f19348, type: 2}
+  - {fileID: 11400000, guid: ea477bf732ff0954b8589ebba2999a25, type: 2}
+  - {fileID: 11400000, guid: e736a3cbb87dfff4e8f06ac481e68364, type: 2}
+  - {fileID: 11400000, guid: 3f258d2b060424c4eb5828af127bd02d, type: 2}
+  - {fileID: 11400000, guid: e59d3d35612399a4da3c74bff50820c0, type: 2}
+  startingRelic: {fileID: 11400000, guid: 3c94534ca83310a44b905862511474ea, type: 2}
+  card: {fileID: 11400000, guid: 0302c6071fd7af345984402c455a1ada, type: 2}
+  color: 1

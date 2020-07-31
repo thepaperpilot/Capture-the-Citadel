@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
+  m_Name: GuardRed
+  m_EditorClassIdentifier: 
+  image: {fileID: -2457126375605692245, guid: 89608e16cbdd9af4aa472c2a89b2082e, type: 3}
+  name: Guard
+  description: Gain 2 Defense this turn.
+  energyCost: 1
+  exhaust: 0
+  rarity: 1
+  color: 1
+  actions:
+  - type: 3
+    status: 1
+    amount: 2
+    ranged: 0
+    sound: {fileID: 0}
+    targets:
+    - {fileID: 0}
+    actor: {fileID: 0}
+    destination: {fileID: 0}
+    target: 0
+  toy: {fileID: 6108090036375266474, guid: 371b99d3a953b954a8085fd798eeadbf, type: 3}

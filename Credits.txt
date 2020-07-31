@@ -1,0 +1,18 @@
+Card Art - https://opengameart.org/content/40x56-card-frames-revised-again
+Wolf Model Sound - https://opengameart.org/content/wolf-1
+Wolf Howl Sound - https://freesound.org/people/killyourpepe/sounds/395192/
+Wolf Run Sound - https://freesound.org/people/sabotovat/sounds/414350/
+Wolf Attack Sound - https://opengameart.org/content/dog-snarl-grunt-grumble
+Wolf Hurt Sound - https://freesound.org/people/Coral_Island_Studios/sounds/277195/
+Sword - https://opengameart.org/content/sword-flat-shaded
+TilesTexture - https://opengameart.org/content/handpainted-brick-texture-pack
+HumanForScale - https://opengameart.org/content/cleaned-base-human-models
+Jagged Sword - https://opengameart.org/content/jagged-sword
+Icons - "Lorc" https://opengameart.org/content/700-rpg-icons
+Health Bar - https://opengameart.org/content/health-bar-64x8
+Staffs - https://opengameart.org/content/staff-pack-low-poly
+Battleaxe - https://opengameart.org/content/rpg-axes-low-poly-3d-and-2d-pixel-axes-icons
+Shields - https://opengameart.org/content/shields-low-poly-asset-2
+Potions - https://opengameart.org/content/low-poly-potions-0
+More Weapons - https://opengameart.org/content/lowpoly-medieval-weapons
+Pawn - https://opengameart.org/content/chess-pawn

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 8fd160c33cf31c4448e1b3bf0590b3bd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - attackTex: {fileID: 2800000, guid: 9e42ce8e8dc04e54c822e8ca14914a8f, type: 3}
+  - attackMajorTex: {fileID: 2800000, guid: 52cc8d8c7363cf143bf20af82f0f0c10, type: 3}
+  - attackRangedTex: {fileID: 2800000, guid: ba697c177437b6f47a124da5352f110f, type: 3}
+  - blockTex: {fileID: 2800000, guid: 5a59ae873563e8a4bbd6a51c3c49f453, type: 3}
+  - moveTex: {fileID: 2800000, guid: b5d38811f3636284fbc8c0add37f5a3d, type: 3}
+  - debuffTex: {fileID: 2800000, guid: dd42876501876d644a7bbf963b90a249, type: 3}
+  - debuffMajorTex: {fileID: 2800000, guid: f2d55e0489f6899499b0794891fc3a99, type: 3}
+  - buffTex: {fileID: 2800000, guid: 708e8c637d32ccf4fa537b74facf8b28, type: 3}
+  - buffMajorTex: {fileID: 2800000, guid: c462ab7956fc9314680d2d4075953e33, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

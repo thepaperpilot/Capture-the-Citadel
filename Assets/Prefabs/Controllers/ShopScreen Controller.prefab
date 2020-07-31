@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &656237311572307377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196270811650574710}
+  - component: {fileID: 997416980894642442}
+  m_Layer: 0
+  m_Name: ShopScreen Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &196270811650574710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656237311572307377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997416980894642442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656237311572307377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe5c7fd6269a344e990767d8cdb332f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: {fileID: 11400000, guid: 1bda9e701bc7e5c458e813de5d1cd1a7, type: 2}
+  toy: {fileID: 5141749092700269470, guid: afcbe855abbd2fe4c9f59b06c31714f6, type: 3}
+  nextScene: Map
+  colorlessPool:
+  - {fileID: 11400000, guid: a99beea6627c56444bc0009a1ef7a026, type: 2}
+  - {fileID: 11400000, guid: ba29bbae607326e49ac1920eacad8284, type: 2}
+  - {fileID: 11400000, guid: 8ad2799e9057e3f4b9c652930264313f, type: 2}
+  - {fileID: 11400000, guid: 80857061a4505b14a8109df4adcc329a, type: 2}
+  common: 1
+  uncommon: 0.5
+  rare: 0.1
+  commonCost: {x: 50, y: 100}
+  uncommonCost: {x: 100, y: 150}
+  rareCost: {x: 200, y: 250}

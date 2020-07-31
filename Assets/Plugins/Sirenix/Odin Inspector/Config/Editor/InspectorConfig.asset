@@ -1,0 +1,310 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1137305049, guid: a4865f1ab4504ed8a368670db22f409c, type: 3}
+  m_Name: InspectorConfig
+  m_EditorClassIdentifier: 
+  enableOdinInInspector: 1
+  defaultEditorBehaviour: 11
+  processMouseMoveInInspector: 1
+  drawingConfig:
+    configs:
+    - DrawnTypeName: VRTK.Examples.AnimatorScrubber, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.JointConnectedBodySetter, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Prefabs.OptionsMenu.OptionsMenuFacade, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Prefabs.WarehouseDoor.WarehouseDoor, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Scarecrow.Tags.ScarecrowArmTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Scarecrow.Tags.ScarecrowHandTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Scarecrow.Tags.ScarecrowHatTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Scarecrow.Tags.ScarecrowHeadTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Tags.InteractableHacksawTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Tags.InteractableHammerTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Tags.InteractableSawTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Examples.Tags.InvalidTeleportLocationTag, VRTK.Samples.Farm.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.CameraRigSwitcher.XRSettingsConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.SimulatedCameraRig.ActiveObjectController,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.SimulatedCameraRig.KeyBindingDisplay,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.SimulatedCameraRig.SimulatorConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.SimulatedCameraRig.SimulatorFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.SimulatedCameraRig.TransformPropertyResetter,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.SimulatedCameraRig.Input.MouseVector2DAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.TrackedAlias.TrackedAliasConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.TrackedAlias.TrackedAliasFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.UnityXRCameraRig.UnityXRConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.UnityXRCameraRig.Input.UnityAxis1DAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.UnityXRCameraRig.Input.UnityAxis2DAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.CameraRig.UnityXRCameraRig.Input.UnityButtonAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.AxisRotator.AxisRotatorConfigurator, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.AxisRotator.AxisRotatorFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.SceneConsole.SceneConsoleFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.Tooltip.TooltipConfigurator, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.Tooltip.TooltipFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.TrackedCollider.TrackedColliderConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Helpers.TrackedCollider.TrackedColliderFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.DirectionalDriveFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.DirectionalJointDrive,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.DirectionalTransformDrive,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.RotationalDriveFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.RotationalJointDrive,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.RotationalTransformDrive,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Controllables.ComponentTags.ControllableJointDriveContainerTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Haptics.InteractorHapticsConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Haptics.InteractorHapticsFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.InteractableConsumerContainerExtractor,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.InteractableConsumerRigidbodyExtractor,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.InteractableFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.InteractableFacadeEventProxyEmitter,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.InteractableFacadeExtractor,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.InteractablePropertyCache,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Climb.ClimbInteractableConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Climb.ClimbInteractableFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.GrabInteractableConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.InteractableGrabStateEmitter,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.InteractableGrabStateRegistrar,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Action.GrabInteractableAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Action.GrabInteractableControlDirectionAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Action.GrabInteractableFollowAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Action.GrabInteractableScaleAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Action.GrabInteractableSwapAction,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Provider.GrabInteractableListInteractorProvider,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Provider.GrabInteractableStackInteractorProvider,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Grab.Receiver.GrabInteractableReceiver,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactables.Touch.TouchInteractableConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.InteractableSnapZone.ActivationValidator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.InteractableSnapZone.SnapZoneActivator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.InteractableSnapZone.SnapZoneConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.InteractableSnapZone.SnapZoneFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ActionInteractorConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.GrabInteractorConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.InteractorExtractor, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.InteractorFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.InteractorFacadeEventProxyEmitter,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.TouchInteractorConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.Collection.InteractorFacadeObservableList,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.IgnoreInteractorCollisionTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.StartActionTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.StartGrabbingTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.StartTouchingTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.StopActionTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.StopGrabbingTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.Interactors.ComponentTags.StopTouchingTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Interactions.InteractorVisibilityModifier.InteractorVisibilityModifierFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.BodyRepresentation.BodyRepresentationColliderTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.BodyRepresentation.BodyRepresentationFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.BodyRepresentation.BodyRepresentationProcessor,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.DestinationLocations.ActionDispatcher,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.DestinationLocations.DestinationLocation,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.DestinationLocations.DestinationLocationConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.DestinationLocations.DestinationLocationFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.DestinationLocations.DestinationLocationLockedStateTag,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.AxesToVector3.AxesToVector3Facade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.AxesToVector3.AxesToVector3Processor,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.AxesToVector3.Vector3Cache,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.Climb.ClimbFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.Climb.ClimbVelocityApplier,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.MovementAmplifier.MovementAmplifierConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.MovementAmplifier.MovementAmplifierFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.SpatialManipulation.PositionManipulator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.SpatialManipulation.RotationManipulator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.SpatialManipulation.ScaleManipulator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Movement.SpatialManipulation.SpatialManipulatorFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Teleporters.TeleporterConfigurator, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Locomotion.Teleporters.TeleporterFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.PlayAreaRepresentation.PlayAreaRepresentationConfigurator,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.PlayAreaRepresentation.PlayAreaRepresentationFacade,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Pointers.PointerConfigurator, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Pointers.PointerFacade, VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Pointers.PointerFacadeComponentGameObjectExtractor,
+        VRTK.Prefabs.Runtime
+      EditorTypeName: 
+    - DrawnTypeName: VRTK.Prefabs.Pointers.PointerFacadeGameObjectExtractor, VRTK.Prefabs.Runtime
+      EditorTypeName: 

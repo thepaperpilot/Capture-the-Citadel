@@ -8,6 +8,18 @@ TagManager:
   - projectile
   - FxTemporaire
   - TeleportIgnore
+  - Card
+  - Grabbable
+  - PointingZone
+  - PlayerSpawn
+  - Obstacle
+  - Enemy
+  - Hex
+  - Scene
+  - Shop
+  - Pawn
+  - MapTile
+  - Relic
   layers:
   - Default
   - TransparentFX
@@ -18,9 +30,9 @@ TagManager:
   - 
   - 
   - 3rd Person
-  - 
-  - 
-  - 
+  - Hands
+  - Obstacle
+  - MapTile
   - 
   - 
   - 

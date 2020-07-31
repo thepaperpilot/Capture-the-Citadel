@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac91ad2398a4bfe40908627e5a4a686b, type: 3}
+  m_Name: Prayer of Justice
+  m_EditorClassIdentifier: 
+  image: {fileID: 3673667057570157979, guid: a52fe72842deebe4a97bbbabafdc1fe9, type: 3}
+  name: Prayer of Justice
+  description: Gain 2 Strength. End of turn, lose 2 Strength.
+  energyCost: 1
+  exhaust: 0
+  rarity: 1
+  color: 1
+  actions:
+  - type: 3
+    status: 0
+    amount: 2
+    ranged: 0
+    sound: {fileID: 0}
+    targets:
+    - {fileID: 0}
+    actor: {fileID: 0}
+    destination: {fileID: 0}
+    target: 0
+  - type: 3
+    status: 8
+    amount: 2
+    ranged: 0
+    sound: {fileID: 0}
+    targets:
+    - {fileID: 0}
+    actor: {fileID: 0}
+    destination: {fileID: 0}
+    target: 0
+  toy: {fileID: 4561849584493709916, guid: 4066941fb1c342e4aa64a18db61861f8, type: 3}
